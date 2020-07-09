@@ -5,7 +5,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       layout:decorator="layout">
 <head>
-    <title>Log in</title>
+    <title>Реєстрація</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,7 +14,7 @@
             <div class="panel-heading">Register Form</div>
             <div class="panel-body">
 
-                <form action="home" th:action="@{/register}" method="post">
+                <form th:action="@{/register}" method="post">
                     <div class="form-group has-feedback">
                         <input type="email" class="form-control" name="email"
                                placeholder="Email" /> <span
@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="form-group col-xs-offset-8 col-xs-4">
                             <button type="submit" class="btn btn-primary btn-block btn-flat"
-                                    th:text="#{label.login}">Register</button>
+                                    th:text="#{label.login}">Реєстрація</button>
                         </div>
                     </div>
                     <div class="row">

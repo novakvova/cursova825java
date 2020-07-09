@@ -30,10 +30,9 @@ public class HomeController
 	@Autowired
 	private UserRepository userRepository;
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	public PasswordEncoder passwordEncoder;
+
 	@GetMapping("/home")
 	public String home(Model model)
 	{
@@ -55,12 +54,13 @@ public class HomeController
 	@PostMapping("/register")
 	public String Register(User user)
 	{
-		String pass = new BCryptPasswordEncoder().encode(user.getPassword());
+		String pass = passwordEncoder.encode(user.getPassword());
 		user.setPassword(pass);
 		User u = new User();
 		u.setPassword(pass);
 		u.setEmail(user.getEmail());
 		u.setName(user.getName());
+
 //		List<Role> roles = new ArrayList<Role>();
 //		Role role = new Role();
 //		role.setId(3);
