@@ -1,12 +1,12 @@
-package net.javaguides.springbootsecurity.services;
+package epicentr.services;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 import net.javaguides.springbootsecurity.dto.UserRegistrationDto;
-import net.javaguides.springbootsecurity.entities.Role;
-import net.javaguides.springbootsecurity.entities.User;
-import net.javaguides.springbootsecurity.repositories.UserRepository;
+import epicentr.entities.Role;
+import epicentr.entities.User;
+import epicentr.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

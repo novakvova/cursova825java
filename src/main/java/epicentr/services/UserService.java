@@ -1,7 +1,7 @@
-package net.javaguides.springbootsecurity.services;
+package epicentr.services;
 
 import net.javaguides.springbootsecurity.dto.UserRegistrationDto;
-import net.javaguides.springbootsecurity.entities.User;
+import epicentr.entities.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
