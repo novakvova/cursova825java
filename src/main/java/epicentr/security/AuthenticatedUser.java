@@ -1,15 +1,14 @@
-package net.javaguides.springbootsecurity.security;
+package epicentr.security;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import epicentr.entities.Role;
+import epicentr.entities.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-
-import net.javaguides.springbootsecurity.entities.Role;
-import net.javaguides.springbootsecurity.entities.User;
 
 /**
  * @author Ramesh Fadatare

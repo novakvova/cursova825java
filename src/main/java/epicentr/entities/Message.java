@@ -1,4 +1,4 @@
-package net.javaguides.springbootsecurity.entities;
+package epicentr.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

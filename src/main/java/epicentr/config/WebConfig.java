@@ -1,4 +1,4 @@
-package net.javaguides.springbootsecurity.config;
+package epicentr.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

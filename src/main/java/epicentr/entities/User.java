@@ -1,5 +1,6 @@
-package net.javaguides.springbootsecurity.entities;
+package epicentr.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,14 +30,11 @@ public class User
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
 	@Column(nullable=false)
-	@NotEmpty()
 	private String name;
 	@Column(nullable=false, unique=true)
-	@NotEmpty
 	@Email(message="{errors.invalid_email}")
 	private String email;
 	@Column(nullable=false)
-	@NotEmpty
 	@Size(min=4)
 	private String password;
 	
@@ -46,7 +44,17 @@ public class User
 	      joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
 	      inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
 	private List<Role> roles;
-	
+
+	public User() {
+		roles = new ArrayList<Role>();
+	}
+
+	public User(@NotEmpty() String name, @NotEmpty @Email(message = "{errors.invalid_email}") String email, @NotEmpty @Size(min = 4) String password) {
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
+
 	public Integer getId()
 	{
 		return id;

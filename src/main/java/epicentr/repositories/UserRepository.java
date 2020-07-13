@@ -1,10 +1,9 @@
-package net.javaguides.springbootsecurity.repositories;
+package epicentr.repositories;
 
 import java.util.Optional;
 
+import epicentr.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import net.javaguides.springbootsecurity.entities.User;
 
 
 /**

@@ -1,7 +1,9 @@
-package net.javaguides.springbootsecurity.security;
+package epicentr.security;
 
 import java.util.Collection;
 
+import epicentr.entities.User;
+import epicentr.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -10,9 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import net.javaguides.springbootsecurity.entities.User;
-import net.javaguides.springbootsecurity.repositories.UserRepository;
 
 /**
  * @author Ramesh Fadatare

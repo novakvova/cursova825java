@@ -1,8 +1,7 @@
-package net.javaguides.springbootsecurity.repositories;
+package epicentr.repositories;
 
+import epicentr.entities.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import net.javaguides.springbootsecurity.entities.Message;
 
 /**
  * @author Ramesh Fadatare
