@@ -1,15 +1,11 @@
-# Spring Boot + Spring MVC + Role Based Spring Security + Hibernate + Thymeleaf + MySQL Tutorial
+# Course project student group pd825 JAVA Spring, Hibernate and Maven
 
 
-**springboot-thymeleaf-security-demo**: This tutorial demonstrates how to secure a SpringBoot +Thymeleaf based web application using Spring Security.
+**springboot-security-boot**: This secure a SpringBoot +Thymeleaf based web application using Spring Security.
+> How to run?
 
-#### How to run?
+project> `mvn spring-boot:run`
 
-springboot-thymeleaf-security-demo> mvn spring-boot:run
-
-Go to http://localhost:8080/
+Go to http://localhost:8081/
 
 Login with admin@gmail.com/admin (or) user@gmail.com/user
-
-
-Blog post - https://www.javaguides.net/2018/09/spring-boot-spring-mvc-role-based-spring-security-jpa-thymeleaf-mysql-tutorial.html
