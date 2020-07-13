@@ -1,4 +1,4 @@
-package net.javaguides.springbootsecurity;
+package epicentr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package net.javaguides.springbootsecurity.config;
+package epicentr.config;
 
 import javax.sql.DataSource;
 

@@ -1,4 +1,4 @@
-package net.javaguides.springbootsecurity.entities;
+package epicentr.entities;
 
 import java.util.ArrayList;
 import java.util.List;
