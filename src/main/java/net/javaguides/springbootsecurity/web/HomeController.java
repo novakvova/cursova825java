@@ -2,6 +2,7 @@ package net.javaguides.springbootsecurity.web;
 
 import net.javaguides.springbootsecurity.entities.Role;
 import net.javaguides.springbootsecurity.entities.User;
+import net.javaguides.springbootsecurity.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,6 +18,7 @@ import net.javaguides.springbootsecurity.repositories.UserRepository;
 import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Ramesh Fadatare
@@ -29,6 +31,9 @@ public class HomeController
 	private MessageRepository messageRepository;
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private RoleRepository roleRepository;
 
 	@Autowired
 	public PasswordEncoder passwordEncoder;
@@ -60,12 +65,9 @@ public class HomeController
 		u.setPassword(pass);
 		u.setEmail(user.getEmail());
 		u.setName(user.getName());
-
-//		List<Role> roles = new ArrayList<Role>();
-//		Role role = new Role();
-//		role.setId(3);
-//		roles.add(role);
-//		u.setRoles(roles);
+		Role r = new Role();
+		r.setId(3);
+		u.getRoles().add(r);
 		userRepository.save(u);
 		//messageRepository.save(message);
 		return "redirect:/home";

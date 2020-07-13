@@ -1,5 +1,6 @@
 package net.javaguides.springbootsecurity.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -28,6 +29,10 @@ public class Role
 		
 	@ManyToMany(mappedBy="roles")
 	private List<User> users;
+
+	public Role() {
+		users= new ArrayList<>();
+	}
 
 	public Integer getId()
 	{
