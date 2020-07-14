@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
+<head>
+    <title>Реєстрація</title>
+    <link rel="stylesheet"
+          th:href="@{/assets/css/index.min.css}" />
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container">
+        <form th:action="@{/document}" method="post" class="row" enctype="multipart/form-data">
+            <div class="col-md-4">
+                <div class="uploader">
+                    <div class="wrapper">
+                        <div class="images">
+                            <div class="pic" id="pic">
+                                Додати файли (натисніть або перетягніть)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div id="filesContainer">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Файл</th>
+                            <th>Ім'я</th>
+                            <th>Розмір</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodyFileList">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button type="submit" class="btn  btn-primary">Save documents</button>
+        </form>
+    </div>
+    <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+
+    <script  th:src="@{'/assets/js/uploader.js'}" ></script>
+
+</div>
+</body>
+</html>
