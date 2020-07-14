@@ -23,7 +23,7 @@
                 let files = dt.files
                 let uploader = $('<input type="file" name="images[]" style="display:none"/>');
 
-                uploader[0].files = files;
+                uploader.files = files;
                 //console.log(uploader);
 
                 viewFileUploader(uploader);
@@ -38,7 +38,7 @@
                 uploader.click();
 
                 uploader.on('change', function () {
-                    viewFileUploader(uploader);
+                    viewFileUploader(this);
                 });
             });
             $("#tbodyFileList").on("click", ".removefile", function () {
@@ -49,14 +49,15 @@
 
         function viewFileUploader(uploader) {
 
-            var nBytes = uploader[0].files[0].size;
+            var file = uploader.files[0];
+            var nBytes = file.size;
             var sOutput = nBytes + " bytes";
             // optional code for multiples approximation
             for (var aMultiples = ["KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], nMultiple = 0, nApprox = nBytes / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
                 sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple];
             }
 
-            var type = uploader[0].files[0].type;
+            var type = file.type;
             let fileTypes = {
                 'wordprocessingml.document': '<i class="fa fa-2x fa-file-word-o text-primary"></i>',
                 'spreadsheetml.sheet': '<i class="fa fa-2x fa-file-excel-o text-success"></i>',
@@ -83,7 +84,7 @@
                 <td>
                 	${type}
                 </td>
-                <td>${uploader[0].files[0].name}</td>
+                <td>${file.name}</td>
                 <td>${sOutput}</td>
                 <td><a href="#" class="btn btn-danger removefile"><i class="fa fa-times" aria-hidden="true"></i></a></td>
             </tr>
