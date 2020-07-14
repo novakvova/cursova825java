@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 /**
  * @author Ramesh Fadatare
  *
@@ -39,9 +42,38 @@ public class DocumentController
     }
 
     @PostMapping("/document")
-    public String saveDocument(@RequestParam("images[]") MultipartFile[] images,
+    public String saveDocument(@RequestParam("images[]") MultipartFile[] files,
                                RedirectAttributes redirectAttributes)
     {
+        for (int i = 0; i < files.length; i++) {
+            MultipartFile file = files[i];
+            String name = names[i];
+            try {
+                byte[] bytes = file.getBytes();
+
+                // Creating the directory to store file
+                String rootPath = System.getProperty("catalina.home");
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists())
+                    dir.mkdirs();
+
+                // Create the file on server
+                File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + name);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+
+                logger.info("Server File Location="
+                        + serverFile.getAbsolutePath());
+
+                message = message + "You successfully uploaded file=" + name
+                        + "<br />";
+            } catch (Exception e) {
+                return "You failed to upload " + name + " => " + e.getMessage();
+            }
+        }
         return "redirect:/home";
     }
 }
