@@ -33,7 +33,6 @@
         //загрузка фото на клік
         function uploadImage() {
             let button = $('.images .pic');
-            let images = $('.images');
             button.on('click', function () {
                 let uploader = $('<input type="file" name="images[]" style="display:none"/>');
                 uploader.click();
@@ -46,9 +45,6 @@
                 $(this).closest("tr").remove();
             });
 
-            images.on('click', '.img', function () {
-                $(this).remove();
-            });
         }
 
         function viewFileUploader(uploader) {
