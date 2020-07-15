@@ -61,6 +61,7 @@ public class DocumentController
 
                 // Creating the directory to store file
                 String rootPath =  context.getRealPath("resources/");
+                System.out.println("---------"+rootPath);
                 File dir = new File(rootPath + File.separator + "uploads");
                 if (!dir.exists())
                     dir.mkdirs();
