@@ -9,3 +9,4 @@ target
 dump.rdb
 Test.java
 *.log
+/.vs/slnx.sqlite
