@@ -91,10 +91,14 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
-		<finalName>pv825</finalName>
+		<finalName>epic</finalName>
 		<plugins>
 
 			<plugin>
