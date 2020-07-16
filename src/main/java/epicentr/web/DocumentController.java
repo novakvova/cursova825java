@@ -60,8 +60,8 @@ public class DocumentController
                 byte[] bytes = file.getBytes();
 
                 // Creating the directory to store file
-                // System.getProperty("catalina.home");
-                String rootPath =  System.getProperty("catalina.home");;
+                String rootPath =  context.getRealPath("resources/");
+                System.out.println("---------"+rootPath);
                 File dir = new File(rootPath + File.separator + "uploads");
                 if (!dir.exists())
                     dir.mkdirs();
