@@ -9,3 +9,5 @@ target
 dump.rdb
 Test.java
 *.log
+node_modules/
+package-lock.json
