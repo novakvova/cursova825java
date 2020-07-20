@@ -18,7 +18,7 @@ import java.util.Arrays;
  *
  */
 @Controller
-public class AccountConroller
+public class AccountController
 {
     @Autowired
     private UserRepository userRepository;
