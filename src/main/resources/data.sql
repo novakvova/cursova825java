@@ -27,4 +27,4 @@ create table if not exists persistent_logins (
 -- (1,2),
 -- (1,3),
 -- (3,2)
--- ;
+;
