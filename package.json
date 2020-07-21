@@ -1,0 +1,16 @@
+{
+  "name": "cursova825java",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "gulp": "4.0.2",
+    "gulp-concat": "2.6.1",
+    "gulp-cssmin": "0.2.0",
+    "gulp-uglify": "3.0.2",
+    "jquery": "^3.5.1",
+    "merge-stream": "^2.0.0",
+    "rimraf": "3.0.0",
+    "vue": "^2.6.11",
+    "vue-router": "^3.3.4"
+  }
+}
