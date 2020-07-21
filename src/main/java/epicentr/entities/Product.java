@@ -1,6 +1,7 @@
 package epicentr.entities;
 
 
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 
 @Entity
 
-@Table(name="products")
+@Data
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
