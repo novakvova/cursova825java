@@ -2,6 +2,8 @@ package epicentr.api;
 
 import epicentr.entities.Product;
 import epicentr.services.ProductService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +15,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/products")
+@Slf4j
+@RequiredArgsConstructor
 public class ProductAPI {
     @Autowired
     private ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<Product>> findAll() {
-        return ResponseEntity.ok(productService.findAll());
+        List<Product> r =productService.findAll();
+        return ResponseEntity.ok(r);
     }
 
     @PostMapping
