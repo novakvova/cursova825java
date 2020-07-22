@@ -15,6 +15,7 @@
 			 <p sec:authorize="isAnonymous()"><a th:href="@{/register}">Register</a></p>
 	         <p><a th:href="@{/home}">User Home</a></p>
 			 <p><a th:href="@{/document}">Документи</a></p>
+			<p><a th:href="@{/products}">Продукти</a></p>
 		     <p><a th:href="@{/admin/home}">Admin Home</a></p>
 		     <p sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></p>
     	</div>
