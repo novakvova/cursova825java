@@ -14,6 +14,9 @@ var merge = require('merge-stream');
 var depscss = {
     "bootstrap": {
         "dist/css/bootstrap.min.css": ""
+    },
+    "vuetify": {
+        "dist/vuetify.css": "/vue/"
     }
 };
 
@@ -29,6 +32,9 @@ var depsjs = {
     },
     "vue-router": {
         "dist/vue-router.min.js": "vue/"
+    },
+    "vuetify": {
+        "dist/vuetify.js": "vue/"
     },
     // "axios": {
     //     "dist/axios.min.js": ""

@@ -7,7 +7,9 @@
   <meta name="author" content="">
   <title>Full stack CRUD Example with Spring Boot, MySQL and VueJS</title>
   <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
   <link href="/products.css" rel="stylesheet"/>
+
 </head>
 <body>
   <div class="container">
@@ -45,6 +47,7 @@
       <div class="filters row">
         <div class="form-group col-sm-3">
           <input placeholder="Search" v-model="searchKey" class="form-control" id="search-element" requred/>
+          <v-btn block color="secondary" dark>Block Button</v-btn>
         </div>
       </div>
       <table class="table">
@@ -148,6 +151,7 @@
 <!--  <script src="https://unpkg.com/vue@2.5.22/dist/vue.js"></script>-->
   <script src="/lib/js/vue/vue.min.js"></script>
   <script src="/lib/js/vue/vue-router.min.js"></script>
+  <script src="/lib/js/vue/vuetify.js"></script>
 <!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
   <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
   <script src="/products.js"></script>
