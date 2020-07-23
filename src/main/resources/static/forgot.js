@@ -70,5 +70,6 @@ var router = new VueRouter({
 });
 
 new Vue({
-    router
+    vuetify: new Vuetify(),
+    render: h => h(List)
 }).$mount('#app')

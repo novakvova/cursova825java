@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+		xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,11 +12,14 @@
 <meta
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 	name="viewport" />
-<link rel="stylesheet"
-	th:href="@{/assets/bootstrap/css/bootstrap.min.css}" />
+	<link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 <link rel="stylesheet"
 	th:href="@{/assets/font-awesome-4.5.0/css/font-awesome.min.css}" />
-<link rel="stylesheet" th:href="@{/assets/css/styles.css}" />
+
 
 <style>
 .footer {
@@ -22,9 +27,8 @@
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	background-color: black;
+	background-color: #1e1e1e;
 	color: white;
-	height: 100px;
 	text-align: center;
 }
 </style>
@@ -32,43 +36,117 @@
 </head>
 
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+
+<div >
+	<main id="app">
+		<router-view></router-view>
+	</main>
+</div>
+	<template id="navbar">
+		<div>
+			<v-app-bar
+					color="deep-purple accent-4"
+					dense
+					dark
+			>
+				<v-app-bar-nav-icon></v-app-bar-nav-icon>
+
+				<v-toolbar-title>Epicentr</v-toolbar-title>
+				<a class="ml-3" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+				<a class="ml-3" th:href="@{/}">Home</a>
+				<v-spacer></v-spacer>
+
+				<v-btn icon>
+					<v-icon>mdi-heart</v-icon>
+				</v-btn>
+
+				<v-btn icon>
+					<v-icon>mdi-magnify</v-icon>
+				</v-btn>
+
+				<v-menu
+						left
+						bottom
+				>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn
+								icon
+								v-bind="attrs"
+								v-on="on"
+						>
+							<v-icon>mdi-dots-vertical</v-icon>
+						</v-btn>
+					</template>
+
+					<v-list>
+						<v-list-item
+								v-for="n in 5"
+								:key="n"
+								@click="() => {}"
+						>
+							<v-list-item-title>Option {{ n }}</v-list-item-title>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-app-bar>
 		</div>
 
-		<div id="navbar" class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				<li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Logout</a></li>
-			</ul>
-		</div>
-	</div><!-- /.container-fluid -->
-</nav>
-
-
-	<div class="container">
-
-		<div layout:fragment="content">
-			<!-- Your Page Content Here -->
-		</div>
-
+	</template>
+<div class="container">
+	<div layout:fragment="content">
+		<!-- Your Page Content Here -->
 	</div>
+</div>
 
+<!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
+<!--	<div class="container-fluid">-->
+
+<!--	</div>-->
+<!--</nav>-->
+<!--<ul class="nav container-fluid footer">-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link active" href="#">Active</a>-->
+<!--	</li>-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link" href="#">Link</a>-->
+<!--	</li>-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link" href="#">Link</a>-->
+<!--	</li>-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+<!--	</li>-->
+<!--</ul>-->
+<nav class="navbar navbar-light bg-light footer">
+	<a class="navbar-brand" href="#">крутий футер!! як і пара !!!!  ;)     &#127773</a>
+</nav>
 	<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
-	<script th:src="@{'/assets/bootstrap/js/bootstrap.min.js'}"></script>
-<nav class="navbar navbar-default navbar-fixed-bottom">
-	<div class="container-fluid">
-		крутий футер!! як і пара !!!!  ;)     &#127773
-	</div>
-</nav>
+	<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
+<script src="/lib/js/vue/vue.min.js"></script>
+<script src="/lib/js/vue/vue-router.min.js"></script>
+<script src="/lib/js/vue/vuetify.js"></script>
+<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script>
+	var App = Vue.extend({
+		template: '#navbar',
+		data: () => ({
+			drawer: false,
+		}),
+	});
+	new Vue({
+		vuetify: new Vuetify(),
+		render: h => h(App)
+	}).$mount('#app')
+</script>
+<script>
+	export default {
+		data: () => ({
+			drawer: false,
+		}),
+	}
+</script>
+
 
 
 </body>
