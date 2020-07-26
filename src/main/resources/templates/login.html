@@ -8,12 +8,11 @@
 <title>Log in</title>
 </head>
 <body>
-	<div layout:fragment="content">
-		<div class="panel col-md-5">
-			<div class="panel panel-primary">
-				<div class="panel-heading">Login Form</div>
-				<div class="panel-body">
-
+	<div layout:fragment="content" class="d-flex justify-content-center">
+			<div class="card col-md-5" >
+				<div class="card-body">
+				<h5 class="card-title">Login</h5>
+				<div>
 					<form action="home" th:action="@{/login}" method="post">
 						<div class="form-group has-feedback">
 							<input type="email" class="form-control" name="username"
@@ -32,8 +31,9 @@
 						</div>
 						<div class="row">
 							<div class="form-group col-xs-offset-8 col-xs-4">
-								<button type="submit" class="btn btn-primary btn-block btn-flat"
-									th:text="#{label.login}">LogIn</button>
+<!--								<button  class="btn btn-primary btn-block btn-flat"-->
+<!--									th:text="#{label.login}">LogIn</button>-->
+								<button type="submit" style="color: white" class="btn btn-primary">LogIn</button>
 							</div>
 						</div>
 						<div class="row">

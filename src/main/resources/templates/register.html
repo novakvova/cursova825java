@@ -9,12 +9,11 @@
 
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="panel col-md-5">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Register Form</div>
-            <div class="panel-body">
-
+<div layout:fragment="content" class="d-flex justify-content-center">
+    <div class="card col-md-5" >
+        <div class="card-body">
+            <h5 class="card-title">Register</h5>
+            <div >
                 <form th:action="@{/register}" method="post">
                     <div class="form-group has-feedback">
                         <input type="email" class="form-control" name="email"
@@ -34,7 +33,7 @@
                     <div class="row">
                         <div class="form-group col-xs-offset-8 col-xs-4">
                             <button type="submit" class="btn btn-primary btn-block btn-flat"
-                                    th:text="#{label.login}">Реєстрація</button>
+                                     style="color: white">Register</button>
                         </div>
                     </div>
                     <div class="row">
