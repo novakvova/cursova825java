@@ -50,40 +50,36 @@
           <v-btn block color="secondary" dark>Block Button</v-btn>
         </div>
       </div>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th class="col-sm-2">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="product in filteredProducts">
-          <!-- tr v-for="product in products" -->
-          <!-- tr v-for="product in products | filterBy searchKey in 'name'" -->
-          <td>
-            <a>
-              <router-link :to="{name: 'product', params: {product_id: product.id}}">{{ product.name }}</router-link>
-            </a>
-          </td>
-          <td>{{ product.description }}</td>
-          <td>
-            {{ product.price }}
-            <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
-          </td>
-          <td>
-            <a class="btn btn-warning btn-xs">
-              <router-link :to="{name: 'product-edit', params: {product_id: product.id}}">Edit</router-link>
-            </a>
-            <a class="btn btn-danger btn-xs">
-              <router-link :to="{name: 'product-delete', params: {product_id: product.id}}">Delete</router-link>
-            </a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+
+        <div class="container" >
+          <div class="row">
+
+
+          <div class="col-sm-4 col-md-3 col-lg-2" v-for="product in filteredProducts">
+
+
+          <v-card>
+            <v-card-text>
+              <h3>{{ product.name }}</h3>
+              <h5>{{ product.price }}</h5>
+              <p>{{ product.description }}</p>
+
+            </v-card-text>
+
+            <v-card-actions>
+              <v-btn
+                      :to="{name: 'product', params: {product_id: product.id}}"
+                      text
+                      color="deep-purple accent-4"
+              >
+                Learn More
+              </v-btn>
+            </v-card-actions>
+
+          </v-card>
+        </div>
+        </div>
+        </div>
     </div>
   </template>
 
