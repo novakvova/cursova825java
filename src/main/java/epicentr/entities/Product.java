@@ -34,4 +34,12 @@ public class Product {
 
     @UpdateTimestamp
     private Date updatedAt;
+
+    public List<ProductImages> getProductImages() {
+        return productImages;
+    }
+
+    public void setProductImages(List<ProductImages> productImages) {
+        this.productImages = productImages;
+    }
 }

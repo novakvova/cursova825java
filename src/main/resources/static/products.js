@@ -16,7 +16,7 @@ var productService = {
   findAll(fn) {
     axios
       .get('/api/v1/products')
-      .then(response => fn(response))
+      .then(response =>  fn(response))
       .catch(error => console.log(error))
   },
 

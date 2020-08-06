@@ -59,6 +59,13 @@
 
 
           <v-card>
+            <v-img
+                    class="white--text align-end"
+                    height="200px"
+                    :src="'/files/' + product.productImages[0].image_name"
+
+            >
+            </v-img>
             <v-card-text>
               <h3>{{ product.name }}</h3>
               <h5>{{ product.price }}</h5>

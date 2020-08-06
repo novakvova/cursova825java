@@ -1,6 +1,7 @@
 package epicentr.api;
 
 import epicentr.entities.Product;
+import epicentr.entities.ProductImages;
 import epicentr.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,11 @@ public class ProductAPI {
     @GetMapping
     public ResponseEntity<List<Product>> findAll() {
         List<Product> r =productService.findAll();
+        for (int i=0;i<r.size();i+=1) {
+            for (int j = 0; j<r.get(i).getProductImages().size();j+=1 ){
+                r.get(i).getProductImages().get(j).setProduct(null);
+            }
+        }
         return ResponseEntity.ok(r);
     }
 
