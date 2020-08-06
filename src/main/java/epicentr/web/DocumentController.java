@@ -2,6 +2,7 @@ package epicentr.web;
 
 import epicentr.entities.Message;
 import epicentr.repositories.RoleRepository;
+import epicentr.services.StorageService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,7 @@ import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
+import java.nio.file.Path;
 import java.util.UUID;
 
 /**
@@ -33,6 +35,12 @@ public class DocumentController
 
     @Autowired
     ServletContext context;
+    private final StorageService storageService;
+
+    @Autowired
+    public DocumentController(StorageService storageService) {
+        this.storageService = storageService;
+    }
     @Autowired
     private UserRepository userRepository;
 
@@ -59,10 +67,11 @@ public class DocumentController
             try {
                 byte[] bytes = file.getBytes();
 
-                // Creating the directory to store file
-                String rootPath =  context.getRealPath("resources/");
+                Path f = storageService.load("");
+                String rootPath= f.toUri().getPath();
+                //String rootPath =  context.getRealPath("resources/");
                 System.out.println("---------"+rootPath);
-                File dir = new File(rootPath + File.separator + "uploads");
+                File dir = new File(rootPath + File.separator );
                 if (!dir.exists())
                     dir.mkdirs();
 

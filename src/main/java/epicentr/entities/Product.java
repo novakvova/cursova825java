@@ -7,7 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 
@@ -16,7 +18,11 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ManyToOne()
+    @JoinColumn(name="category_id", referencedColumnName = "id",insertable = false, updatable = false)
+    private Category category;
+    @OneToMany(targetEntity=ProductImages.class, mappedBy="product",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductImages> productImages = new ArrayList<>();
     private String name;
 
     private String description;
