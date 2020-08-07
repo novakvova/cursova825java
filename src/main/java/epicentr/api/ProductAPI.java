@@ -46,7 +46,9 @@ public class ProductAPI {
             //log.error("Id " + id + " is not existed");
             ResponseEntity.badRequest().build();
         }
-
+        for (int j = 0; j<stock.get().getProductImages().size();j+=1 ){
+            stock.get().getProductImages().get(j).setProduct(null);
+        }
         return ResponseEntity.ok(stock.get());
     }
 
