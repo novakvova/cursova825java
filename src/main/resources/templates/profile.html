@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Full stack CRUD Example with Spring Boot, MySQL and VueJS</title>
+    <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <main id="app">
+
+
+    </main>
+</div>
+
+<template id="profile">
+    <v-container
+            id="user-profile"
+            fluid
+            tag="section"
+    >
+        <v-row justify="center">
+            <v-col
+                    cols="12"
+                    md="8"
+            >
+                <base-material-card>
+
+                    <form th:action="@{/profile}" method="post">
+                        <v-container class="py-0">
+                            <v-row>
+                                <v-col
+                                        cols="12"
+                                        md="12"
+                                >
+                                    <v-text-field
+                                            th:value="${email}"
+                                            name="email"
+                                            label="Email Address"
+                                            class="purple-input"
+                                    />
+                                </v-col>
+                                <v-col
+                                        cols="12"
+                                        md="6"
+                                >
+                                    <v-text-field
+                                            name="name"
+                                            th:value="${firstName}"
+                                            label="First Name"
+                                            class="purple-input"
+                                    />
+                                </v-col>
+
+                                <v-col
+                                        cols="12"
+                                        md="6"
+                                >
+                                    <v-text-field
+                                            name="lastName"
+                                            th:value="${lastName}"
+                                            label="Last Name"
+                                            class="purple-input"
+                                    />
+                                </v-col>
+
+
+                                <v-col
+                                        cols="12"
+                                        md="6"
+                                >
+                                    <v-text-field
+                                            th:value="${city}"
+                                            name="city"
+                                            label="City"
+                                            class="purple-input"
+                                    />
+                                </v-col>
+
+                                <v-col
+                                        cols="12"
+                                        md="6"
+                                >
+                                    <v-text-field
+                                            name="postOffice"
+                                            th:value="${postOffice}"
+                                            type="number"
+                                            label="Post office"
+                                            class="purple-input"
+                                    />
+                                </v-col>
+                                <v-col
+                                        cols="12"
+                                        class="text-right"
+                                >
+                                    <v-btn
+                                            type="submit"
+                                            class="mr-0"
+                                    >
+                                        Update Profile
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </form>
+                </base-material-card>
+            </v-col>
+
+            <v-col
+                    cols="12"
+                    md="4"
+            >
+                <base-material-card
+                        class="v-card-profile"
+                        avatar="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+                >
+                    <v-card-text class="text-center">
+                        <div class="d-flex flex-column justify-content-center">
+<!--                            <v-avatar th:if="${image} == null" >-->
+<!--                                <v-btn icon>-->
+<!--                                    <v-icon>mdi-account</v-icon>-->
+<!--                                </v-btn>-->
+<!--                            </v-avatar>-->
+
+                            <v-avatar size="lg" th:if="${image} != null">
+                                <img
+                                        style="max-height: 350px"
+                                        th:src="'/files/' + ${image}"
+                                        alt="profileImage"
+                                >
+                            </v-avatar>
+                            <v-btn
+                                    rounded
+                                    class="mt-3 mr-0"
+                            >
+                                Update photo
+                            </v-btn>
+                        </div>
+
+                    </v-card-text>
+                </base-material-card>
+            </v-col>
+        </v-row>
+    </v-container>
+</template>
+
+
+
+<script src="/lib/js/vue/vue.min.js"></script>
+<script src="/lib/js/vue/vue-router.min.js"></script>
+<script src="/lib/js/vue/vuetify.js"></script>
+<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script>
+    var UP = Vue.extend({
+        template: '#profile'
+    });
+
+    new Vue({
+        vuetify: new Vuetify(),
+        render: h => h(UP)
+    }).$mount('#app')
+
+</script>
+
+
+
+<!--  <script src="/lib/js/xzoom.min.js"></script>-->
+
+
+<!--  <script src="https://unpkg.com/vue@2.5.22/dist/vue.js"></script>-->
+
+
+</body>
+</html>

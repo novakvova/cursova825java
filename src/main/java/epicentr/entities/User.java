@@ -31,13 +31,20 @@ public class User
 	private Integer id;
 	@Column(nullable=false)
 	private String name;
+	@Column(nullable=false)
+	private String lastName;
+	@Column(nullable=false)
+	private String city;
+	@Column(nullable=false)
+	private String postOffice  ;
 	@Column(nullable=false, unique=true)
 	@Email(message="{errors.invalid_email}")
 	private String email;
 	@Column(nullable=false)
 	@Size(min=4)
 	private String password;
-	
+	@Column(nullable=true)
+	private String image;
 	@ManyToMany(cascade=CascadeType.MERGE)
 	@JoinTable(
 	      name="user_role",
@@ -53,6 +60,38 @@ public class User
 		this.name = name;
 		this.email = email;
 		this.password = password;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getPostOffice() {
+		return postOffice;
+	}
+
+	public void setPostOffice(String postOffice) {
+		this.postOffice = postOffice;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public Integer getId()

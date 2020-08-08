@@ -532,13 +532,15 @@
                         </v-card-text>
 
                         <v-card-actions>
+                            <a :href="'/product-view/' + product.id">
                             <v-btn
-                                    :to="{name: 'product', params: {product_id: product.id}}"
+
                                     text
                                     color="deep-purple accent-4"
                             >
                                 Learn More
                             </v-btn>
+                            </a>
                         </v-card-actions>
 
                     </v-card>

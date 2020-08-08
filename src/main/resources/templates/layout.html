@@ -59,11 +59,11 @@
 				<v-btn icon>
 					<v-icon>mdi-heart</v-icon>
 				</v-btn>
-
+				<a sec:authorize="isAuthenticated()" th:href="@{/profile}">
 				<v-btn icon>
-					<v-icon>mdi-magnify</v-icon>
+					<v-icon>mdi-account</v-icon>
 				</v-btn>
-
+				</a>
 				<v-menu
 						left
 						bottom
