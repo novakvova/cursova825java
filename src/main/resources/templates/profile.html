@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <title>Full stack CRUD Example with Spring Boot, MySQL and VueJS</title>
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
+    <link href="/lib/css/cropper.css" rel="stylesheet"/>
+
 </head>
 <body>
 <div class="container">
@@ -15,11 +18,36 @@
 </div>
 
 <template id="profile">
+
+
     <v-container
             id="user-profile"
             fluid
             tag="section"
     >
+        <div class="modal" id="cropperModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Обріжте фото</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <img id="imageCropper" src="/files/200_default.png" height="400">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!--                        <a id="img-rotation" class="btn btn-success"><i class="fa fa-repeat" aria-hidden="true"></i></a>-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="cropImg" class="btn btn-primary">Обрізати фото</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <v-row justify="center">
             <v-col
                     cols="12"
@@ -113,30 +141,44 @@
             >
                 <base-material-card
                         class="v-card-profile"
-                        avatar="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+
                 >
                     <v-card-text class="text-center">
-                        <div class="d-flex flex-column justify-content-center">
-<!--                            <v-avatar th:if="${image} == null" >-->
-<!--                                <v-btn icon>-->
-<!--                                    <v-icon>mdi-account</v-icon>-->
-<!--                                </v-btn>-->
-<!--                            </v-avatar>-->
 
-                            <v-avatar size="lg" th:if="${image} != null">
-                                <img
-                                        style="max-height: 350px"
-                                        th:src="'/files/' + ${image}"
-                                        alt="profileImage"
+
+                            <form action="/save-image" method="post">
+                                <div class="d-flex flex-column justify-content-center">
+                                <a id="photo">
+                                    <v-avatar size="lg" th:if="${image} == null">
+                                        <img
+                                                style="max-height: 350px"
+                                                src="/files/200_default.png"
+                                                alt="profileImage"
+                                                class="image"
+                                        >
+                                    </v-avatar>
+                                    <v-avatar size="lg" th:if="${image} != null">
+                                        <img
+
+                                                style="max-height: 350px"
+                                                th:src="'/files/' + ${image}"
+                                                class="image"
+                                                alt="profileImage"
+                                        >
+                                    </v-avatar>
+                                </a>
+                                <input name="image" type="hidden" id="valueImage"/>
+
+                                <v-btn
+                                        type="submit"
+                                        rounded
+                                        class="mt-3 mr-0"
                                 >
-                            </v-avatar>
-                            <v-btn
-                                    rounded
-                                    class="mt-3 mr-0"
-                            >
-                                Update photo
-                            </v-btn>
-                        </div>
+                                    Save photo
+                                </v-btn>
+                                </div>
+                            </form>
+
 
                     </v-card-text>
                 </base-material-card>
@@ -146,10 +188,13 @@
 </template>
 
 
-
 <script src="/lib/js/vue/vue.min.js"></script>
 <script src="/lib/js/vue/vue-router.min.js"></script>
 <script src="/lib/js/vue/vuetify.js"></script>
+
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js"></script>
+<script src="/lib/js/cropper.js"></script>
 <!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
 <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
 <script>
@@ -163,7 +208,68 @@
     }).$mount('#app')
 
 </script>
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            //загрузка фото на клік
+            uploadImage();
 
+            //загрузка фото на клік
+            function uploadImage() {
+                let cropper = null;
+                let button = $('#photo');
+                let dialogCropper = $("#cropperModal");
+
+                button.on('click', function () {
+                    if (cropper == null) {
+                        //запуск кропера
+                        const imageCropper = document.getElementById('imageCropper');
+                        cropper = new Cropper(imageCropper, {
+                            aspectRatio: 224 / 168,
+                            viewMode: 1,
+                            autoCropArea: 0.5,
+                            crop(event) {
+                                // console.log(event.detail.x);
+                                // console.log(event.detail.y);
+                                // console.log(event.detail.width);
+                                // console.log(event.detail.height);
+                                // console.log(event.detail.rotate);
+                                // console.log(event.detail.scaleX);
+                                // console.log(event.detail.scaleY);
+                            },
+                        });
+
+                        //обрізка малюнка
+                        $("#cropImg").on("click", function (e) {
+                            e.preventDefault();
+                            var imgContent = cropper.getCroppedCanvas().toDataURL();
+                            $(".image").attr("src", imgContent);
+                            $("#valueImage").val(imgContent);
+                            dialogCropper.modal('hide');
+                        });
+                    }
+
+
+                    let uploader = $('<input type="file" accept="image/*" />');
+                    uploader.click()
+                    uploader.on('change', function () {
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
+
+                            dialogCropper.modal('show');
+                            cropper.replace(event.target.result);
+                            uploader.remove();
+                            //
+                        };
+                        reader.readAsDataURL(uploader[0].files[0]);
+
+                    });
+                });
+
+            }
+        });
+    })(jQuery);
+</script>
 
 
 <!--  <script src="/lib/js/xzoom.min.js"></script>-->

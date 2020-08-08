@@ -15,6 +15,9 @@ var depscss = {
     "bootstrap": {
         "dist/css/bootstrap.min.css": ""
     },
+    "cropperjs": {
+        "dist/cropper.css": ""
+    },
     "vuetify": {
         "dist/vuetify.css": "/vue/"
     }
@@ -26,6 +29,12 @@ var depsjs = {
     },
     "jquery": {
         "dist/jquery.js": ""
+    },
+    "popper.js": {
+        "dist/popper.js": ""
+    },
+    "cropperjs": {
+        "dist/cropper.js": ""
     },
     "vue": {
         "dist/vue.min.js": "vue/"
