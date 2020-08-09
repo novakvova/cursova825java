@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.antMatchers("/lib/css/bootstrap.min.css").permitAll()
 //				.antMatchers("/lib/css/vue/vuetify.css").permitAll()
 				.antMatchers("/product-view/1").permitAll()
-				.antMatchers("/api/v1/products").permitAll()
+				.antMatchers("/api/**").permitAll()
 				.antMatchers("/api/v1/products/").permitAll()
 				.antMatchers("/products").permitAll()
 				.antMatchers("/admin/**").hasRole("ADMIN")

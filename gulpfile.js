@@ -15,6 +15,10 @@ var depscss = {
     "bootstrap": {
         "dist/css/bootstrap.min.css": ""
     },
+    "@fortawesome": {
+        "fontawesome-free/css/all.css": "",
+        "fontawesome-free/css/fontawesome.css": "",
+    },
     "cropperjs": {
         "dist/cropper.css": ""
     },
@@ -32,6 +36,10 @@ var depsjs = {
     },
     "popper.js": {
         "dist/popper.js": ""
+    },
+    "@fortawesome": {
+        "fontawesome-free/js/all.js": "",
+        "fontawesome-free/js/fontawesome.js": "",
     },
     "cropperjs": {
         "dist/cropper.js": ""

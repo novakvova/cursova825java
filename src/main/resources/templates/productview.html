@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
-
+    <link href="/lib/css/all.css" rel="stylesheet"/>
+    <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
     <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
     <style>
         .breadcrumb-list > li {
@@ -446,6 +447,7 @@
                                                             <a asp-controller="Product" asp-action="AddToCart"
                                                                asp-route-id="@Model.Product.Id"
                                                                style="text-decoration: inherit;color:inherit; position: inherit; ">
+                                                                <i class="fas fa-shopping-cart"></i>
                                                                 <button class="btn btn-primary">Order</button>
                                                             </a>
                                                             <div class="flex-row mt-3"
@@ -642,6 +644,8 @@
 <script src="/lib/js/vue/vue.min.js"></script>
 <script src="/lib/js/vue/vue-router.min.js"></script>
 <script src="/lib/js/vue/vuetify.js"></script>
+<script src="/lib/js/fontawesome.js"></script>
+<script src="/lib/js/all.js"></script>
 <!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
 <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
 <script>
@@ -711,6 +715,7 @@
     });
 
     new Vue({
+        vuetify: new Vuetify(),
         render: h => h(Product)
     }).$mount('#app')
 
