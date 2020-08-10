@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,15 +11,8 @@
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
     <link href="/products.css" rel="stylesheet"/>
-    <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
-    <script th:src="@{'/assets/js/xzoom.min.js'}"></script>
-    <script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
-    <script src="/lib/js/vue/vue.min.js"></script>
-    <script src="/lib/js/vue/vue-router.min.js"></script>
-    <script src="/lib/js/vue/vuetify.js"></script>
-    <!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
-    <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
-    <script src="/products.js"></script>
+
+
     <style>
         .breadcrumb-list > li {
             font-size: 14px;
@@ -360,9 +355,9 @@
 
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
-<body>
-<div class="container">
-    <h1>Product CRUD</h1>
+<body layout:fragment="content">
+<div >
+    <h1>Best for buy</h1>
     <main id="app">
         <router-view></router-view>
 
@@ -493,7 +488,34 @@
 </template>
 
 <template id="product-list">
-    <div>
+    <v-app>
+
+
+        <v-carousel
+                cycle
+                height="400"
+                hide-delimiter-background
+                show-arrows-on-hover
+        >
+            <v-carousel-item
+                    v-for="(slide, i) in slides"
+                    :key="i"
+            >
+                <v-sheet
+                        :color="colors[i]"
+                        height="100%"
+                >
+                    <v-row
+                            class="fill-height"
+                            align="center"
+                            justify="center"
+                    >
+                        <div class="display-3">{{ slide }} Slide</div>
+                    </v-row>
+                </v-sheet>
+            </v-carousel-item>
+        </v-carousel>
+        <div class="container">
         <div class="actions">
             <a class="btn btn-default">
                 <router-link :to="{path: '/add-product'}">
@@ -547,7 +569,9 @@
                 </div>
             </div>
         </div>
+
     </div>
+    </v-app>
 </template>
 
 <template id="add-product">
@@ -618,7 +642,7 @@
 <script src="/lib/js/vue/vuetify.js"></script>
 <!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
 <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
-<script src="/products.js"></script>
+<script type="module" src="/products.js"></script>
 
 <!--  <script src="/lib/js/xzoom.min.js"></script>-->
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      >
 <head>
     <meta charset="UTF-8">
     <title>Full stack CRUD Example with Spring Boot, MySQL and VueJS</title>
@@ -9,7 +10,7 @@
     <link href="/lib/css/cropper.css" rel="stylesheet"/>
 
 </head>
-<body>
+<body >
 <div class="container">
     <main id="app">
 
@@ -18,7 +19,7 @@
 </div>
 
 <template id="profile">
-
+    <v-app>
 
     <v-container
             id="user-profile"
@@ -185,6 +186,7 @@
             </v-col>
         </v-row>
     </v-container>
+    </v-app>
 </template>
 
 
