@@ -52,6 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/register").permitAll()
 				.antMatchers("/forgotpassword").permitAll()
 				.antMatchers("/changepassword").permitAll()
+				.antMatchers("/product-view/**").permitAll()
+				.antMatchers("/order").permitAll()
+
 //				.antMatchers("/lib/js/vue/vue.min.js").permitAll()
 //				.antMatchers("/lib/js/vue/vue-router.min.js").permitAll()
 //				.antMatchers("/lib/js/vue/vuetify.js").permitAll()

@@ -4,16 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -52,6 +43,8 @@ public class User
 	      inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
 	private List<Role> roles;
 
+	@OneToMany(targetEntity=Order.class, mappedBy="user",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Order> orders = new ArrayList<>();
 	public User() {
 		roles = new ArrayList<Role>();
 	}

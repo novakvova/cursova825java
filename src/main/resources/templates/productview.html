@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
@@ -378,12 +379,13 @@
                                                          :src="'/files/' + product.productImages[0].image_name"/>
                                                     <div class="xzoom-thumbs">
 
-                                                            <a :href="'/files/' + image.image_name" v-for="image in product.productImages">
-                                                                <img class="xzoom-gallery" style=" object-fit: contain;"
-                                                                     width="105" height="80"
-                                                                     :src="'/files/' + image.image_name">
-                                                            </a>
-                                                        </div>
+                                                        <a :href="'/files/' + image.image_name"
+                                                           v-for="image in product.productImages">
+                                                            <img class="xzoom-gallery" style=" object-fit: contain;"
+                                                                 width="105" height="80"
+                                                                 :src="'/files/' + image.image_name">
+                                                        </a>
+                                                    </div>
 
                                                 </div>
                                             </div>
@@ -437,25 +439,53 @@
                                                             display: none;
                                                         }
                                                     </style>
+                                                    <v-btn icon>
+                                                        <i class="fas fa-cart-plus"></i>
+                                                    </v-btn>
                                                     <div class="product-add-to-cart">
-                                                        <span class="control-label">Quantity</span>
-                                                        <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" min="1" max="10" type="number"
-                                                                   name="quantity" value="1">
-                                                        </div>
-                                                        <div>
-                                                            <a asp-controller="Product" asp-action="AddToCart"
-                                                               asp-route-id="@Model.Product.Id"
-                                                               style="text-decoration: inherit;color:inherit; position: inherit; ">
-                                                                <i class="fas fa-shopping-cart"></i>
-                                                                <button class="btn btn-primary">Order</button>
-                                                            </a>
-                                                            <div class="flex-row mt-3"
-                                                                 style="display:flex; align-self:center; align-items:center;">
+                                                        <form action="/order" method="post">
+                                                            <input type="hidden" name="id" th:value="${product_id}"/>
 
-
+                                                            <div sec:authorize="!isAuthenticated()">
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" class="form-control" name="name"
+                                                                           placeholder="Name"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" class="form-control"
+                                                                           name="lastName"
+                                                                           placeholder="Last Name"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" class="form-control" name="city"
+                                                                           placeholder="City"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="number" class="form-control"
+                                                                           name="postOffice"
+                                                                           placeholder="Post office"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
                                                             </div>
-                                                        </div>
+                                                            <span class="control-label">Quantity</span>
+                                                            <div class="cart-plus-minus">
+                                                                <input class="cart-plus-minus-box" name="count" min="1"
+                                                                       max="10" type="number"
+                                                                       value="1">
+                                                            </div>
+                                                            <div>
+                                                                <button type="submit" class="btn btn-primary">Order
+                                                                </button>
+                                                                <div class="flex-row mt-3"
+                                                                     style="display:flex; align-self:center; align-items:center;">
+
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
                                                     </div>
 
                                                 </div>
@@ -484,14 +514,13 @@
 </template>
 
 
-
 <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 <script th:src="@{'/assets/js/xzoom.min.js'}"></script>
 <script src="/assets/js/xzoom.min.js" rel="script"></script>
 <script>
     (function ($) {
         $(document).ready(function () {
-            $('.xzoom, .xzoom-gallery').xzoom({ zoomWidth: 300, title: true, tint: '#333', Xoffset: 15 });
+            $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 300, title: true, tint: '#333', Xoffset: 15});
             // $('.xzoom2, .xzoom-gallery2').xzoom({ position: '#xzoom2-id', tint: '#ffa200' });
             // $('.xzoom3, .xzoom-gallery3').xzoom({ position: 'lens', lensShape: 'circle', sourceClass: 'xzoom-hidden' });
             // $('.xzoom4, .xzoom-gallery4').xzoom({ tint: '#006699', Xoffset: 15 });
@@ -566,6 +595,7 @@
                             }
                             counter = 0;
                         }
+
                         xzoom.openzoom(event);
                     });
                 });
@@ -601,14 +631,15 @@
                                 var gallery = xzoom.gallery().cgallery;
                                 var i, images = new Array();
                                 for (i in gallery) {
-                                    images[i] = { src: gallery[i] };
+                                    images[i] = {src: gallery[i]};
                                 }
-                                $.magnificPopup.open({ items: images, type: 'image', gallery: { enabled: true } });
+                                $.magnificPopup.open({items: images, type: 'image', gallery: {enabled: true}});
                             } else {
                                 xzoom.closezoom();
                             }
                             counter = 0;
                         }
+
                         xzoom.openzoom(event);
                     });
                 });
@@ -620,7 +651,7 @@
                 $('#xzoom-fancy').bind('click', function (event) {
                     var xzoom = $(this).data('xzoom');
                     xzoom.closezoom();
-                    $.fancybox.open(xzoom.gallery().cgallery, { padding: 0, helpers: { overlay: { locked: false } } });
+                    $.fancybox.open(xzoom.gallery().cgallery, {padding: 0, helpers: {overlay: {locked: false}}});
                     event.preventDefault();
                 });
 
@@ -631,9 +662,9 @@
                     var gallery = xzoom.gallery().cgallery;
                     var i, images = new Array();
                     for (i in gallery) {
-                        images[i] = { src: gallery[i] };
+                        images[i] = {src: gallery[i]};
                     }
-                    $.magnificPopup.open({ items: images, type: 'image', gallery: { enabled: true } });
+                    $.magnificPopup.open({items: images, type: 'image', gallery: {enabled: true}});
                     event.preventDefault();
                 });
             }
@@ -651,12 +682,12 @@
 <script>
     var product = {};
 
-    function findProduct (productId) {
+    function findProduct(productId) {
         console.log("ax");
-        return findById(productId, fn) ;
+        return findById(productId, fn);
     }
 
-    function findProductKey (productId) {
+    function findProductKey(productId) {
         console.log("ax2");
         for (var key = 0; key < products.length; key++) {
             if (products[key].id == productId) {
@@ -669,7 +700,7 @@
         findAll(fn) {
             axios
                 .get('/api/v1/products')
-                .then(response =>  fn(response))
+                .then(response => fn(response))
                 .catch(error => console.log(error))
         },
 
@@ -710,7 +741,10 @@
             return {product: {}};
         },
         mounted() {
-            productService.findById($("#id").val(),r => {this.product = r.data; product = r.data})
+            productService.findById($("#id").val(), r => {
+                this.product = r.data;
+                product = r.data
+            })
         }
     });
 
@@ -720,7 +754,6 @@
     }).$mount('#app')
 
 </script>
-
 
 
 <!--  <script src="/lib/js/xzoom.min.js"></script>-->

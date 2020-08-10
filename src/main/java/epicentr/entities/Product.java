@@ -23,9 +23,19 @@ public class Product {
     private Category category;
     @OneToMany(targetEntity=ProductImages.class, mappedBy="product",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductImages> productImages = new ArrayList<>();
+    @OneToMany(targetEntity=Order.class, mappedBy="product",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
     private String name;
 
     private String description;
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     private BigDecimal price;
 
