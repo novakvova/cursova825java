@@ -25,7 +25,7 @@ public class OrderController {
     @Autowired
     private ProductRespository productRespository;
     @GetMapping("/myorders")
-    public String home(Model model)
+    public String myorders(Model model)
     {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         String u =  a.getName();

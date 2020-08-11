@@ -26,8 +26,17 @@ public class Product {
     @OneToMany(targetEntity=Order.class, mappedBy="product",cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
     private String name;
-
+    @Column(nullable=true)
+    private Integer discount;
     private String description;
+
+    public Integer getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
+    }
 
     public Long getId() {
         return id;

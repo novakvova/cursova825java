@@ -30,7 +30,17 @@
                     </v-img>
                     <v-card-text>
                         <h3 th:text="${order.getProduct().getName()}"></h3>
-                        <h5 th:text="${order.getProduct().getPrice()}"></h5>
+                        <h5 th:if="${order.getProduct().getDiscount()} == null" th:text="${order.getProduct().getPrice()}"></h5>
+                        <v-badge
+                                color="red"
+                                th:if="${order.getProduct().getDiscount()} != null"
+                                th:content="'-' + ${order.getProduct().getDiscount()} + '%'"
+                        >
+                            <div class="d-flex flex-row">
+                                <h5 class="mr-1" style="text-decoration: line-through" th:text="${order.getProduct().getPrice()}"></h5>
+                                <h5 class="text-danger" th:text="${order.getProduct().getPrice()-(order.getProduct().getPrice()/100*order.getProduct().getDiscount())}"></h5>
+                            </div>
+                        </v-badge>
                         <p th:text="${order.getProduct().getDescription()}"></p>
                         <p class="text-primary" th:text="'Status: '+${order.getOrderStatus().getName()}"></p>
                         <p class="text-primary" th:text="'Count: '+${order.getCount()}"></p>
