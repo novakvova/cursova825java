@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>My orders</title>
+    <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
+    <link href="/lib/css/cropper.css" rel="stylesheet"/>
+</head>
+<body >
+<div class="container">
+    <main id="app">
+
+
+    </main>
+</div>
+<template id="orders">
+    <v-app>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2" th:each="order : ${orders}"  >
+                <v-card>
+                    <v-img
+                            class="white--text align-end"
+                            height="200px"
+                            th:src="'/files/' + ${order.getProduct().getProductImages().get(0).getImage_name()}"
+
+                    >
+                    </v-img>
+                    <v-card-text>
+                        <h3 th:text="${order.getProduct().getName()}"></h3>
+                        <h5 th:text="${order.getProduct().getPrice()}"></h5>
+                        <p th:text="${order.getProduct().getDescription()}"></p>
+                        <p class="text-primary" th:text="'Status: '+${order.getOrderStatus().getName()}"></p>
+                        <p class="text-primary" th:text="'Count: '+${order.getCount()}"></p>
+
+                    </v-card-text>
+
+                    <v-card-actions>
+                        <a th:href="'/product-view/' + ${order.getProduct().getId()}">
+                            <v-btn
+
+                                    text
+                                    color="deep-purple accent-4"
+                            >
+                                Learn More
+                            </v-btn>
+                        </a>
+                    </v-card-actions>
+
+                </v-card>
+            </div>
+        </div>
+
+    </v-app>
+</template>
+
+<script src="/lib/js/vue/vue.min.js"></script>
+<script src="/lib/js/vue/vue-router.min.js"></script>
+<script src="/lib/js/vue/vuetify.js"></script>
+
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js"></script>
+<script src="/lib/js/cropper.js"></script>
+<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script>
+    var UP = Vue.extend({
+        template: '#orders'
+    });
+
+    new Vue({
+        vuetify: new Vuetify(),
+        render: h => h(UP)
+    }).$mount('#app')
+
+</script>
+</body>
+</html>

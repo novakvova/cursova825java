@@ -21,6 +21,22 @@ public class ProductImages {
     private Product product;
     private String image_name;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getImage_name() {
+        return image_name;
+    }
+
+    public void setImage_name(String image_name) {
+        this.image_name = image_name;
+    }
+
     @CreationTimestamp
     private Date createdAt;
 

@@ -55,6 +55,14 @@ public class User
 		this.password = password;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 	public String getLastName() {
 		return lastName;
 	}

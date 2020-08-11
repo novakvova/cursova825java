@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class OrderController {
     @Autowired
@@ -22,7 +24,24 @@ public class OrderController {
     private OrderStatusRepository orderStatusRepository;
     @Autowired
     private ProductRespository productRespository;
-
+    @GetMapping("/myorders")
+    public String home(Model model)
+    {
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        String u =  a.getName();
+        User user = userRepository.findByEmail(u);
+        List<Order> orders = user.getOrders();
+        for (int i=0;i<orders.size();i++) {
+            int s =orders.get(i).getProduct().getProductImages().size();
+            orders.get(i).getProduct().setOrders(null);
+            orders.get(i).getOrderStatus().setOrders(null);
+            for (int j = 0; j<s;j++){
+                orders.get(i).getProduct().getProductImages().get(j).setProduct(null);
+            }
+        }
+        model.addAttribute("orders",orders );
+        return "myorders";
+    }
     @PostMapping("/order")
     public String GetProfile(Order model)
     {

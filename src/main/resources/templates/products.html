@@ -516,18 +516,23 @@
             </v-carousel-item>
         </v-carousel>
         <div class="container">
-        <div class="actions">
-            <a class="btn btn-default">
-                <router-link :to="{path: '/add-product'}">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Add product
-                </router-link>
-            </a>
-        </div>
+<!--        <div class="actions">-->
+<!--            <a class="btn btn-default">-->
+<!--                <router-link :to="{path: '/add-product'}">-->
+<!--                    <span class="glyphicon glyphicon-plus"></span>-->
+<!--                    Add product-->
+<!--                </router-link>-->
+<!--            </a>-->
+<!--        </div>-->
         <div class="filters row">
             <div class="form-group col-sm-3">
-                <input placeholder="Search" v-model="searchKey" class="form-control" id="search-element" requred/>
-                <v-btn block color="secondary" dark>Block Button</v-btn>
+                <v-text-field
+                        v-model="searchKey"
+                        label="Search"
+                        id="search-element"
+                        outlined
+                ></v-text-field>
+<!--                <input placeholder="Search" v-model="searchKey" class="form-control"  requred/>-->
             </div>
         </div>
 
