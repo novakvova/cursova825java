@@ -1,7 +1,9 @@
 package epicentr.web;
 
+import epicentr.entities.Document;
+import epicentr.entities.DocumentFile;
 import epicentr.entities.Message;
-import epicentr.repositories.RoleRepository;
+import epicentr.repositories.*;
 import epicentr.services.StorageService;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import epicentr.repositories.MessageRepository;
-import epicentr.repositories.UserRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,12 +23,15 @@ import java.io.File;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * @author Ramesh Fadatare
  *
  */
+import java.util.List;
+
 @Controller
 public class DocumentController
 {
@@ -45,7 +48,9 @@ public class DocumentController
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private DocumentRepository documentRepository;
+    @Autowired
+    private DocumentFileRepository documentFileRepository;
 
     @Autowired
     public PasswordEncoder passwordEncoder;
@@ -58,8 +63,11 @@ public class DocumentController
 
     @PostMapping("/document")
     public String saveDocument(@RequestParam("images[]") MultipartFile[] files,
-                               RedirectAttributes redirectAttributes)
+                               RedirectAttributes redirectAttributes, Document model)
     {
+        Document doc = new Document();
+        doc.setName(model.getName());
+        List <DocumentFile> docFiles = new ArrayList<DocumentFile>();
         for (int i = 0; i < files.length; i++) {
             MultipartFile file = files[i];
 
@@ -82,6 +90,12 @@ public class DocumentController
                         new FileOutputStream(serverFile));
                 stream.write(bytes);
                 stream.close();
+                DocumentFile docFile = new DocumentFile();
+                docFile.setFile_name(name);
+                docFile.setDocument(doc);
+                docFiles.add(docFile);
+
+
 
 //                logger.info("Server File Location="
 //                        + serverFile.getAbsolutePath());
@@ -90,6 +104,8 @@ public class DocumentController
                 return "You failed to upload " + name + " => " + e.getMessage();
             }
         }
+        doc.setDocumentFiles(docFiles);
+        documentRepository.save(doc);
         return "redirect:/home";
     }
 }

@@ -17,7 +17,7 @@ public class ProductImages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne()
-    @JoinColumn(name="product_id", referencedColumnName = "id",insertable = false, updatable = false)
+    @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
     private String image_name;
 
