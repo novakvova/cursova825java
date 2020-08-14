@@ -55,10 +55,16 @@ public class DocumentController
     @Autowired
     public PasswordEncoder passwordEncoder;
 
-    @GetMapping("/document")
+    @GetMapping("/document/create")
     public String document()
     {
         return "documents";
+    }
+    @GetMapping("/documents")
+    public String documents(Model model)
+    {
+        model.addAttribute("documents",documentRepository.findAll());
+        return "allDocuments";
     }
 
     @PostMapping("/document")

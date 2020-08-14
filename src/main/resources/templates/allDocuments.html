@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Documents</title>
+    <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/css/all.css" rel="stylesheet"/>
+    <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
+    <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <main id="app">
+
+
+    </main>
+</div>
+<template id="documents">
+    <v-app>
+        <div class="row">
+            <div class="col-sm-4 col-md-3 col-lg-2" th:each="document : ${documents}"  >
+                <v-card>
+                    <v-card-text>
+                        <h3 th:text="${document.getName()}"></h3>
+                    </v-card-text>
+                    <v-card-actions>
+                        <a th:href="'/document-view/' + ${document.getId()}">
+                            <v-btn
+
+                                    text
+                                    color="deep-purple accent-4"
+                            >
+                                Learn More
+                            </v-btn>
+                        </a>
+                    </v-card-actions>
+                </v-card>
+            </div>
+        </div>
+
+    </v-app>
+</template>
+
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js"></script>
+<script src="/lib/js/vue/vue.min.js"></script>
+<script src="/lib/js/vue/vue-router.min.js"></script>
+<script src="/lib/js/vue/vuetify.js"></script>
+<script src="/lib/js/fontawesome.js"></script>
+<script src="/lib/js/all.js"></script>
+<script>
+    var Documents = Vue.extend({
+        template: '#documents',
+        data: function () {
+            return {product: {}};
+        }
+    });
+    new Vue({
+        vuetify: new Vuetify(),
+        render: h => h(Documents)
+    }).$mount('#app')
+
+</script>
+</body>
+</html>
