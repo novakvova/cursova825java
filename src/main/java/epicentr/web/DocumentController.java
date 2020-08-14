@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestParam;
@@ -66,7 +67,12 @@ public class DocumentController
         model.addAttribute("documents",documentRepository.findAll());
         return "allDocuments";
     }
-
+    @GetMapping("/document-view/{id}")
+    public String documentView(@PathVariable("id") Long id,Model model)
+    {
+        model.addAttribute("document",documentRepository.findById(id).get());
+        return "documentView";
+    }
     @PostMapping("/document")
     public String saveDocument(@RequestParam("images[]") MultipartFile[] files,
                                RedirectAttributes redirectAttributes, Document model)

@@ -64,11 +64,19 @@
 				</v-btn>
 				<v-tooltip  bottom>
 					<template v-slot:activator="{ on, attrs }">
-						<v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/documents}" icon>
 							<v-icon>mdi-file-document</v-icon>
 						</v-btn>
 					</template>
 					<span>Documents</span>
+				</v-tooltip>
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+							<v-icon>mdi-text-box-plus </v-icon>
+						</v-btn>
+					</template>
+					<span>Create Document</span>
 				</v-tooltip>
 				<a sec:authorize="isAuthenticated()" th:href="@{/profile}">
 				<v-btn icon>
@@ -149,7 +157,7 @@
 
 
 <nav class="navbar navbar-light bg-light footer">
-	<a class="navbar-brand" href="#">крутий футер!! як і пара !!!!  ;)     &#127773</a>
+	<a class="navbar-brand" href="#">крутий футер!! як і пара !!!!  ;)     &#127773, дикі танці 🕺 💃</a>
 </nav>
 	<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 	<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
