@@ -28,7 +28,7 @@ import java.security.SecureRandom;
 import java.util.Optional;
 import java.util.Properties;
 
-import static jdk.internal.util.xml.XMLStreamWriter.DEFAULT_ENCODING;
+//import static jdk.internal.util.xml.XMLStreamWriter.DEFAULT_ENCODING;
 
 
 /**
@@ -98,18 +98,10 @@ public class ForgotPasswordController
 
 
     public static String base64encode(String text) {
-        try {
-            return enc.encode(text.getBytes(DEFAULT_ENCODING));
-        } catch (UnsupportedEncodingException e) {
-            return null;
-        }
+            return text;
     }//base64encode
 
     public static String base64decode(String text) {
-        try {
-            return new String(dec.decodeBuffer(text), DEFAULT_ENCODING);
-        } catch (IOException e) {
-            return null;
-        }
+            return new String(text);
     }//base64decode
 }
