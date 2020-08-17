@@ -44,25 +44,65 @@
 </div>
 	<template id="navbar">
 		<div>
+
+
 			<v-app-bar
 					color="deep-purple accent-4"
 					dense
 					dark
 			>
 				<v-app-bar-nav-icon></v-app-bar-nav-icon>
-
+<!--				<img  src="/assets/css/epicentrLogo.svg"/>-->
 				<v-toolbar-title>Epicentr</v-toolbar-title>
-				<a class="ml-3" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
-				<a class="ml-3" th:href="@{/}">Home</a>
 				<v-spacer></v-spacer>
 
+				<v-btn icon  th:href="@{/products}">
+					<v-icon>mdi-camera-burst </v-icon>
+				</v-btn>
+				<v-btn icon  th:href="@{/}">
+					<v-icon>mdi-home</v-icon>
+				</v-btn>
+				<v-btn icon  th:href="@{/product-add}">
+					<v-icon>mdi-image-plus</v-icon>
+				</v-btn>
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/documents}" icon>
+							<v-icon>mdi-file-document</v-icon>
+						</v-btn>
+					</template>
+					<span>Documents</span>
+				</v-tooltip>
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+							<v-icon>mdi-text-box-plus </v-icon>
+						</v-btn>
+					</template>
+					<span>Create Document</span>
+				</v-tooltip>
+				<a sec:authorize="isAuthenticated()" th:href="@{/profile}">
 				<v-btn icon>
-					<v-icon>mdi-heart</v-icon>
+					<v-icon>mdi-account</v-icon>
 				</v-btn>
 
-				<v-btn icon>
-					<v-icon>mdi-magnify</v-icon>
-				</v-btn>
+				</a>
+				<v-tooltip sec:authorize="isAuthenticated()" bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/myorders}" icon>
+							<v-icon>mdi-order-bool-descending</v-icon>
+						</v-btn>
+					</template>
+					<span>My orders</span>
+				</v-tooltip>
+				<v-tooltip sec:authorize="isAuthenticated()" bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/logout}" icon>
+							<v-icon>mdi-exit-to-app</v-icon>
+						</v-btn>
+					</template>
+					<span>Logout</span>
+				</v-tooltip>
 
 				<v-menu
 						left
@@ -92,7 +132,7 @@
 		</div>
 
 	</template>
-<div class="container">
+<div >
 	<div layout:fragment="content">
 		<!-- Your Page Content Here -->
 	</div>
@@ -117,8 +157,10 @@
 <!--		<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
 <!--	</li>-->
 <!--</ul>-->
+
+
 <nav class="navbar navbar-light bg-light footer">
-	<a class="navbar-brand" href="#">крутий футер!! як і пара !!!!  ;)     &#127773</a>
+	<a class="navbar-brand" href="#">крутий футер!! як і пара !!!!  ;)     &#127773, дикі танці 🕺 💃</a>
 </nav>
 	<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 	<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>

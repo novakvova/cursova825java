@@ -1,6 +1,7 @@
 package epicentr.api;
 
 import epicentr.entities.Product;
+import epicentr.entities.ProductImages;
 import epicentr.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,18 @@ public class ProductAPI {
     @GetMapping
     public ResponseEntity<List<Product>> findAll() {
         List<Product> r =productService.findAll();
+        for (int i=0;i<r.size();i++) {
+            if (r.get(i).getDiscount() == null) {
+                r.remove(r.get(0));
+            }
+        }
+        for (int i=0;i<r.size();i++) {
+                int s =r.get(i).getProductImages().size();
+                r.get(i).setOrders(null);
+                for (int j = 0; j<s;j++){
+                    r.get(i).getProductImages().get(j).setProduct(null);
+                }
+        }
         return ResponseEntity.ok(r);
     }
 
@@ -39,7 +53,10 @@ public class ProductAPI {
             //log.error("Id " + id + " is not existed");
             ResponseEntity.badRequest().build();
         }
-
+        for (int j = 0; j<stock.get().getProductImages().size();j+=1 ){
+            stock.get().getProductImages().get(j).setProduct(null);
+        }
+        stock.get().setOrders(null);
         return ResponseEntity.ok(stock.get());
     }
 

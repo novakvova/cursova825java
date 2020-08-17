@@ -1,3 +1,4 @@
+
 var products = [];
 
 function findProduct (productId) {
@@ -16,7 +17,7 @@ var productService = {
   findAll(fn) {
     axios
       .get('/api/v1/products')
-      .then(response => fn(response))
+      .then(response =>  fn(response))
       .catch(error => console.log(error))
   },
 
@@ -52,7 +53,20 @@ var productService = {
 var List = Vue.extend({
   template: '#product-list',
   data: function () {
-    return {products: [], searchKey: ''};
+    return {products: [], searchKey: '',colors: [
+        'indigo',
+        'warning',
+        'pink darken-2',
+        'red lighten-1',
+        'deep-purple accent-4',
+      ],
+      slides: [
+        'First',
+        'Second',
+        'Third',
+        'Fourth',
+        'Fifth',
+      ],};
   },
   computed: {
     filteredProducts() {
@@ -124,5 +138,6 @@ var router = new VueRouter({
 });
 
 new Vue({
+  vuetify: new Vuetify(),
   router
 }).$mount('#app')

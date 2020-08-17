@@ -3,17 +3,26 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="layout">
+      layout:decorator="layout" lang="en">
 <head>
-    <title>Реєстрація</title>
+    <meta charset="UTF-8">
+    <title>Add product</title>
     <link rel="stylesheet"
           th:href="@{/assets/css/index.min.css}" />
 </head>
 <body>
 <div layout:fragment="content">
     <div class="container">
-        <form th:action="@{/document}" method="post" class="row" enctype="multipart/form-data">
-            <input type="text" class="form-control" name="name" placeholder="Назва папки з документами"/>
+        <form th:action="@{/product-add}" method="post" class="row" enctype="multipart/form-data">
+            <input type="text" class="form-control mt-2" name="name" placeholder="Назва продукта"/>
+            <input type="number" class="form-control mt-2" name="price" placeholder="Ціна"/>
+            <input type="number" class="form-control mt-2" name="discount" placeholder="Знижка (%)"/>
+            <select name="category" class="form-control mt-2 ">
+                <option th:each="category : ${categories}" name="id" th:value="${category.getId()}" th:text="${category.getName()}">
+
+                </option>
+            </select>
+            <input type="text" class="form-control mt-2" name="name" placeholder="Опис"/>
             <div class="col-md-4">
                 <div class="uploader">
                     <div class="wrapper">
@@ -41,7 +50,7 @@
                     </table>
                 </div>
             </div>
-            <button type="submit" class="btn  btn-primary">Save documents</button>
+            <button type="submit" class="btn  btn-primary">Save product</button>
         </form>
     </div>
     <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
