@@ -13,6 +13,7 @@
 <div layout:fragment="content">
     <div class="container">
         <form th:action="@{/document}" method="post" class="row" enctype="multipart/form-data">
+            <input type="text" class="form-control" name="name" placeholder="Назва папки з документами"/>
             <div class="col-md-4">
                 <div class="uploader">
                     <div class="wrapper">
