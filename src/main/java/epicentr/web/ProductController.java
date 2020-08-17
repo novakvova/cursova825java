@@ -28,5 +28,6 @@ public class ProductController {
         model.addAttribute("product",productRespository.findById(product_id).get());
         return "productviewHTML";
     }
+
 }
 
