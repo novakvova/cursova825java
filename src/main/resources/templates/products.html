@@ -6,8 +6,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Full stack CRUD Example with Spring Boot, MySQL and VueJS</title>
-    <link th:href="@{/lib/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/lib/css/vue/vuetify.css}" rel="stylesheet"/>
+    <link th:href="@{'/lib/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <link th:href="@{'/lib/css/vue/vuetify.css'}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          th:href="@{'/assets/font-awesome-4.5.0/css/font-awesome.min.css'}" />
+
 
 
 
@@ -359,7 +365,6 @@
 </head>
 <body >
 <div>
-    <h1>Best for buy</h1>
     <main id="app">
         <router-view></router-view>
 
@@ -742,9 +747,9 @@
 <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 <script th:src="@{'/assets/js/xzoom.min.js'}"></script>
 <script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
-<script src="/lib/js/vue/vue.min.js"></script>
-<script src="/lib/js/vue/vue-router.min.js"></script>
-<script src="/lib/js/vue/vuetify.js"></script>
+<script th:src="@{'/lib/js/vue/vue.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vue-router.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vuetify.js'}"></script>
 <!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
 <script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
 
