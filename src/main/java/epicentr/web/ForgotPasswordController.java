@@ -39,7 +39,6 @@ public class ForgotPasswordController
     @Autowired
     private UserRepository userRepository;
 
-
     @Autowired
     public PasswordEncoder passwordEncoder;
 
