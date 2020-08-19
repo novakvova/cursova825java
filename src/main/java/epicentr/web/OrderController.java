@@ -1,17 +1,19 @@
 package epicentr.web;
-import epicentr.entities.Message;
+//import com.google.gson.Gson;
 import epicentr.entities.Order;
 import epicentr.entities.User;
 import epicentr.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.util.WebUtils;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -43,23 +45,29 @@ public class OrderController {
         return "myorders";
     }
     @GetMapping("/cart")
-    public String cart(Model model)
-    {
+    public String Cart(HttpServletResponse response, HttpServletRequest request, Model model){
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
-        String u =  a.getName();
-        User user = userRepository.findByEmail(u);
-        List<Order> orders = user.getOrders();
-        for (int i=0;i<orders.size();i++) {
-            int s =orders.get(i).getProduct().getProductImages().size();
-            orders.get(i).getProduct().setOrders(null);
-            orders.get(i).getOrderStatus().setOrders(null);
-            for (int j = 0; j<s;j++){
-                orders.get(i).getProduct().getProductImages().get(j).setProduct(null);
+        if(a.isAuthenticated() && a.getName()!="anonymousUser") {
+            Cookie value=WebUtils.getCookie(request, "value");
+            if(value!=null) {
+
+
+                model.addAttribute("values",value);
+
+                int[] numbers = {1, 1, 2, 3, 5, 8, 13};
+
+                //Gson gson = new Gson();
+
+                //String numbersJson = gson.toJson(numbers);
+//                Cookie cookie = new Cookie("value",numbersJson);
+//                cookie.setMaxAge(7 * 24 * 60 * 60);
+//                response.addCookie(cookie);
             }
+            else model.addAttribute("error","Ваш кошик пустий");
         }
-        model.addAttribute("orders",orders );
         return "myorders";
     }
+
     @PostMapping("/order")
     public String GetProfile(Order model)
     {

@@ -7,8 +7,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +50,20 @@ public class ProductAPI {
     public ResponseEntity create(@Valid @RequestBody Product product) {
         return ResponseEntity.ok(productService.save(product));
     }
+    @PostMapping("/addcart/{product_id}")
+    public ResponseEntity AddIntoCart(@PathVariable("product_id") Long product_id,HttpServletResponse response, HttpServletRequest request)
+    {
+        Cookie oldValue= WebUtils.getCookie(request, "value");
+        Product [] products;
+        if(oldValue!=null) {
+            //products=oldValue.getValue();
 
+        }
+        Cookie cookie = new Cookie("value", "Jodn");
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        response.addCookie(cookie);
+        return ResponseEntity.ok("");
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Product> findById(@PathVariable Long id) {
         Optional<Product> stock = productService.findById(id);
