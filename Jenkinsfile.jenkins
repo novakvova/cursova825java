@@ -16,7 +16,7 @@ pipeline  {
             steps {
                 echo 'Stop process ...'
                 dir('.'){
-                  sh "systemctl stop gachi"
+                  sh "sudo systemctl stop gachi"
                 }
             }
         }
