@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html
+		xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Епіцентр</title>
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport" />
+	<link th:href="@{'/lib/css/bootstrap.min.css'}" rel="stylesheet"/>
+	<link th:href="@{'/lib/css/vue/vuetify.css'}" rel="stylesheet"/>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+<link rel="stylesheet"
+	th:href="@{'/assets/font-awesome-4.5.0/css/font-awesome.min.css'}" />
+
+
+<style>
+.footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	background-color: #1e1e1e;
+	color: white;
+	text-align: center;
+}
+</style>
+
+</head>
+
+<body>
+
+<div >
+	<main id="app">
+		<router-view></router-view>
+	</main>
+</div>
+	<template id="navbar">
+		<div>
+
+
+			<v-app-bar
+					color="deep-purple accent-4"
+					dense
+					dark
+			>
+				<v-app-bar-nav-icon></v-app-bar-nav-icon>
+<!--				<img  src="/assets/css/epicentrLogo.svg"/>-->
+				<v-toolbar-title>Epicentr</v-toolbar-title>
+				<v-spacer></v-spacer>
+
+				<v-btn icon  th:href="@{/products}">
+					<v-icon>mdi-camera-burst </v-icon>
+				</v-btn>
+				<v-btn icon  th:href="@{/}">
+					<v-icon>mdi-home</v-icon>
+				</v-btn>
+				<v-btn icon  th:href="@{/product-add}">
+					<v-icon>mdi-image-plus</v-icon>
+				</v-btn>
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/documents}" icon>
+							<v-icon>mdi-file-document</v-icon>
+						</v-btn>
+					</template>
+					<span>Documents</span>
+				</v-tooltip>
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+							<v-icon>mdi-text-box-plus </v-icon>
+						</v-btn>
+					</template>
+					<span>Create Document</span>
+				</v-tooltip>
+				<a sec:authorize="isAuthenticated()" th:href="@{/profile}">
+				<v-btn icon>
+					<v-icon>mdi-account</v-icon>
+				</v-btn>
+
+				</a>
+				<v-tooltip sec:authorize="isAuthenticated()" bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/myorders}" icon>
+							<v-icon>mdi-order-bool-descending</v-icon>
+						</v-btn>
+					</template>
+					<span>My orders</span>
+				</v-tooltip>
+				<v-tooltip sec:authorize="isAuthenticated()" bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/cart}" icon>
+							<v-icon>mdi-cart-outline</v-icon>
+						</v-btn>
+					</template>
+					<span>Cart</span>
+				</v-tooltip>
+				<v-tooltip sec:authorize="isAuthenticated()" bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/logout}" icon>
+							<v-icon>mdi-exit-to-app</v-icon>
+						</v-btn>
+					</template>
+					<span>Logout</span>
+				</v-tooltip>
+
+				<v-menu
+						left
+						bottom
+				>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn
+								icon
+								v-bind="attrs"
+								v-on="on"
+						>
+							<v-icon>mdi-dots-vertical</v-icon>
+						</v-btn>
+					</template>
+
+					<v-list>
+						<v-list-item
+								v-for="n in 5"
+								:key="n"
+								@click="() => {}"
+						>
+							<v-list-item-title>Option {{ n }}</v-list-item-title>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+			</v-app-bar>
+		</div>
+
+	</template>
+<div >
+	<div layout:fragment="content">
+		<!-- Your Page Content Here -->
+	</div>
+</div>
+
+<!--<nav class="navbar navbar-default navbar-fixed-bottom">-->
+<!--	<div class="container-fluid">-->
+
+<!--	</div>-->
+<!--</nav>-->
+<!--<ul class="nav container-fluid footer">-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link active" href="#">Active</a>-->
+<!--	</li>-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link" href="#">Link</a>-->
+<!--	</li>-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link" href="#">Link</a>-->
+<!--	</li>-->
+<!--	<li class="nav-item">-->
+<!--		<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+<!--	</li>-->
+<!--</ul>-->
+
+
+<nav class="navbar navbar-light bg-light footer">
+	<a class="navbar-brand" href="#">крутий футер!! як і пара !!!!  ;)     &#127773, дикі танці 🕺 💃</a>
+</nav>
+	<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+	<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vue.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vue-router.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vuetify.js'}"></script>
+<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script>
+	var App = Vue.extend({
+		template: '#navbar',
+		data: () => ({
+			drawer: false,
+		}),
+	});
+	new Vue({
+		vuetify: new Vuetify(),
+		render: h => h(App)
+	}).$mount('#app')
+</script>
+<script>
+	export default {
+		data: () => ({
+			drawer: false,
+		}),
+	}
+</script>
+
+
+
+</body>
+</html>

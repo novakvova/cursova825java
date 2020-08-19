@@ -1,0 +1,45 @@
+.uploader {
+    $picBackColor: #5599fa;
+    $picColor: #f4ffea;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    
+    .wrapper {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 5px;
+        width: 100%;
+        max-width: 100%;
+        //margin: 50px auto;
+        align-self: center;
+        box-sizing: border-box;
+
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: center;
+            .img,
+            .pic {
+                //flex-basis: 31%;
+                margin-bottom: 10px;
+                border-radius: 4px;
+            }
+            .pic {
+                border: dashed rgb(0, 0, 179) 2px;
+                //background-color: $picBackColor;
+                width: 100%;
+                align-self: center;
+                text-align: center;
+                padding: 60px 0;
+                text-transform: uppercase;
+                //color: $picColor;
+                font-size: 12px;
+                cursor: pointer;
+            }
+
+        }
+    }    
+}
