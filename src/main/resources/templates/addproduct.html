@@ -9,20 +9,62 @@
     <title>Add product</title>
     <link rel="stylesheet"
           th:href="@{/assets/css/index.min.css}" />
+<!--    <link th:href="@{/assets/css/addproductstyle.min.css}" rel="stylesheet"/>-->
 </head>
+
 <body>
 <div layout:fragment="content">
     <div class="container">
-        <form th:action="@{/product-add}" method="post" class="row" enctype="multipart/form-data">
-            <input type="text" class="form-control mt-2" name="name" placeholder="Назва продукта"/>
-            <input type="number" class="form-control mt-2" name="price" placeholder="Ціна"/>
-            <input type="number" class="form-control mt-2" name="discount" placeholder="Знижка (%)"/>
-            <select name="category" class="form-control mt-2 ">
-                <option th:each="category : ${categories}" name="id" th:value="${category.getId()}" th:text="${category.getName()}">
+        <header>
+            <h1>Додати продукт :</h1>
+        </header>
+        <form th:action="@{/product-add}" method="post" id="form" class="form" enctype="multipart/form-data">
 
-                </option>
-            </select>
-            <input type="text" class="form-control mt-2" name="name" placeholder="Опис"/>
+            <div class="form-control">
+                <label for="name">Назва</label>
+                <input type="text" placeholder="Назва" id="name" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="price">Ціна</label>
+                <input type="number" id="price" placeholder="Ціна"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="discount">Знижка (%)</label>
+                <input type="number" id="discount" placeholder="Знижка (%)" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="category">Категорія</label>
+                <select id="category" >
+                    <option th:each="category : ${categories}" name="id" th:value="${category.getId()}" th:text="${category.getName()}">
+
+                    </option>
+                </select>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="description">Опис</label>
+                <input type="text" placeholder="Опис" id="description" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="image">
             <div class="col-md-4">
                 <div class="uploader">
                     <div class="wrapper">
@@ -50,12 +92,182 @@
                     </table>
                 </div>
             </div>
-            <button type="submit" class="btn  btn-primary">Save product</button>
+            </div>
+            <button type="submit" class="btn btn-primary">Зберегти</button>
         </form>
     </div>
+
+    <script>
+        const form = document.getElementById('form');
+        const name = document.getElementById('name');
+        const price = document.getElementById('price');
+        const description = document.getElementById('description');
+        const discount = document.getElementById('discount');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+
+            checkInputs();
+        });
+
+        function checkInputs() {
+            // trim to remove the whitespaces
+            const nameValue = name.value.trim();
+            const priceValue = price.value.trim();
+            const descriptionValue = description.value.trim();
+            const discountValue = discount.value.trim();
+
+            if(nameValue === '') {
+                setErrorFor(name, "Введіть ім'я");
+            } else {
+                setSuccessFor(name);
+            }
+
+            if(priceValue === '') {
+                setErrorFor(price, 'Введіть ціну');
+            } else if (priceValue === 0 || priceValue <= 0) {
+                setErrorFor(price, 'Ціна некоректна');
+            } else {
+                setSuccessFor(price);
+            }
+
+            if(discountValue === ''){
+                setErrorFor(discount, 'Введіть знижку');
+            } else if (discountValue === 0 || priceValue <= 0) {
+                setErrorFor(discount, 'Знижка некоректна');
+            } else {
+                setSuccessFor(discount);
+            }
+
+            if(descriptionValue === '') {
+                setErrorFor(description, 'Введіть опис');
+            } else {
+                setSuccessFor(description);
+            }
+        }
+
+        function setErrorFor(input, message) {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector('small');
+            formControl.className = 'form-control error';
+            small.innerText = message;
+        }
+
+        function setSuccessFor(input) {
+            const formControl = input.parentElement;
+            formControl.className = 'form-control success';
+        }
+
+    </script>
+
     <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 
     <script  th:src="@{'/assets/js/uploader.js'}" ></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500&display=swap');
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        .container {
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgb(142, 68, 173);
+            overflow: hidden;
+            border: 2px solid #8e44ad;
+        }
+        .header h2 {
+            margin: 0;
+        }
+
+        .form {
+            padding: 15px 25px;
+        }
+        .form-control {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border: 2px solid #8e44ad;
+            box-shadow: 0 2px 5px rgb(142, 68, 173);
+            height: 110px;
+            position: relative;
+        }
+        .form-control label {
+            margin-bottom: 10px;
+        }
+        .form-control select{
+            border: 2px solid #f0f0f0;
+            border-radius: 4px;
+            display: block;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 10px;
+            width: 100%;
+        }
+        .form-control input {
+            border: 2px solid #f0f0f0;
+            border-radius: 4px;
+            display: block;
+            font-family: inherit;
+            font-size: 14px;
+            padding: 10px;
+            width: 100%;
+        }
+        .form-control input:focus {
+            outline: 0;
+            border-color: #777;
+        }
+        .form-control.success input {
+            border-color: #2ecc71;
+        }
+
+        .form-control.error input {
+            border-color: #e74c3c;
+        }
+        .form-control i {
+            visibility: hidden;
+            position: absolute;
+            top: 40px;
+            right: 10px;
+        }
+        .form-control.success i.fa-check-circle {
+            color: #2ecc71;
+            visibility: visible;
+        }
+
+        .form-control.error i.fa-exclamation-circle {
+            color: #e74c3c;
+            visibility: visible;
+        }
+        .form-control small {
+            color: #e74c3c;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            visibility: hidden;
+        }
+        .form-control.error small {
+            visibility: visible;
+        }
+        .form button {
+            background-color: #8e44ad;
+            border: 2px solid #8e44ad;
+            box-shadow: 0 2px 5px rgb(142, 68, 173);
+            border-radius: 4px;
+            color: #fff;
+            display: block;
+            font-family: inherit;
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .image{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    </style>
 
 </div>
 </body>
