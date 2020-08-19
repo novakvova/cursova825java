@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import epicentr.repositories.MessageRepository;
 import epicentr.repositories.UserRepository;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
@@ -38,12 +36,8 @@ import java.util.Properties;
 @Controller
 public class ForgotPasswordController
 {
-
-    static BASE64Encoder enc = new BASE64Encoder();
-    static BASE64Decoder dec = new BASE64Decoder();
     @Autowired
     private UserRepository userRepository;
-
 
     @Autowired
     public PasswordEncoder passwordEncoder;
