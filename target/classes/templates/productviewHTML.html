@@ -352,7 +352,7 @@
     </style>
 </head>
 <body>
-<div class=" wrapper con">
+<div class=" wrapper con" >
 
     <main>
         <div id="shopify-section-product-template" class="shopify-section">
@@ -373,10 +373,9 @@
                                                      th:xoriginal="'/files/' + ${product.productImages[0].image_name}"
                                                      th:if="${product.productImages}!=undefined"
                                                      th:src="'/files/' + ${product.productImages[0].image_name}"/>
-                                                <div class="xzoom-thumbs">
+                                                <div class="xzoom-thumbs" >
 
-                                                    <a th:href="'/files/' + ${image.image_name}"
-                                                       th:each="image : ${product.productImages}">
+                                                    <a th:href="'/files/' + ${image.image_name}" th:each="image : ${product.productImages}">
                                                         <img class="xzoom-gallery" style=" object-fit: contain;"
                                                              width="105" height="80"
                                                              th:src="'/files/' + ${image.image_name}">
@@ -411,11 +410,10 @@
                                                 </div>
                                             </div>
                                             <div class="product-info" th:text="${product.description}"></div>
-                                            <form th:action="@{'/addtocart/'+${product.id}}" method="post">
+                                            <form th:action="@{'/addcart/'+${product.id}}" method="post">
                                                 <button type="submit" class="btn btn-primary">Add to cart
                                                 </button>
                                             </form>
-
                                             <div class="single-product-action">
                                                 <div class="product-variant-option">
                                                     <select name="id" id="productSelect"
