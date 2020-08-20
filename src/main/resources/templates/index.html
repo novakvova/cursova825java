@@ -69,28 +69,28 @@
             },
             options: {
 
-                "hover": {
-                    "animationDuration": 0
-                },
-                "animation": {
-                    "duration": 1,
-                    "onComplete": function() {
-                        var chartInstance = this.chart,
-                            ctxL = chartInstance.ctx;
-
-                        ctxL.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
-                        ctxL.textAlign = 'center';
-                        ctxL.textBaseline = 'bottom';
-
-                        this.data.datasets.forEach(function(dataset, i) {
-                            var meta = chartInstance.controller.getDatasetMeta(i);
-                            meta.data.forEach(function(bar, index) {
-                                var data = dataset.data[index];
-                                ctxL.fillText(data+" м³", bar._model.x, bar._model.y - 10);
-                            });
-                        });
-                    }
-                },
+                // "hover": {
+                //     "animationDuration": 0
+                // },
+                // "animation": {
+                //     "duration": 1,
+                //     "onComplete": function() {
+                //         var chartInstance = this.chart,
+                //             ctxL = chartInstance.ctx;
+                //
+                //         ctxL.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                //         ctxL.textAlign = 'center';
+                //         ctxL.textBaseline = 'bottom';
+                //
+                //         this.data.datasets.forEach(function(dataset, i) {
+                //             var meta = chartInstance.controller.getDatasetMeta(i);
+                //             meta.data.forEach(function(bar, index) {
+                //                 var data = dataset.data[index];
+                //                 ctxL.fillText(data+" м³", bar._model.x, bar._model.y - 10);
+                //             });
+                //         });
+                //     }
+                // },
 
 
                 responsive: true,
@@ -109,9 +109,9 @@
                     yAxes: [{
                         display: true,
                         ticks: {
-                            beginAtZero: true,
-                            steps: 10,
-                            stepValue: 5,
+                            //beginAtZero: true,
+                            //steps: 10,
+                            //stepValue: 5,
                             //max: 533,
                             // Include a dollar sign in the ticks
                             callback: function(value, index, values) {
