@@ -19,6 +19,10 @@ var depscss = {
         "fontawesome-free/css/all.css": "",
         "fontawesome-free/css/fontawesome.css": "",
     },
+    "chart.js": {
+        "dist/Chart.css": "",
+        "dist/Chart.min.css": "",
+    },
     "cropperjs": {
         "dist/cropper.css": ""
     },
@@ -40,6 +44,10 @@ var depsjs = {
     "@fortawesome": {
         "fontawesome-free/js/all.js": "",
         "fontawesome-free/js/fontawesome.js": "",
+    },
+    "chart.js": {
+        "dist/Chart.js": "",
+        "dist/Chart.min.js": ""
     },
     "cropperjs": {
         "dist/cropper.js": ""
