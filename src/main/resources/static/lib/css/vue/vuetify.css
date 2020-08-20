@@ -3229,10 +3229,6 @@ progress {
   vertical-align: baseline;
 }
 
-svg:not([fill]) {
-  fill: currentColor;
-}
-
 /* # =================================================================
    # Accessibility
    # ================================================================= */
@@ -18058,9 +18054,11 @@ html.overflow-y-hidden {
   content: "";
   display: inline-block;
   height: 100%;
+  left: 0;
   opacity: 0;
   pointer-events: none;
   position: absolute;
+  top: 0;
   transform: scale(1.3);
   width: 100%;
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1);
@@ -19784,7 +19782,6 @@ html.overflow-y-hidden {
   pointer-events: none;
 }
 .v-menu-transition-enter-to .v-list-item {
-  pointer-events: auto;
   transition-delay: 0.1s;
 }
 .v-menu-transition-leave-active, .v-menu-transition-leave-to {
@@ -22661,6 +22658,10 @@ html.overflow-y-hidden {
 }
 .v-input--selection-controls:not(.v-input--hide-details) > .v-input__slot {
   margin-bottom: 12px;
+}
+.v-input--selection-controls .v-input__slot,
+.v-input--selection-controls .v-radio {
+  cursor: pointer;
 }
 .v-input--selection-controls .v-input__slot > .v-label,
 .v-input--selection-controls .v-radio > .v-label {
@@ -27520,7 +27521,6 @@ html.overflow-y-hidden {
   justify-content: flex-end;
 }
 .v-snack:not(.v-snack--has-background) .v-snack__wrapper {
-  background: transparent !important;
   box-shadow: none !important;
 }
 .v-snack--text .v-snack__wrapper:before {
@@ -29037,9 +29037,6 @@ html.overflow-y-hidden {
 .v-treeview-node.v-treeview-node--rounded .v-treeview-node__root {
   margin-top: 8px;
   margin-bottom: 8px;
-}
-.v-treeview-node--excluded {
-  display: none;
 }
 .v-treeview-node--click > .v-treeview-node__root,
 .v-treeview-node--click > .v-treeview-node__root > .v-treeview-node__content > * {
