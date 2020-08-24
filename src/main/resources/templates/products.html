@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,9 +12,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <link rel="stylesheet"
-          th:href="@{'/assets/font-awesome-4.5.0/css/font-awesome.min.css'}" />
-
-
+          th:href="@{'/assets/font-awesome-4.5.0/css/font-awesome.min.css'}"/>
 
 
     <style>
@@ -22,6 +20,7 @@
             margin-bottom: 20px;
             margin-top: 20px;
         }
+
         .breadcrumb-list > li {
             font-size: 14px;
             list-style: none;
@@ -363,7 +362,7 @@
 
     <link th:href="@{/lib/css/bootstrap.min.css}" rel="stylesheet"/>
 </head>
-<body >
+<body>
 <div>
     <main id="app">
         <router-view></router-view>
@@ -509,27 +508,27 @@
                 <v-toolbar-title>Epicentr</v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-btn icon  th:href="@{/products}">
-                    <v-icon>mdi-camera-burst </v-icon>
+                <v-btn icon th:href="@{/products}">
+                    <v-icon>mdi-camera-burst</v-icon>
                 </v-btn>
-                <v-btn icon  th:href="@{/}">
+                <v-btn icon th:href="@{/}">
                     <v-icon>mdi-home</v-icon>
                 </v-btn>
-                <v-btn icon  th:href="@{/product-add}">
+                <v-btn icon th:href="@{/product-add}">
                     <v-icon>mdi-image-plus</v-icon>
                 </v-btn>
-                <v-tooltip  bottom>
+                <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/documents}" icon>
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/documents}" icon>
                             <v-icon>mdi-file-document</v-icon>
                         </v-btn>
                     </template>
                     <span>Documents</span>
                 </v-tooltip>
-                <v-tooltip  bottom>
+                <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
-                            <v-icon>mdi-text-box-plus </v-icon>
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/document/create}" icon>
+                            <v-icon>mdi-text-box-plus</v-icon>
                         </v-btn>
                     </template>
                     <span>Create Document</span>
@@ -542,7 +541,7 @@
                 </a>
                 <v-tooltip sec:authorize="isAuthenticated()" bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/myorders}" icon>
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/myorders}" icon>
                             <v-icon>mdi-order-bool-descending</v-icon>
                         </v-btn>
                     </template>
@@ -550,7 +549,7 @@
                 </v-tooltip>
                 <v-tooltip sec:authorize="isAuthenticated()" bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/logout}" icon>
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/logout}" icon>
                             <v-icon>mdi-exit-to-app</v-icon>
                         </v-btn>
                     </template>
@@ -631,12 +630,10 @@
 
             <div class="container">
                 <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3" v-for="product in filteredProducts">
 
-
-                    <div class="col-sm-4 col-md-3 col-lg-2" v-for="product in filteredProducts">
-
-
-                        <v-card>
+                        <a style="text-decoration: inherit" :href="'/product-view/' + product.id">
+                            <v-card>
 
                                 <v-img
                                         class="white--text align-end"
@@ -646,36 +643,29 @@
                                 >
                                 </v-img>
 
-                            <v-card-text>
+                                <v-card-text>
 
-                                <h3>{{ product.name }}</h3>
-                                <v-badge
+                                    <h3>{{ product.name }}</h3>
+                                    <v-badge
 
-                                        color="red"
-                                        :content="'-' + product.discount + '%'"
-                                >
-                                    <div class="d-flex flex-row">
-                                        <h5 class="mr-1" style="text-decoration: line-through">{{ product.price}}</h5>
-                                        <h5 class="text-danger">{{ product.price-(product.price/100*product.discount) }}</h5>
-                                    </div>
-                                </v-badge>
-                                <p>{{ product.description }}</p>
-
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <a :href="'/product-view/' + product.id">
-                                    <v-btn
-
-                                            text
-                                            color="deep-purple accent-4"
+                                            color="red"
+                                            :content="'-' + product.discount + '%'"
                                     >
-                                        Learn More
-                                    </v-btn>
-                                </a>
-                            </v-card-actions>
+                                        <div class="d-flex flex-row">
+                                            <h5 class="mr-1" style="text-decoration: line-through">{{
+                                                product.price}}</h5>
+                                            <h5 class="text-danger">{{
+                                                product.price-(product.price/100*product.discount) }}</h5>
+                                        </div>
+                                    </v-badge>
+                                    <p>{{ product.description }}</p>
 
-                        </v-card>
+                                </v-card-text>
+
+
+
+                            </v-card>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -757,11 +747,11 @@
 
     var products = [];
 
-    function findProduct (productId) {
+    function findProduct(productId) {
         return products[findProductKey(productId)];
     }
 
-    function findProductKey (productId) {
+    function findProductKey(productId) {
         for (var key = 0; key < products.length; key++) {
             if (products[key].id == productId) {
                 return key;
@@ -773,7 +763,7 @@
         findAll(fn) {
             axios
                 .get('/api/v1/products')
-                .then(response =>  fn(response))
+                .then(response => fn(response))
                 .catch(error => console.log(error))
         },
 
@@ -809,7 +799,8 @@
     var List = Vue.extend({
         template: '#product-list',
         data: function () {
-            return {products: [], searchKey: '',colors: [
+            return {
+                products: [], searchKey: '', colors: [
                     'indigo',
                     'warning',
                     'pink darken-2',
@@ -822,7 +813,8 @@
                     'Third',
                     'Fourth',
                     'Fifth',
-                ],};
+                ],
+            };
         },
         computed: {
             filteredProducts() {
@@ -834,7 +826,10 @@
             }
         },
         mounted() {
-            productService.findAll(r => {this.products = r.data; products = r.data})
+            productService.findAll(r => {
+                this.products = r.data;
+                products = r.data
+            })
         }
     });
 
