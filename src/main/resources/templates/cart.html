@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html  xmlns="http://www.w3.org/1999/xhtml"
-       xmlns:th="http://www.thymeleaf.org"
-       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-       layout:decorator="layout" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -34,29 +34,30 @@
                                             <th scope="col">Available</th>
                                             <th scope="col" class="text-center">Quantity</th>
                                             <th scope="col" class="text-right">Price</th>
+                                            <th scope="col" class="text-right">Discount</th>
                                             <th></th>
                                         </tr>
                                         </thead>
                                         <tbody th:each="item : ${products}">
-                                        <tr id="{{$item->id}}">
+                                        <tr th:id="${item.id}">
                                             <td>
                                                 <img th:src="'/files/' + ${item.image_name}" width="75">
                                             </td>
-                                            <td data-th-text="${user.login}"></td>
+                                            <td th:text="${item.name}"></td>
 
                                             <td>In stock</td>
                                             <td style="width: 100px"><input
                                                     class="form-control count" type="number"
                                                     min="1"
-                                                    max="{{$item->count}}" value="1"/></td>
+                                                    th:max="10" value="1"/></td>
 
-                                            <td class="text-right prc">{{$item->price}}</td>
+                                            <td class="text-right prc" th:text="${item.price}"></td>
+                                            <td class="text-right prc" th:text="${item.discount}"></td>
+
                                             <td class="text-right">
-                                                <form action="/cart/deleteProduct/{{$item->id}}"
-                                                      method="post">
-                                                    <button class="btn btn-sm btn-danger" type="submit"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </form>
+                                                <button class="btn btn-sm btn-danger" th:name="${item.id}" id="btnDel">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
                                             </td>
                                         </tr>
 
@@ -76,11 +77,11 @@
                             <div class="col mb-2">
                                 <div class="row">
                                     <div class="col-sm-12  col-md-6">
-                                        <a href="{{ route('products.index')}}" class="btn btn-block btn-light">Continue
+                                        <a href="/products/#/" class="btn btn-block btn-light">Continue
                                             Shopping</a>
                                     </div>
                                     <div class="col-sm-12 col-md-6 text-right">
-                                        <form id="create" method="post" action="{{ route('cart.store') }}">
+                                        <form id="create" method="post" action="/cart-order">
                                             <input type="hidden" id="ids"/>
                                             <input type="hidden" id="counts"/>
                                             <button type="submit" id="upload"
@@ -97,10 +98,29 @@
         </div>
     </div>
     <div sec:authorize="!isAuthenticated()">
-        <h4>Ваш кошик пустий</h4>
+        <h4>Ви не зареєструвались!</h4>
     </div>
 </div>
 <div layout:fragment="scripts">
+    <script src="/lib/js/fontawesome.js"></script>
+    <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+
+    <script>
+        (function ($) {
+            $("#btnDel").click(function (e) {
+                $.cookie.raw = true;
+                let prod_id = parseInt($(this).attr('name'));
+                let expDate = new Date();
+
+                let oldCart = JSON.parse($.cookie('cart'));
+                oldCart.splice($.inArray(prod_id, oldCart), 1);
+                $.cookie('cart', JSON.stringify(oldCart), {path: '/', expires: expDate.getTime()});
+
+                location.reload();
+                return false;
+            });
+        })(jQuery);
+    </script>
     <script>
         let glPrice = 0;
         let total = $('#total');
@@ -143,6 +163,11 @@
             });
         })(jQuery);
     </script>
+    <script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <script src="/lib/js/all.js"></script>
 </div>
 </body>
 </html>

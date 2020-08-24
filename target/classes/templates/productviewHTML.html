@@ -450,10 +450,12 @@
                                                     </style>
 
 
-                                                    <button id="cartBtn" class="btn btn-primary mb-2 mt-3">Add to
-                                                        cart
-                                                    </button>
-                                                    <hr class="hrr">
+                                                    <div sec:authorize="isAuthenticated()">
+                                                        <button id="cartBtn" class="btn btn-primary mb-2 mt-3">Add to
+                                                            cart
+                                                        </button>
+                                                        <hr class="hrr">
+                                                    </div>
                                                     <div class="mt-0 product-add-to-cart">
                                                         <form action="/order" method="post">
                                                             <input type="hidden" id="prod_id" name="id"

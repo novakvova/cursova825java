@@ -1,4 +1,5 @@
 package epicentr.web;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -36,25 +38,26 @@ public class OrderController {
     private OrderStatusRepository orderStatusRepository;
     @Autowired
     private ProductRespository productRespository;
+
     @GetMapping("/myorders")
-    public String myorders(Model model)
-    {
+    public String myorders(Model model) {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
-        String u =  a.getName();
+        String u = a.getName();
         User user = userRepository.findByEmail(u);
         List<Order> orders = user.getOrders();
-        for (int i=0;i<orders.size();i++) {
-            int s =orders.get(i).getProduct().getProductImages().size();
+        for (int i = 0; i < orders.size(); i++) {
+            int s = orders.get(i).getProduct().getProductImages().size();
             orders.get(i).getProduct().setOrders(null);
             orders.get(i).getOrderStatus().setOrders(null);
-            for (int j = 0; j<s;j++){
+            for (int j = 0; j < s; j++) {
                 orders.get(i).getProduct().getProductImages().get(j).setProduct(null);
             }
         }
-        model.addAttribute("orders",orders );
+        model.addAttribute("orders", orders);
         return "myorders";
     }
-//    @GetMapping("/addtocart/{id}")
+
+    //    @GetMapping("/addtocart/{id}")
 //    public String AddIntoCart(@PathVariable Long id, HttpServletResponse response, HttpServletRequest request)
 //    {
 //        Cookie oldValue= WebUtils.getCookie(request, "value");
@@ -74,43 +77,63 @@ public class OrderController {
 //        return "redirect:/products";
 //    }
     @GetMapping("/cart")
-    public String Cart(HttpServletRequest request, Model model){
+    public String Cart(HttpServletRequest request, Model model) {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
-        if(a.isAuthenticated() && a.getName()!="anonymousUser") {
-            Cookie value=WebUtils.getCookie(request, "cart");
+        if (a.isAuthenticated() && a.getName() != "anonymousUser") {
+            Cookie value = WebUtils.getCookie(request, "cart");
             Cookie[] cookies = request.getCookies();
-            if(value!=null) {
+            if (value != null) {
                 Gson gson = new Gson();
                 //Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
                 //List<ShortProductModel> list = gson.fromJson(value.getValue(), type);
-                String [] arr=gson.fromJson(value.getValue(), String[].class);
-                List<ShortProductModel> products=new ArrayList<>();
-                for(String item:arr)
-                {
-                    Product prod=productRespository.findById(Long.parseLong(item)).get();
-                    if(prod!=null)
-                    {
+                String[] arr = gson.fromJson(value.getValue(), String[].class);
+                List<ShortProductModel> products = new ArrayList<>();
+                for (String item : arr) {
+                    Product prod = productRespository.findById(Long.parseLong(item)).get();
+                    if (prod != null) {
                         products.add(new ShortProductModel(
                                 prod.getId(),
                                 prod.getName(),
                                 prod.getDiscount(),
-                                prod.getDescription(),
                                 prod.getPrice(),
                                 prod.getProductImages().get(0).getImage_name()));
                     }
                 }
-                model.addAttribute("products",products);
+                model.addAttribute("products", products);
             }
         }
         return "cart";
     }
 
+    @PostMapping("/cart-order")
+    public String OrderFromCart(@RequestParam(name = "productId[]") long[] ids, @RequestParam(name = "productCount[]") int[] counts, HttpServletResponse response) {
+        if (ids != null && counts != null) {
+            Authentication a = SecurityContextHolder.getContext().getAuthentication();
+            String u = a.getName();
+            User user = userRepository.findByEmail(u);
+            for (int i = 0; i < ids.length; i++) {
+                Order o = new Order();
+                o.setUser(user);
+                o.setCount(counts[i]);
+                o.setOrderStatus(orderStatusRepository.getOne(new Long(1)));
+                o.setProduct(productRespository.getOne(ids[i]));
+                orderRepository.save(o);
+            }
+
+            Cookie cookie = new Cookie("cart", "");
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
+            return "redirect:/myorders";
+        } else return "redirect:/cart";
+    }
+
     @PostMapping("/order")
-    public String GetProfile(Order model)
-    {
+    public String GetProfile(Order model) {
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
-        if(a.isAuthenticated() && a.getName()!="anonymousUser"){
-            String u =  a.getName();
+        if (a.isAuthenticated() && a.getName() != "anonymousUser") {
+            String u = a.getName();
             User user = userRepository.findByEmail(u);
             Order o = new Order();
             o.setUser(user);
@@ -118,7 +141,7 @@ public class OrderController {
             o.setOrderStatus(orderStatusRepository.getOne(new Long(1)));
             o.setProduct(productRespository.getOne(model.getId()));
             orderRepository.save(o);
-        }else {
+        } else {
             Order o = new Order();
             o.setCount(model.getCount());
             o.setCity(model.getCity());
