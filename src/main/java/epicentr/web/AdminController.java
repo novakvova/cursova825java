@@ -3,6 +3,7 @@ package epicentr.web;
 import epicentr.entities.Order;
 import epicentr.entities.User;
 import epicentr.repositories.OrderRepository;
+import epicentr.repositories.OrderStatusRepository;
 import epicentr.repositories.RoleRepository;
 import epicentr.repositories.UserRepository;
 import epicentr.services.StorageService;
@@ -33,6 +34,8 @@ public class AdminController {
     private UserRepository userRepository;
 
     @Autowired
+    private OrderStatusRepository orderStatusRepository;
+    @Autowired
     private OrderRepository orderRepository;
     @Autowired
     private RoleRepository roleRepository;
@@ -52,5 +55,12 @@ public class AdminController {
         model.addAttribute("orders", orders);
         return "adminhome";
     }
+    @GetMapping("admin/orders")
+    public String GetOrders(Model model) {
+        List<Order> orders = orderRepository.findAll();
 
+        model.addAttribute("orderStatuses",orderStatusRepository.findAll());
+        model.addAttribute("orders", orders);
+        return "adminorders";
+    }
 }
