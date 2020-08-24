@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -82,8 +83,11 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public void init() {
         try {
-            Files.createDirectory(rootLocation);
-        } catch (IOException e) {
+            File dir = new File(rootLocation.toUri());
+            if (!dir.exists())
+                dir.mkdirs();
+            //Files.createDirectory(rootLocation);
+        } catch (Exception e) {
             throw new StorageException("Could not initialize storage", e);
         }
     }
