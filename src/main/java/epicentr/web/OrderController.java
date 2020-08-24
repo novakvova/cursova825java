@@ -1,7 +1,13 @@
 package epicentr.web;
-//import com.google.gson.Gson;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import epicentr.entities.Order;
+import epicentr.entities.Product;
 import epicentr.entities.User;
+import epicentr.models.ShortProductModel;
 import epicentr.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -9,11 +15,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.util.WebUtils;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,24 +54,36 @@ public class OrderController {
         model.addAttribute("orders",orders );
         return "myorders";
     }
+//    @GetMapping("/addtocart/{id}")
+//    public String AddIntoCart(@PathVariable Long id, HttpServletResponse response, HttpServletRequest request)
+//    {
+//        Cookie oldValue= WebUtils.getCookie(request, "value");
+//        List<ShortProductModel> products=new ArrayList<>();
+//        Gson gson = new GsonBuilder().create();;
+//        if(oldValue!=null) {
+//            Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
+//            products = gson.fromJson(oldValue.getValue(), type);
+//        }
+//        Product newProd=productRespository.findById(id).get();
+//        products.add(new ShortProductModel(newProd.getId(),newProd.getName(),newProd.getDiscount(),newProd.getDescription()));
+//
+//        String json=gson.toJson(products);
+//        Cookie cookie = new Cookie("value", json);
+//        cookie.setMaxAge(7 * 24 * 60 * 60);
+//        response.addCookie(cookie);
+//        return "redirect:/products";
+//    }
     @GetMapping("/cart")
-    public String Cart(HttpServletResponse response, HttpServletRequest request, Model model){
+    public String Cart(HttpServletRequest request, Model model){
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         if(a.isAuthenticated() && a.getName()!="anonymousUser") {
             Cookie value=WebUtils.getCookie(request, "value");
             if(value!=null) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
+                List<ShortProductModel> list = gson.fromJson(value.getValue(), type);
 
-
-                model.addAttribute("values",value);
-
-                int[] numbers = {1, 1, 2, 3, 5, 8, 13};
-
-                //Gson gson = new Gson();
-
-                //String numbersJson = gson.toJson(numbers);
-//                Cookie cookie = new Cookie("value",numbersJson);
-//                cookie.setMaxAge(7 * 24 * 60 * 60);
-//                response.addCookie(cookie);
+                model.addAttribute("values",list);
             }
             else model.addAttribute("error","Ваш кошик пустий");
         }
