@@ -21,7 +21,7 @@
 
             <div class="form-control">
                 <label for="name">Назва</label>
-                <input type="text" placeholder="Назва" id="name" />
+                <input type="text" placeholder="Назва" id="name" name="name" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -29,7 +29,7 @@
 
             <div class="form-control">
                 <label for="price">Ціна</label>
-                <input type="number" id="price" placeholder="Ціна"/>
+                <input type="number" id="price" name="price" placeholder="Ціна"/>
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -37,7 +37,7 @@
 
             <div class="form-control">
                 <label for="discount">Знижка (%)</label>
-                <input type="number" id="discount" placeholder="Знижка (%)" />
+                <input type="number" id="discount" name="discount" placeholder="Знижка (%)" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -57,7 +57,7 @@
 
             <div class="form-control">
                 <label for="description">Опис</label>
-                <input type="text" placeholder="Опис" id="description" />
+                <input type="text" placeholder="Опис" name="description" id="description" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
@@ -107,9 +107,10 @@
         const discount = document.getElementById('discount');
 
         form.addEventListener('submit', e => {
-            e.preventDefault();
-
-            checkInputs();
+            if(!checkInputs())
+            {
+                e.preventDefault();
+            }
         });
 
         function checkInputs() {
@@ -119,33 +120,41 @@
             const descriptionValue = description.value.trim();
             const discountValue = discount.value.trim();
 
+            var isValid=true;
             if(nameValue === '') {
                 setErrorFor(name, "Введіть ім'я");
+                isValid=false;
             } else {
                 setSuccessFor(name);
             }
 
             if(priceValue === '') {
                 setErrorFor(price, 'Введіть ціну');
+                isValid=false;
             } else if (priceValue === 0 || priceValue <= 0) {
                 setErrorFor(price, 'Ціна некоректна');
+                isValid=false;
             } else {
                 setSuccessFor(price);
             }
 
             if(discountValue === ''){
                 setErrorFor(discount, 'Введіть знижку');
+                isValid=false;
             } else if (discountValue === 0 || priceValue <= 0) {
                 setErrorFor(discount, 'Знижка некоректна');
+                isValid=false;
             } else {
                 setSuccessFor(discount);
             }
 
             if(descriptionValue === '') {
                 setErrorFor(description, 'Введіть опис');
+                isValid=false;
             } else {
                 setSuccessFor(description);
             }
+            return isValid;
         }
 
         function setErrorFor(input, message) {
