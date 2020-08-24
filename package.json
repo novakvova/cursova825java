@@ -4,6 +4,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.14.0",
     "bootstrap": "^4.5.0",
+    "chart.js": "^2.9.3",
     "gulp": "4.0.2",
     "gulp-concat": "2.6.1",
     "gulp-cssmin": "0.2.0",
