@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Full stack CRUD Example with Spring Boot, MySQL and VueJS</title>
+    <link th:href="@{'/lib/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <link th:href="@{'/lib/css/vue/vuetify.css'}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          th:href="@{'/assets/font-awesome-4.5.0/css/font-awesome.min.css'}"/>
+
+
+    <style>
+        .actions {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .breadcrumb-list > li {
+            font-size: 14px;
+            list-style: none;
+            display: inline;
+        }
+
+        .breadcrumb-list > li a:after {
+            content: "/";
+            vertical-align: middle;
+            margin: 0 5px;
+            color: #7a7a7a;
+        }
+
+        .action-wishlist:hover,
+        .action-wishlist:focus {
+            color: #fff;
+        }
+
+        .add-to-cart.action-wishlist {
+            width: 50px;
+            text-align: center;
+            padding: 0;
+        }
+
+        .add-to-cart.action-wishlist i {
+            margin-right: 0px;
+        }
+
+        .product-add-to-cart .cart-title,
+        .product-add-to-cart .cart-title:hover,
+        .product-list-action .cart-title,
+        .product-list-action .cart-title:hover {
+            background-color: transparent;
+            border-bottom: none;
+            color: inherit;
+        }
+
+        .product-add-to-cart .pro-add-btn i,
+        .product-list-action .pro-add-btn i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        #ProductPhotoImg {
+            max-height: 370px !important;
+            width: 370px !important;
+        }
+
+        .add-to-cart {
+            display: inline-block;
+        }
+
+        .action-wishlist:hover,
+        .action-wishlist:focus {
+            color: #fff;
+        }
+
+        .add-to-cart.action-wishlist i {
+            margin-right: 0px;
+        }
+
+        .product-add-to-cart {
+            float: none;
+        }
+
+        .single-product-wishlist {
+            display: inline-block;
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .product-thumbnail .owl-nav {
+            display: none;
+        }
+
+        .breadcrumb-area {
+            padding: 30px 0;
+            background-color: #f3f3f3;
+        }
+
+        .breadmome-name {
+            color: #ff6a00;
+            font-size: 24px;
+            font-weight: 500;
+            text-transform: capitalize;
+            margin: 0 0 18px;
+        }
+
+        .breadcrumb-content > ul > li {
+            display: inline-block;
+            list-style: none;
+            position: relative;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .breadcrumb-content > ul > li.active {
+            color: #ff6a00;
+        }
+
+        .breadcrumb-content > ul > li:after {
+            content: "/";
+            vertical-align: middle;
+            margin: 0 5px;
+            color: #7a7a7a;
+        }
+
+        .breadcrumb-content > ul > li:last-child:after {
+            display: none;
+        }
+
+        .mt-80 {
+            margin-top: 80px
+        }
+
+        .mb-80 {
+            margin-bottom: 80px
+        }
+
+        .single-product-name {
+            font-size: 22px;
+            text-transform: capitalize;
+            font-weight: 900;
+            color: #444;
+            line-height: 24px;
+            margin-bottom: 15px;
+        }
+
+        .single-product-reviews {
+            margin-bottom: 10px;
+        }
+
+        .single-product-price {
+            margin-top: 25px;
+        }
+
+        .single-product-action {
+            margin-top: 30px;
+            padding-bottom: 30px;
+            border-top: 1px solid #ebebeb;
+            border-bottom: 1px solid #ebebeb;
+            float: left;
+            width: 100%;
+        }
+
+        .product-discount {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .product-discount span.price {
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 30px;
+            display: inline-block;
+            color: #008bff;
+        }
+
+        .product-info {
+            color: #333;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .product-info p {
+            line-height: 30px;
+            font-size: 14px;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .product-add-to-cart span.control-label {
+            display: block;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+            color: #232323;
+            font-size: 14px;
+        }
+
+        .product-add-to-cart {
+            overflow: hidden;
+            margin: 20px 0px;
+            float: left;
+            width: 100%;
+        }
+
+        .cart-plus-minus-box {
+            border: 1px solid #e1e1e1;
+            border-radius: 0;
+            color: #3c3c3c;
+            height: 49px;
+            text-align: center;
+            width: 50px;
+            padding: 5px 10px;
+        }
+
+        .product-add-to-cart .cart-plus-minus {
+            margin-right: 25px;
+        }
+
+        .cart-plus-minus {
+            position: relative;
+            width: 75px;
+            float: left;
+            padding-right: 25px;
+        }
+
+        .add-to-cart {
+            background: #008bff;
+            border: 0;
+            border-bottom: 3px solid #0680e5;
+            color: #fff;
+            box-shadow: none;
+            padding: 0 30px;
+            border-radius: 3px;
+            font-weight: 400;
+            cursor: pointer;
+            font-size: 14px;
+            text-transform: capitalize;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .add-to-cart:hover {
+            background: #ff6a00;
+            border-color: #e96405;
+        }
+
+        #pages {
+            margin-top: -80px !important;
+        }
+    </style>
+    <style>
+        .xzoom-source img, .xzoom-preview img, .xzoom-lens img {
+            display: block;
+            max-width: none;
+            max-height: none;
+            -webkit-transition: none;
+            -moz-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+
+        /* --------------- */
+        /* xZoom Styles below */
+        .xzoom-container {
+            display: inline-block;
+        }
+
+        .xzoom-thumbs {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .xzoom {
+            width: 400px;
+            -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .xzoom2, .xzoom3, .xzoom4, .xzoom5 {
+            -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Thumbs */
+        .xzoom-gallery, .xzoom-gallery2, .xzoom-gallery3, .xzoom-gallery4, .xzoom-gallery5 {
+            border: 1px solid #cecece;
+            margin-left: 5px;
+            margin-bottom: 10px;
+        }
+
+        .xzoom-source, .xzoom-hidden {
+            display: block;
+            position: static;
+            float: none;
+            clear: both;
+        }
+
+        /* Everything out of border is hidden */
+        .xzoom-hidden {
+            overflow: hidden;
+        }
+
+        /* Preview */
+        .xzoom-preview {
+            border: 1px solid #888;
+            background: #2f4f4f;
+            box-shadow: -0px -0px 10px rgba(0, 0, 0, 0.50);
+        }
+
+        /* Lens */
+        .xzoom-lens {
+            border: 1px solid #555;
+            box-shadow: -0px -0px 10px rgba(0, 0, 0, 0.50);
+            cursor: crosshair;
+        }
+
+        /* Loading */
+        .xzoom-loading {
+            background-position: center center;
+            background-repeat: no-repeat;
+            border-radius: 100%;
+            opacity: .7;
+            background: url(../images/xloading.gif);
+            width: 48px;
+            height: 48px;
+        }
+
+        /* Additional class that applied to thumb when it is active */
+        .xactive {
+            -webkit-box-shadow: 0px 0px 3px 0px rgba(74, 169, 210, 1);
+            -moz-box-shadow: 0px 0px 3px 0px rgba(74, 169, 210, 1);
+            box-shadow: 0px 0px 3px 0px rgba(74, 169, 210, 1);
+            border: 1px solid #4aaad2;
+        }
+
+        /* Caption */
+        .xzoom-caption {
+            position: absolute;
+            bottom: -43px;
+            left: 0;
+            background: #000;
+            width: 100%;
+            text-align: left;
+        }
+
+        .xzoom-caption span {
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: block;
+            font-size: 0.75em;
+            font-weight: bold;
+            padding: 10px;
+        }
+    </style>
+
+    <link th:href="@{/lib/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<div>
+    <main id="app">
+        <router-view></router-view>
+
+    </main>
+</div>
+
+<template id="product">
+    <div>
+        <div id="shopify-section-product-template" class="shopify-section">
+            <div class="single-product-area mt-80 mb-80">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="container">
+                                <div class="row">
+
+                                    <hr>
+                                    <div class="large-5 column">
+                                        <div class="xzoom-container">
+
+                                            <img class="xzoom" id="xzoom-default"
+                                                 xoriginal="'/files/' + product.productImages[0].image_name"
+                                                 :src="'/files/' + product.productImages[0].image_name"/>
+                                            <div class="xzoom-thumbs">
+                                                <div class="col-sm-4 col-md-3 col-lg-2"
+                                                     v-for="image in product.productImages">
+                                                    <a :href="'/files/' + image.image_name">
+                                                        <img class="xzoom-gallery" style=" object-fit: contain;"
+                                                             width="105" height="80"
+                                                             :src="'/files/' + image.image_name">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="large-7 column"></div>
+                                </div>
+                                <!-- default end -->
+                            </div>
+                            <div class="col-md-7">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                         aria-labelledby="home-tab">
+                                        <div class="single-product-content" style="margin-top:35px;">
+
+                                            <input type="hidden" name="form_type" value="product"><input type="hidden"
+                                                                                                         name="utf8"
+                                                                                                         value="✓">
+                                            <div class="product-details">
+
+                                                <h1 class="single-product-name">
+                                                    {{ product.name }}
+
+                                                </h1>
+
+
+                                                <div class="single-product-price">
+                                                    <div class="product-discount">
+                                                    <span class="price" id="ProductPrice">
+                                                        <span class="money">
+                                                            {{ product.price }}
+                                                        </span>
+                                                    </span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info">{{ product.description }}</div>
+
+                                                <div class="single-product-action">
+                                                    <div class="product-variant-option">
+                                                        <select name="id" id="productSelect"
+                                                                class="product-single__variants" style="display:none;">
+                                                            <option selected="selected" data-sku="YQT71020193"
+                                                                    value="19506517377094">Default Title - $20.66 USD
+                                                            </option>
+
+                                                        </select>
+
+                                                    </div>
+                                                    <style>
+                                                        .product-variant-option .selector-wrapper {
+                                                            display: none;
+                                                        }
+                                                    </style>
+                                                    <div class="product-add-to-cart">
+                                                        <span class="control-label">Quantity</span>
+                                                        <div class="cart-plus-minus">
+                                                            <input class="cart-plus-minus-box" type="text"
+                                                                   name="quantity" value="1">
+                                                        </div>
+                                                        <div>
+                                                            <a asp-controller="Product" asp-action="AddToCart"
+                                                               asp-route-id="@Model.Product.Id"
+                                                               style="text-decoration: inherit;color:inherit; position: inherit; ">
+                                                                <button class="btn btn-primary">Order</button>
+                                                            </a>
+                                                            <div class="flex-row mt-3"
+                                                                 style="display:flex; align-self:center; align-items:center;">
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    <a>
+                        <router-link to="/">Back to product list</router-link>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</template>
+
+<template id="product-list">
+    <v-app>
+        <div>
+
+
+            <v-app-bar
+                    color="deep-purple accent-4"
+                    dense
+                    dark
+            >
+                <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                <!--				<img  src="/assets/css/epicentrLogo.svg"/>-->
+                <v-toolbar-title>Epicentr</v-toolbar-title>
+                <v-spacer></v-spacer>
+
+                <v-btn icon th:href="@{/products}">
+                    <v-icon>mdi-camera-burst</v-icon>
+                </v-btn>
+                <v-btn icon th:href="@{/}">
+                    <v-icon>mdi-home</v-icon>
+                </v-btn>
+                <v-btn icon th:href="@{/product-add}">
+                    <v-icon>mdi-image-plus</v-icon>
+                </v-btn>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/documents}" icon>
+                            <v-icon>mdi-file-document</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Documents</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/document/create}" icon>
+                            <v-icon>mdi-text-box-plus</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Create Document</span>
+                </v-tooltip>
+                <a sec:authorize="isAuthenticated()" th:href="@{/profile}">
+                    <v-btn icon>
+                        <v-icon>mdi-account</v-icon>
+                    </v-btn>
+
+                </a>
+                <v-tooltip sec:authorize="isAuthenticated()" bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/myorders}" icon>
+                            <v-icon>mdi-order-bool-descending</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>My orders</span>
+                </v-tooltip>
+                <v-tooltip sec:authorize="isAuthenticated()" bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on" th:href="@{/logout}" icon>
+                            <v-icon>mdi-exit-to-app</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Logout</span>
+                </v-tooltip>
+
+                <v-menu
+                        left
+                        bottom
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                                icon
+                                v-bind="attrs"
+                                v-on="on"
+                        >
+                            <v-icon>mdi-dots-vertical</v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-list>
+                        <v-list-item
+                                v-for="n in 5"
+                                :key="n"
+                                @click="() => {}"
+                        >
+                            <v-list-item-title>Option {{ n }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+            </v-app-bar>
+        </div>
+        <img style="height: 250px" src="/assets/css/epicentrLogo.svg"/>
+        <v-carousel
+                cycle
+                height="400"
+                hide-delimiter-background
+                show-arrows-on-hover
+        >
+            <v-carousel-item
+                    v-for="(slide, i) in slides"
+                    :key="i"
+            >
+                <v-sheet
+                        :color="colors[i]"
+                        height="100%"
+                >
+                    <v-row
+                            class="fill-height"
+                            align="center"
+                            justify="center"
+                    >
+                        <div class="display-3">{{ slide }} Slide</div>
+                    </v-row>
+                </v-sheet>
+            </v-carousel-item>
+        </v-carousel>
+        <div class="container">
+            <!--        <div class="actions">-->
+            <!--            <a class="btn btn-default">-->
+            <!--                <router-link :to="{path: '/add-product'}">-->
+            <!--                    <span class="glyphicon glyphicon-plus"></span>-->
+            <!--                    Add product-->
+            <!--                </router-link>-->
+            <!--            </a>-->
+            <!--        </div>-->
+            <div class="filters row">
+                <div class="form-group col-sm-3">
+                    <v-text-field
+                            v-model="searchKey"
+                            label="Search"
+                            id="search-element"
+                            outlined
+                    ></v-text-field>
+                    <!--                <input placeholder="Search" v-model="searchKey" class="form-control"  requred/>-->
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 col-lg-3" v-for="product in filteredProducts">
+
+                        <a style="text-decoration: inherit" :href="'/product-view/' + product.id">
+                            <v-card>
+
+                                <v-img
+                                        class="white--text align-end"
+                                        height="200px"
+                                        :src="'/files/' + product.productImages[0].image_name"
+
+                                >
+                                </v-img>
+
+                                <v-card-text>
+
+                                    <h3>{{ product.name }}</h3>
+                                    <v-badge
+
+                                            color="red"
+                                            :content="'-' + product.discount + '%'"
+                                    >
+                                        <div class="d-flex flex-row">
+                                            <h5 class="mr-1" style="text-decoration: line-through">{{
+                                                product.price}}</h5>
+                                            <h5 class="text-danger">{{
+                                                product.price-(product.price/100*product.discount) }}</h5>
+                                        </div>
+                                    </v-badge>
+                                    <p>{{ product.description }}</p>
+
+                                </v-card-text>
+
+
+
+                            </v-card>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </v-app>
+</template>
+
+<template id="add-product">
+    <div>
+        <h2>Add new product</h2>
+        <form @submit="createProduct">
+            <div class="form-group">
+                <label for="add-name">Name</label>
+                <input class="form-control" id="add-name" v-model="product.name" required/>
+            </div>
+            <div class="form-group">
+                <label for="add-description">Description</label>
+                <textarea class="form-control" id="add-description" rows="10" v-model="product.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="add-price">Price, <span class="glyphicon glyphicon-euro"></span></label>
+                <input type="number" class="form-control" id="add-price" v-model="product.price"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+            <a class="btn btn-default">
+                <router-link to="/">Cancel</router-link>
+            </a>
+        </form>
+    </div>
+</template>
+
+<template id="product-edit">
+    <div>
+        <h2>Edit product</h2>
+        <form @submit="updateProduct">
+            <div class="form-group">
+                <label for="edit-name">Name</label>
+                <input class="form-control" id="edit-name" v-model="product.name" required/>
+            </div>
+            <div class="form-group">
+                <label for="edit-description">Description</label>
+                <textarea class="form-control" id="edit-description" rows="3" v-model="product.description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="edit-price">Price, <span class="glyphicon glyphicon-euro"></span></label>
+                <input type="number" class="form-control" id="edit-price" v-model="product.price"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-default">
+                <router-link to="/">Cancel</router-link>
+            </a>
+        </form>
+    </div>
+</template>
+
+<template id="product-delete">
+    <div>
+        <h2>Delete product {{ product.name }}</h2>
+        <form @submit="deleteProduct">
+            <p>The action cannot be undone.</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a class="btn btn-default">
+                <router-link to="/">Cancel</router-link>
+            </a>
+        </form>
+    </div>
+</template>
+<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+<script th:src="@{'/assets/js/xzoom.min.js'}"></script>
+<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vue.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vue-router.min.js'}"></script>
+<script th:src="@{'/lib/js/vue/vuetify.js'}"></script>
+<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
+<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+
+<script>
+
+    var products = [];
+
+    function findProduct(productId) {
+        return products[findProductKey(productId)];
+    }
+
+    function findProductKey(productId) {
+        for (var key = 0; key < products.length; key++) {
+            if (products[key].id == productId) {
+                return key;
+            }
+        }
+    }
+
+    var productService = {
+        findAll(fn) {
+            axios
+                .get('/api/v1/products')
+                .then(response => fn(response))
+                .catch(error => console.log(error))
+        },
+
+        findById(id, fn) {
+            axios
+                .get('/api/v1/products/' + id)
+                .then(response => fn(response))
+                .catch(error => console.log(error))
+        },
+
+        create(product, fn) {
+            axios
+                .post('/api/v1/products', product)
+                .then(response => fn(response))
+                .catch(error => console.log(error))
+        },
+
+        update(id, product, fn) {
+            axios
+                .put('/api/v1/products/' + id, product)
+                .then(response => fn(response))
+                .catch(error => console.log(error))
+        },
+
+        deleteProduct(id, fn) {
+            axios
+                .delete('/api/v1/products/' + id)
+                .then(response => fn(response))
+                .catch(error => console.log(error))
+        }
+    }
+
+    var List = Vue.extend({
+        template: '#product-list',
+        data: function () {
+            return {
+                products: [], searchKey: '', colors: [
+                    'indigo',
+                    'warning',
+                    'pink darken-2',
+                    'red lighten-1',
+                    'deep-purple accent-4',
+                ],
+                slides: [
+                    'First',
+                    'Second',
+                    'Third',
+                    'Fourth',
+                    'Fifth',
+                ],
+            };
+        },
+        computed: {
+            filteredProducts() {
+                return this.products.filter((product) => {
+                    return product.name.indexOf(this.searchKey) > -1
+                        || product.description.indexOf(this.searchKey) > -1
+                        || product.price.toString().indexOf(this.searchKey) > -1
+                })
+            }
+        },
+        mounted() {
+            productService.findAll(r => {
+                this.products = r.data;
+                products = r.data
+            })
+        }
+    });
+
+    var Product = Vue.extend({
+        template: '#product',
+        data: function () {
+            return {product: findProduct(this.$route.params.product_id)};
+        }
+    });
+
+    var ProductEdit = Vue.extend({
+        template: '#product-edit',
+        data: function () {
+            return {product: findProduct(this.$route.params.product_id)};
+        },
+        methods: {
+            updateProduct: function () {
+                productService.update(this.product.id, this.product, r => router.push('/'))
+            }
+        }
+    });
+
+    var ProductDelete = Vue.extend({
+        template: '#product-delete',
+        data: function () {
+            return {product: findProduct(this.$route.params.product_id)};
+        },
+        methods: {
+            deleteProduct: function () {
+                productService.deleteProduct(this.product.id, r => router.push('/'))
+            }
+        }
+    });
+
+    var AddProduct = Vue.extend({
+        template: '#add-product',
+        data() {
+            return {
+                product: {name: '', description: '', price: 0}
+            }
+        },
+        methods: {
+            createProduct() {
+                productService.create(this.product, r => router.push('/'))
+            }
+        }
+    });
+
+    var router = new VueRouter({
+        routes: [
+            {path: '/', component: List},
+            {path: '/product/:product_id', component: Product, name: 'product'},
+            {path: '/add-product', component: AddProduct},
+            {path: '/product/:product_id/edit', component: ProductEdit, name: 'product-edit'},
+            {path: '/product/:product_id/delete', component: ProductDelete, name: 'product-delete'}
+        ]
+    });
+
+    new Vue({
+        vuetify: new Vuetify(),
+        router
+    }).$mount('#app')
+
+</script>
+
+<!--  <script src="/lib/js/xzoom.min.js"></script>-->
+
+
+<!--  <script src="https://unpkg.com/vue@2.5.22/dist/vue.js"></script>-->
+
+
+</body>
+</html>
