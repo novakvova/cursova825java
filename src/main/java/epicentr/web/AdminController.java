@@ -1,11 +1,9 @@
 package epicentr.web;
 
 import epicentr.entities.Order;
+import epicentr.entities.Product;
 import epicentr.entities.User;
-import epicentr.repositories.OrderRepository;
-import epicentr.repositories.OrderStatusRepository;
-import epicentr.repositories.RoleRepository;
-import epicentr.repositories.UserRepository;
+import epicentr.repositories.*;
 import epicentr.services.StorageService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,8 @@ public class AdminController {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private ProductRespository productRespository;
     @Autowired
     private OrderStatusRepository orderStatusRepository;
     @Autowired
@@ -62,6 +61,11 @@ public class AdminController {
         orderRepository.save(o);
         return "redirect:/admin/orders";
     }
+    @PostMapping("product/delete")
+    public String DeleteProduct(Product model) {
+        productRespository.delete(productRespository.findById(model.getId()).get());
+        return "redirect:/admin/products";
+    }
     @GetMapping("admin/orders")
     public String GetOrders(Model model) {
         List<Order> orders = orderRepository.findAll();
@@ -69,5 +73,10 @@ public class AdminController {
         model.addAttribute("orderStatuses",orderStatusRepository.findAll());
         model.addAttribute("orders", orders);
         return "adminorders";
+    }
+    @GetMapping("admin/products")
+    public String GetProducts(Model model) {
+        model.addAttribute("products", productRespository.findAll());
+        return "adminproducts";
     }
 }
