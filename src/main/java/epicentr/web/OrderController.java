@@ -84,11 +84,25 @@ public class OrderController {
                 //Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
                 //List<ShortProductModel> list = gson.fromJson(value.getValue(), type);
                 String [] arr=gson.fromJson(value.getValue(), String[].class);
-                model.addAttribute("products",arr);
+                List<ShortProductModel> products=new ArrayList<>();
+                for(String item:arr)
+                {
+                    Product prod=productRespository.findById(Long.parseLong(item)).get();
+                    if(prod!=null)
+                    {
+                        products.add(new ShortProductModel(
+                                prod.getId(),
+                                prod.getName(),
+                                prod.getDiscount(),
+                                prod.getDescription(),
+                                prod.getPrice(),
+                                prod.getProductImages().get(0).getImage_name()));
+                    }
+                }
+                model.addAttribute("products",products);
             }
-            else model.addAttribute("error","Ваш кошик пустий");
         }
-        return "myorders";
+        return "cart";
     }
 
     @PostMapping("/order")
