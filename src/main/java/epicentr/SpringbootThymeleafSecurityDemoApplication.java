@@ -20,7 +20,7 @@ public class SpringbootThymeleafSecurityDemoApplication extends SpringBootServle
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
 		return (args) -> {
-			storageService.deleteAll();
+			//storageService.deleteAll();
 			storageService.init();
 		};
 	}
