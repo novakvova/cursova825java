@@ -55,6 +55,13 @@ public class AdminController {
         model.addAttribute("orders", orders);
         return "adminhome";
     }
+    @PostMapping("order/change")
+    public String ChangeOrderStatus(Order model) {
+        Order o = orderRepository.findById(model.getId()).get();
+        o.setOrderStatus(orderStatusRepository.findById(model.getOrderStatus().getId()).get());
+        orderRepository.save(o);
+        return "redirect:/admin/orders";
+    }
     @GetMapping("admin/orders")
     public String GetOrders(Model model) {
         List<Order> orders = orderRepository.findAll();

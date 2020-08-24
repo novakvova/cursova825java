@@ -35,14 +35,19 @@
             <td th:if="${order.getUser()}==null" th:text="${order.getPostOffice()}"></td>
             <td th:if="${order.getUser()}==null" th:text="${order.getName()}"></td>
             <td th:if="${order.getUser()}==null" th:text="${order.getLastName()}"></td>
-            <td>
-                <input name="id" type="hidden" th:value="${order.getId()}">
-                <select name="orderStatus">
-                    <option th:each="oS : ${orderStatuses}" name="id" th:value="${oS.getId()}"
-                            th:text="${oS.getName()}">
+            <td >
+                <form action="/order/change" method="post">
 
-                    </option>
-                </select>
+                    <input name="id" type="hidden" th:value="${order.getId()}">
+                    <select name="orderStatus">
+                        <option th:if="${order.getOrderStatus()}!=${oS}" th:each="oS : ${orderStatuses}" name="id" th:value="${oS.getId()}"
+                                th:text="${oS.getName()}">
+                        <option th:if="${order.getOrderStatus()}==${oS}" selected  th:each="oS : ${orderStatuses}" name="id" th:value="${oS.getId()}"
+                                th:text="${oS.getName()}">
+                        </option>
+                    </select>
+                    <button  type="submit" class="ml-2 btn btn-primary">Change</button>
+                </form>
             </td>
         </tr>
 
