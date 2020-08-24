@@ -105,6 +105,14 @@
 				</v-tooltip>
 				<v-tooltip sec:authorize="isAuthenticated()" bottom>
 					<template v-slot:activator="{ on, attrs }">
+						<v-btn v-bind="attrs" v-on="on"  th:href="@{/cart}" icon>
+							<v-icon>mdi-cart</v-icon>
+						</v-btn>
+					</template>
+					<span>Cart</span>
+				</v-tooltip>
+				<v-tooltip sec:authorize="isAuthenticated()" bottom>
+					<template v-slot:activator="{ on, attrs }">
 						<v-btn v-bind="attrs" v-on="on"  th:href="@{/logout}" icon>
 							<v-icon>mdi-exit-to-app</v-icon>
 						</v-btn>

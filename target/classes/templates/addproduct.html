@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="layout" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add product</title>
+    <link rel="stylesheet"
+          th:href="@{/assets/css/index.min.css}" />
+    <link rel="stylesheet"
+    th:href="@{/assets/css/addproductform.css}">
+</head>
+
+<body>
+<div layout:fragment="content">
+    <div class="container" id="conteiner">
+        <header>
+            <h1>Додати продукт :</h1>
+        </header>
+        <form th:action="@{/product-add}" method="post" id="form" class="form" enctype="multipart/form-data">
+
+            <div class="form-control">
+                <label for="name">Назва</label>
+                <input type="text" placeholder="Назва" id="name" name="name" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="price">Ціна</label>
+                <input type="number" id="price" name="price" placeholder="Ціна"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="discount">Знижка (%)</label>
+                <input type="number" id="discount" name="discount" placeholder="Знижка (%)" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="category">Категорія</label>
+                <select id="category" name="category" >
+                    <option th:each="category : ${categories}" name="id" th:value="${category.getId()}" th:text="${category.getName()}">
+
+                    </option>
+                </select>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="form-control">
+                <label for="description">Опис</label>
+                <input type="text" placeholder="Опис" name="description" id="description" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+
+            <div class="image">
+            <div class="col-md-4">
+                <div class="uploader">
+                    <div class="wrapper">
+                        <div class="images">
+                            <div class="pic" id="pic">
+                                Додати файли (натисніть або перетягніть)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-8">
+                <div id="filesContainer">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Файл</th>
+                            <th>Ім'я</th>
+                            <th>Розмір</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodyFileList">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Зберегти</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('form');
+        const name = document.getElementById('name');
+        const price = document.getElementById('price');
+        const description = document.getElementById('description');
+        const discount = document.getElementById('discount');
+
+        form.addEventListener('submit', e => {
+            if(!checkInputs())
+            {
+                e.preventDefault();
+            }
+        });
+
+        function checkInputs() {
+            // trim to remove the whitespaces
+            const nameValue = name.value.trim();
+            const priceValue = price.value.trim();
+            const descriptionValue = description.value.trim();
+            const discountValue = discount.value.trim();
+
+            var isValid=true;
+            if(nameValue === '') {
+                setErrorFor(name, "Введіть ім'я");
+                isValid=false;
+            } else {
+                setSuccessFor(name);
+            }
+
+            if(priceValue === '') {
+                setErrorFor(price, 'Введіть ціну');
+                isValid=false;
+            } else if (priceValue === 0 || priceValue <= 0) {
+                setErrorFor(price, 'Ціна некоректна');
+                isValid=false;
+            } else {
+                setSuccessFor(price);
+            }
+
+            if(discountValue === ''){
+                setErrorFor(discount, 'Введіть знижку');
+                isValid=false;
+            } else if (discountValue === 0 || priceValue <= 0) {
+                setErrorFor(discount, 'Знижка некоректна');
+                isValid=false;
+            } else {
+                setSuccessFor(discount);
+            }
+
+            if(descriptionValue === '') {
+                setErrorFor(description, 'Введіть опис');
+                isValid=false;
+            } else {
+                setSuccessFor(description);
+            }
+            return isValid;
+        }
+
+        function setErrorFor(input, message) {
+            const formControl = input.parentElement;
+            const small = formControl.querySelector('small');
+            formControl.className = 'form-control error';
+            small.innerText = message;
+        }
+
+        function setSuccessFor(input) {
+            const formControl = input.parentElement;
+            formControl.className = 'form-control success';
+        }
+
+    </script>
+
+    <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+
+    <script  th:src="@{'/assets/js/uploader.js'}" ></script>
+
+</div>
+</body>
+</html>
