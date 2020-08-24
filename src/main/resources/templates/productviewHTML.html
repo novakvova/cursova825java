@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-
+      layout:decorator="layout" lang="en"
 >
 <head>
     <meta charset="UTF-8">
@@ -12,6 +14,22 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <style>
+        .hrr {
+            border: none;
+            border-top: 3px solid lightgray;
+            color: #333;
+            overflow: visible;
+            text-align: center;
+            height: 10px;
+        }
+
+        .hrr:after {
+            background: #fff;
+            content: 'OR';
+            padding: 0 4px;
+            position: relative;
+            top: -13px;
+        }
         .breadcrumb-list > li {
             font-size: 14px;
             list-style: none;
@@ -352,156 +370,180 @@
     </style>
 </head>
 <body>
-<div class=" wrapper con" >
 
-    <main>
-        <div id="shopify-section-product-template" class="shopify-section">
-            <div class="single-product-area mt-80 mb-80">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <div class="container">
-                                <section id="default" class="padding-top0">
-                                    <div class="row">
+<div layout:fragment="content">
 
-                                        <hr>
-                                        <div class="large-5 column">
+    <div class=" wrapper con">
+        <main>
+            <div id="shopify-section-product-template" class="shopify-section">
+                <div class="single-product-area mt-80 mb-80">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="container">
+                                    <section id="default" class="padding-top0">
+                                        <div class="row">
 
-                                            <div class="xzoom-container">
+                                            <hr>
+                                            <div class="large-5 column">
 
-                                                <img class="xzoom" id="xzoom-default"
-                                                     th:xoriginal="'/files/' + ${product.productImages[0].image_name}"
-                                                     th:if="${product.productImages}!=undefined"
-                                                     th:src="'/files/' + ${product.productImages[0].image_name}"/>
-                                                <div class="xzoom-thumbs" >
+                                                <div class="xzoom-container">
 
-                                                    <a th:href="'/files/' + ${image.image_name}" th:each="image : ${product.productImages}">
-                                                        <img class="xzoom-gallery" style=" object-fit: contain;"
-                                                             width="105" height="80"
-                                                             th:src="'/files/' + ${image.image_name}">
-                                                    </a>
+                                                    <img class="xzoom" id="xzoom-default"
+                                                         th:xoriginal="'/files/' + ${product.productImages[0].image_name}"
+                                                         th:if="${product.productImages}!=undefined"
+                                                         th:src="'/files/' + ${product.productImages[0].image_name}"/>
+                                                    <div class="xzoom-thumbs">
+
+                                                        <a th:href="'/files/' + ${image.image_name}"
+                                                           th:each="image : ${product.productImages}">
+                                                            <img class="xzoom-gallery" style=" object-fit: contain;"
+                                                                 width="105" height="80"
+                                                                 th:src="'/files/' + ${image.image_name}">
+                                                        </a>
+                                                    </div>
+
                                                 </div>
-
                                             </div>
+                                            <div class="large-7 column"></div>
                                         </div>
-                                        <div class="large-7 column"></div>
-                                    </div>
-                                </section>
-                                <!-- default end -->
+                                    </section>
+                                    <!-- default end -->
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-7">
-                            <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                     aria-labelledby="home-tab">
-                                    <div class="single-product-content" style="margin-top:35px;">
+                            <div class="col-md-7">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                         aria-labelledby="home-tab">
+                                        <div class="single-product-content" style="margin-top:35px;">
 
-                                        <input type="hidden" name="form_type" value="product"><input type="hidden"
-                                                                                                     name="utf8"
-                                                                                                     value="✓">
-                                        <div class="product-details">
-                                            <h1 th:text="${product.name}" class="single-product-name"></h1>
-                                            <div class="single-product-price">
-                                                <div class="product-discount">
+                                            <input type="hidden" name="form_type" value="product"><input type="hidden"
+                                                                                                         name="utf8"
+                                                                                                         value="✓">
+                                            <div class="product-details">
+                                                <h1 th:text="${product.name}" class="single-product-name"></h1>
+                                                <div class="single-product-price">
+                                                    <div class="product-discount">
                                                     <span class="price" id="ProductPrice">
                                                         <span th:text="${product.price}" class="money">
                                                         </span>
                                                     </span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-info" th:text="${product.description}"></div>
+
+                                                <div class="single-product-action">
+                                                    <div class="product-variant-option">
+                                                        <select name="id" id="productSelect"
+                                                                class="product-single__variants" style="display:none;">
+                                                            <option selected="selected" data-sku="YQT71020193"
+                                                                    value="19506517377094">Default Title - $20.66 USD
+                                                            </option>
+
+                                                        </select>
+
+                                                    </div>
+                                                    <style>
+                                                        .product-variant-option .selector-wrapper {
+                                                            display: none;
+                                                        }
+                                                    </style>
+
+
+                                                    <button id="cartBtn" class="btn btn-primary mb-2 mt-3">Add to
+                                                        cart
+                                                    </button>
+                                                    <hr class="hrr">
+                                                    <div class="mt-0 product-add-to-cart">
+                                                        <form action="/order" method="post">
+                                                            <input type="hidden" id="prod_id" name="id"
+                                                                   th:value="${product_id}"/>
+
+                                                            <div sec:authorize="!isAuthenticated()">
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" class="form-control" name="name"
+                                                                           placeholder="Name"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" class="form-control"
+                                                                           name="lastName"
+                                                                           placeholder="Last Name"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="text" class="form-control" name="city"
+                                                                           placeholder="City"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                                <div class="form-group has-feedback">
+                                                                    <input type="number" class="form-control"
+                                                                           name="postOffice"
+                                                                           placeholder="Post office"/> <span
+                                                                        class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                                                </div>
+                                                            </div>
+                                                            <span class="control-label">Quantity</span>
+                                                            <div class="cart-plus-minus">
+                                                                <input class="cart-plus-minus-box" name="count" min="1"
+                                                                       max="10" type="number"
+                                                                       value="1">
+                                                            </div>
+                                                            <div>
+                                                                <button type="submit" class="btn btn-primary">Order
+                                                                </button>
+                                                                <div class="flex-row mt-3"
+                                                                     style="display:flex; align-self:center; align-items:center;">
+
+
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                            <div class="product-info" th:text="${product.description}"></div>
 
-                                            <div class="single-product-action">
-                                                <div class="product-variant-option">
-                                                    <select name="id" id="productSelect"
-                                                            class="product-single__variants" style="display:none;">
-                                                        <option selected="selected" data-sku="YQT71020193"
-                                                                value="19506517377094">Default Title - $20.66 USD
-                                                        </option>
-
-                                                    </select>
-
-                                                </div>
-                                                <style>
-                                                    .product-variant-option .selector-wrapper {
-                                                        display: none;
-                                                    }
-                                                </style>
-                                                <v-btn icon>
-                                                    <i class="fas fa-cart-plus"></i>
-                                                </v-btn>
-                                                <div class="product-add-to-cart">
-                                                    <form action="/order" method="post">
-                                                        <input type="hidden" name="id" th:value="${product_id}"/>
-
-                                                        <div sec:authorize="!isAuthenticated()">
-                                                            <div class="form-group has-feedback">
-                                                                <input type="text" class="form-control" name="name"
-                                                                       placeholder="Name"/> <span
-                                                                    class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                                            </div>
-                                                            <div class="form-group has-feedback">
-                                                                <input type="text" class="form-control"
-                                                                       name="lastName"
-                                                                       placeholder="Last Name"/> <span
-                                                                    class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                                            </div>
-                                                            <div class="form-group has-feedback">
-                                                                <input type="text" class="form-control" name="city"
-                                                                       placeholder="City"/> <span
-                                                                    class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                                            </div>
-                                                            <div class="form-group has-feedback">
-                                                                <input type="number" class="form-control"
-                                                                       name="postOffice"
-                                                                       placeholder="Post office"/> <span
-                                                                    class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                                            </div>
-                                                        </div>
-                                                        <span class="control-label">Quantity</span>
-                                                        <div class="cart-plus-minus">
-                                                            <input class="cart-plus-minus-box" name="count" min="1"
-                                                                   max="10" type="number"
-                                                                   value="1">
-                                                        </div>
-                                                        <div>
-                                                            <button type="submit" class="btn btn-primary">Order
-                                                            </button>
-                                                            <div class="flex-row mt-3"
-                                                                 style="display:flex; align-self:center; align-items:center;">
-
-
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
                                         </div>
 
                                     </div>
 
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <style type="text/css">
-                .product-details .countdown-timer-wrapper {
-                    display: none !important;
-                }
-            </style>
+                <style type="text/css">
+                    .product-details .countdown-timer-wrapper {
+                        display: none !important;
+                    }
+                </style>
 
-        </div>
-    </main>
+            </div>
+        </main>
+    </div>
 </div>
 <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 <script th:src="@{'/assets/js/xzoom.min.js'}"></script>
+<script src="/lib/js/fontawesome.js"></script>
 <script src="/assets/js/xzoom.min.js" rel="script"></script>
 <script>
     (function ($) {
+        $("#cartBtn").click(function () {
+            $.cookie.raw = true;
+            let prod_id = parseInt($("#prod_id").val());
+            let expDate = new Date();
+            expDate.setTime(expDate.getTime() + (7 * 24 * 60 * 60));
+            let val = $.cookie('cart');
+            if (val !== undefined) {
+                let oldCart = JSON.parse(val);
+                oldCart.push(prod_id);
+                $.cookie('cart', JSON.stringify(oldCart), {path: '/', expires: expDate});
+            } else {
+                let arr = [prod_id];
+                $.cookie('cart', JSON.stringify(arr), {path: '/', expires: expDate});
+            }
+        });
         $(document).ready(function () {
             $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 300, title: true, tint: '#333', Xoffset: 15});
             // $('.xzoom2, .xzoom-gallery2').xzoom({ position: '#xzoom2-id', tint: '#ffa200' });
@@ -651,11 +693,15 @@
                     event.preventDefault();
                 });
             }
+
+
         });
     })(jQuery);
 </script>
 <script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
-<script src="/lib/js/fontawesome.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
 <script src="/lib/js/all.js"></script>
 </body>
 </html>

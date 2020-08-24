@@ -77,13 +77,14 @@ public class OrderController {
     public String Cart(HttpServletRequest request, Model model){
         Authentication a = SecurityContextHolder.getContext().getAuthentication();
         if(a.isAuthenticated() && a.getName()!="anonymousUser") {
-            Cookie value=WebUtils.getCookie(request, "value");
+            Cookie value=WebUtils.getCookie(request, "cart");
+            Cookie[] cookies = request.getCookies();
             if(value!=null) {
                 Gson gson = new Gson();
-                Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
-                List<ShortProductModel> list = gson.fromJson(value.getValue(), type);
-
-                model.addAttribute("values",list);
+                //Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
+                //List<ShortProductModel> list = gson.fromJson(value.getValue(), type);
+                String [] arr=gson.fromJson(value.getValue(), String[].class);
+                model.addAttribute("products",arr);
             }
             else model.addAttribute("error","Ваш кошик пустий");
         }
