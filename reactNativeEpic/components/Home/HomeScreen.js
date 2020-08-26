@@ -52,12 +52,9 @@ class HomeScreen extends Component {
                 <ImageBackground style={ { width: '100%', height: '100%' } } source={ require('../../Img/background.jpg') }>
 
                     <View style={ styles.container }>
-                        <Text style={ styles.textTitle }>Швидкі кредити</Text>
-                        <Button  large titleStyle={ { color: 'black' } } buttonStyle={ { backgroundColor: '#fce4ec' } } title="Мікропозики" onPress={ () => navigate('ListMicroCredit') } />
-                        <Button large titleStyle={ { color: 'black' } } buttonStyle={ { backgroundColor: '#f3e5f5' } } title="Кредити" onPress={ () => navigate('ListCredit') } />
-                        <Button large titleStyle={ { color: 'black' } } buttonStyle={ { backgroundColor: '#e8f5e9' } } title="Кредитні картки" onPress={ () => navigate('ListCards') } />
-                        <Button large titleStyle={ { color: 'black' } } buttonStyle={ { backgroundColor: '#fff3e0' } } title="Кредитна історія" onPress={ () => Alert.alert('History') } />
-                        <Button large titleStyle={ { color: 'black' } } buttonStyle={ { backgroundColor: '#fffde7' } } title="Статті" onPress={ () => navigate('ListArticles') } />
+                        <Text style={ styles.textTitle }>Epicentr</Text>
+                        <Button  large titleStyle={ { color: 'black' } } buttonStyle={ { backgroundColor: '#fce4ec' } } title="Products" onPress={ () => navigate('ProductsList') } />
+                        
                     </View>
                     <View style={ { marginHorizontal: 55, marginTop: 20 } }>
                         <Button

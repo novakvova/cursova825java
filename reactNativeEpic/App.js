@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
 import HomeScreen from "./components/Home/HomeScreen";
-import ListMicroCreditScreen from "./components/MicroCredit/ListMicroCreditScreen";
+import ProductsList from "./components/ProductsList";
 
 import firebase from "firebase";
 import { createStackNavigator } from 'react-navigation-stack';
@@ -10,7 +10,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const MainNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
-    ListMicroCredit: { screen: ListMicroCreditScreen },
+    ProductsList: { screen: ProductsList },
 
   },
   {
