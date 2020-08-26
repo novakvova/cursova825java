@@ -1,42 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
-import React from 'react';
+import React, {Component} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
+  Text
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-// import { Button } from 'react-native-elements';
-
-const App: () => React$Node = () => {
-  return (
-    <>
-      <Text>Vovik</Text>
-      {/* <Button
-        title="Solid Button"
-      /> */}
-    </>
-  );
-};
-
-
+class App extends React.Component {
+  state = {}
+  render() {
+    return (
+      <Text>Peter</Text>
+    );
+  }
+}
 
 export default App;
