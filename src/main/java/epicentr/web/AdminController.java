@@ -27,7 +27,8 @@ public class AdminController {
     public AdminController(StorageService storageService) {
         this.storageService = storageService;
     }
-
+    @Autowired
+    private DocumentRepository documentRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -66,6 +67,11 @@ public class AdminController {
         productRespository.delete(productRespository.findById(model.getId()).get());
         return "redirect:/admin/products";
     }
+    @PostMapping("document/delete")
+    public String DeleteDocument(Product model) {
+        documentRepository.delete(documentRepository.findById(model.getId()).get());
+        return "redirect:/admin/documents";
+    }
     @GetMapping("admin/orders")
     public String GetOrders(Model model) {
         List<Order> orders = orderRepository.findAll();
@@ -78,5 +84,10 @@ public class AdminController {
     public String GetProducts(Model model) {
         model.addAttribute("products", productRespository.findAll());
         return "adminproducts";
+    }
+    @GetMapping("admin/documents")
+    public String GetDocuments(Model model) {
+        model.addAttribute("documents", documentRepository.findAll());
+        return "admindocuments";
     }
 }
