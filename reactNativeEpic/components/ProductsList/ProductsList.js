@@ -16,25 +16,28 @@ class ProductsList extends Component {
   componentDidMount() {
     this.props.getInfo();
   }
-  // redirect=(id)=>{
-  //     console.log("MicroCreditScreen "+id);
-  //     this.props.navigation.navigate('MicroCreditDetails', {
-  //         id: `${id}`,
-  //     });
-  // }
+  
 
   render() {
+    const redirect = (id) => {
+        console.log("ProductView "+id);
+        this.props.navigation.navigate('ProductView', {
+          id: `${id}`,
+        });
+      };
     return (
       <ScrollView>
-        
         {this.props.data.map(function (el) {
           return (
-            <Card title={el.name} image={{uri:`${serverUrl}files/`+el.productImages[0].image_name}}>
-              
-          <Text style={{marginBottom: 10}}>
-            {el.price}
-          </Text>
-        </Card>); 
+            <Card
+              title={el.name}
+              image={{
+                uri: `${serverUrl}files/` + el.productImages[0].image_name,
+              }}>
+              <Text style={{marginBottom: 10}}>{el.price}</Text>
+              <Button  onPress={() => redirect(el.id)}  title="More info"></Button>
+            </Card>
+          );
         })}
       </ScrollView>
     );
