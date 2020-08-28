@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Card, ListItem, Button, Icon} from 'react-native-elements';
+import {Card, ListItem, Button} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import * as getListActions from './reducer';
 import get from 'lodash.get';
 import {serverUrl} from '../../config';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 class ProductsList extends Component {
   static navigationOptions = {
@@ -25,7 +26,19 @@ class ProductsList extends Component {
           id: `${id}`,
         });
       };
+      const {navigation} = this.props;
+
     return (
+      <React.Fragment>
+      <View style={{flexDirection: 'row'}}>
+              <Button
+                type="clear"
+                onPress={() => {
+                  navigation.openDrawer();
+                }}
+                icon={<Icon name="menu" size={40} />}
+              />
+            </View>
       <ScrollView>
         {this.props.data.map(function (el) {
           return (
@@ -40,6 +53,7 @@ class ProductsList extends Component {
           );
         })}
       </ScrollView>
+      </React.Fragment>
     );
   }
 }

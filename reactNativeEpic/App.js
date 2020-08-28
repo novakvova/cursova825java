@@ -2,17 +2,22 @@ import React, {Component} from 'react';
 import HomeScreen from './components/Home/HomeScreen';
 import ProductsList from './components/ProductsList';
 import ProductView from './components/ProductView';
-
+import { 
+  Provider as PaperProvider, 
+  DefaultTheme as PaperDefaultTheme,
+  DarkTheme as PaperDarkTheme 
+} from 'react-native-paper';
 import firebase from 'firebase';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-
+import {DrawerContent} from "./components/CustomElements/DrawerContent"
 import {StyleSheet, Text, View} from 'react-native';
 const MainNavigator = createStackNavigator(
   {
-
+    Home: {screen: HomeScreen},
+    ProductsList: {screen: ProductsList},
     ProductView: {screen: ProductView},
   },
   {
@@ -66,13 +71,18 @@ class App extends React.Component {
 
   render() {
     return (
+      //  <RootContainer />
+      <PaperProvider 
+      // theme={theme}
+      >
       <NavigationContainer>
-        <RootContainer />
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator  drawerContent={props => <DrawerContent {...props} />} >
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="ProductsList" component={ProductsList} />
+          <Drawer.Screen name="ProductView" component={ProductView} />
         </Drawer.Navigator>
       </NavigationContainer>
+      </PaperProvider>
     );
   }
 }
