@@ -2,11 +2,7 @@ import React, {Component} from 'react';
 import HomeScreen from './components/Home/HomeScreen';
 import ProductsList from './components/ProductsList';
 import ProductView from './components/ProductView';
-import { 
-  Provider as PaperProvider, 
-  DefaultTheme as PaperDefaultTheme,
-  DarkTheme as PaperDarkTheme 
-} from 'react-native-paper';
+
 import firebase from 'firebase';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
@@ -72,9 +68,7 @@ class App extends React.Component {
   render() {
     return (
       //  <RootContainer />
-      <PaperProvider 
-      // theme={theme}
-      >
+
       <NavigationContainer>
         <Drawer.Navigator  drawerContent={props => <DrawerContent {...props} />} >
           <Drawer.Screen name="Home" component={HomeScreen} />
@@ -82,7 +76,7 @@ class App extends React.Component {
           <Drawer.Screen name="ProductView" component={ProductView} />
         </Drawer.Navigator>
       </NavigationContainer>
-      </PaperProvider>
+
     );
   }
 }
