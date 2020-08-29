@@ -24,6 +24,11 @@ class ProductView extends Component {
 
   render() {
     const {data, navigation} = this.props;
+    const {route} = this.props;
+    const {id} = route.params;
+    if(id != data.id){
+      this.props.getInfo({id});
+    }
     return (
       <React.Fragment>
         <View style={{flexDirection: 'row'}}>
@@ -42,7 +47,7 @@ class ProductView extends Component {
                 console.log(`${serverUrl}files/` + el.image_name);
                 return (
                   <Image
-                    style={{width: 200, height: 200,marginLeft:25}}
+                    style={{borderRadius:20,width: 200, height: 200,marginLeft:25}}
                     source={{
                       uri: `${serverUrl}files/` + el.image_name,
                     }}
@@ -53,19 +58,19 @@ class ProductView extends Component {
               <React.Fragment></React.Fragment>
             )}
           </ScrollView>
-          <Text style={{marginLeft:25,fontSize:25}}>{data.name}</Text>
-          <View style={{flexDirection:"row",marginLeft:25}}>
+          <Text style={{marginLeft:25,fontSize:35,fontWeight:'bold',marginBottom:10}}>{data.name}</Text>
+          <View style={{flexDirection:"row",alignItems:"flex-end",marginLeft:25}}>
             <Text style={{textDecorationLine:"line-through",fontSize:25}}>{data.price}</Text>
             <View style={{flexDirection:"column",marginLeft:10}}>
-              <View style={{flexDirection:"row-reverse"}}>
+              <View style={{marginLeft:-25,flexDirection:"row-reverse"}}>
                 <Badge value={"-"+data.discount+"%"} status="error" />
-
               </View>
               <Text  style={{color:"red",fontSize:25}}>{data.price - (data.price / 100 * data.discount)}</Text>
 
             </View>
-
           </View> 
+          <Text style={{marginLeft:25,marginTop:10,fontSize:15}}>Description:</Text>
+          <Text style={{marginLeft:25,marginTop:10,fontSize:12}}>{data.description}</Text>
 
         </ScrollView> 
       </React.Fragment>

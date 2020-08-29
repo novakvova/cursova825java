@@ -21,9 +21,13 @@ export const getInfo = () => {
         dispatch(getListActions.started());
         ProductsListService.getInfo()
             .then((response) => {
+                console.log("resp",response);
+
                 dispatch(getListActions.success(response));               
             }, err=> { throw err; })
-            .catch(err=> {               
+            .catch(err=> {           
+                console.log("errrr",err);
+    
                 dispatch(getListActions.failed(err.response.data));               
             });
     }
