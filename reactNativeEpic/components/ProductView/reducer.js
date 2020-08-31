@@ -1,10 +1,10 @@
 
 import update from '../../helpers/update';
-import ProductsListService from "./ProductsListService"
+import ProductViewService from "./ProductViewService"
 //action types
-export const PRODUCTS_STARTED = "PRODUCTS_STARTED";
-export const PRODUCTS_SUCCESS = "PRODUCTS_SUCCESS";
-export const PRODUCTS_FAILED = "PRODUCTS_FAILED";
+export const PRODUCT_VIEW_STARTED = "PRODUCT_VIEW_STARTED";
+export const PRODUCT_VIEW_SUCCESS = "PRODUCT_VIEW_SUCCESS";
+export const PRODUCT_VIEW_FAILED = "PRODUCT_VIEW_FAILED";
 
 
 const initialState = {
@@ -16,18 +16,14 @@ const initialState = {
     },   
 }
 
-export const getInfo = () => {
+export const getInfo = (model) => {
     return (dispatch) => {
         dispatch(getListActions.started());
-        ProductsListService.getInfo()
+        ProductViewService.getInfo(model)
             .then((response) => {
-                console.log("resp",response);
-
                 dispatch(getListActions.success(response));               
             }, err=> { throw err; })
-            .catch(err=> {           
-                console.log("errrr",err);
-    
+            .catch(err=> {               
                 dispatch(getListActions.failed(err.response.data));               
             });
     }
@@ -38,35 +34,35 @@ export const getInfo = () => {
 export const getListActions = {
     started: () => {
         return {
-            type: PRODUCTS_STARTED
+            type: PRODUCT_VIEW_STARTED
         }
     },  
     success: (response) => {
         return {
-            type: PRODUCTS_SUCCESS,
+            type: PRODUCT_VIEW_SUCCESS,
             response:response.data          
         }
     },      
     failed: (error) => {
         return {           
-            type: PRODUCTS_FAILED,
+            type: PRODUCT_VIEW_FAILED,
             errors: error
         }
     }
   }
 
-export const productsListReducer = (state = initialState, action) => { 
+export const productViewReducer = (state = initialState, action) => { 
   let newState = state;
 
   switch (action.type) {
 
-      case PRODUCTS_STARTED: {
+      case PRODUCT_VIEW_STARTED: {
           newState = update.set(state, 'list.loading', true);
           newState = update.set(newState, 'list.success', false);
           newState = update.set(newState, 'list.failed', false);
           break;
       }
-      case PRODUCTS_SUCCESS: {
+      case PRODUCT_VIEW_SUCCESS: {
           newState = update.set(state, 'list.loading', false);
           newState = update.set(newState, 'list.failed', false);
           newState = update.set(newState, 'list.success', true);       
@@ -74,7 +70,7 @@ export const productsListReducer = (state = initialState, action) => {
 
           break;
       }
-      case PRODUCTS_FAILED: {
+      case PRODUCT_VIEW_FAILED: {
           newState = update.set(state, 'list.loading', false);
           newState = update.set(newState, 'list.success', false);
           newState = update.set(newState, 'list.failed', true);

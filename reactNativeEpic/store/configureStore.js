@@ -5,6 +5,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 ///reducers
 import {productsListReducer} from '../components/ProductsList/reducer';
+import {productViewReducer} from '../components/ProductView/reducer';
 
 
 
@@ -16,7 +17,7 @@ import {productsListReducer} from '../components/ProductsList/reducer';
 export default function configureStore( initialState) {
   const reducers = {
     productsList: productsListReducer,
-
+    productView:productViewReducer,
   };
   const middleware = [
     thunk
