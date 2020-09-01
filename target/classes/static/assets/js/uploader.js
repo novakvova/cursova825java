@@ -58,6 +58,45 @@
             }
 
             var type = file.type;
+            console.log(type);
+            if(type.includes("image")){
+                let cropper = null;
+                let dialogCropper = $("#cropperModal");
+                if (cropper == null) {
+                    //запуск кропера
+                    const imageCropper = document.getElementById('imageCropper');
+                    cropper = new Cropper(imageCropper, {
+                        aspectRatio: 224 / 168,
+                        viewMode: 1,
+                        autoCropArea: 0.5,
+                        crop(event) {
+                            // console.log(event.detail.x);
+                            // console.log(event.detail.y);
+                            // console.log(event.detail.width);
+                            // console.log(event.detail.height);
+                            // console.log(event.detail.rotate);
+                            // console.log(event.detail.scaleX);
+                            // console.log(event.detail.scaleY);
+                        },
+                    });
+
+                    //обрізка малюнка
+                    $("#cropImg").on("click", function (e) {
+                        e.preventDefault();
+                        var imgContent = cropper.getCroppedCanvas().toDataURL();
+                        $("#images").prepend('<input type="hidden" name="productImages" value="' + imgContent + '">')
+                        dialogCropper.modal('hide');
+                    });
+                }
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        dialogCropper.modal('show');
+                        cropper.replace(event.target.result);
+                        uploader.remove();
+                        //
+                    };
+                    reader.readAsDataURL(uploader.files[0]);
+            }
             let fileTypes = {
                 'wordprocessingml.document': '<i class="fa fa-2x fa-file-word-o text-primary"></i>',
                 'spreadsheetml.sheet': '<i class="fa fa-2x fa-file-excel-o text-success"></i>',
@@ -72,6 +111,7 @@
 
             for (const [key, value] of Object.entries(fileTypes)) {
                 if (type.includes(key)) {
+
                     type = value;
                     break;
                 }

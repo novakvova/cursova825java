@@ -61,53 +61,57 @@ public class ProductController {
         return "addproduct";
     }
     @PostMapping("/product-add")
-    public String addProduct(@RequestParam("images[]") MultipartFile[] files,
-                             RedirectAttributes redirectAttributes, Product model){
-        Product pr = new Product();
-        pr.setName(model.getName());
-        pr.setPrice(model.getPrice());
-        pr.setDiscount(model.getDiscount());
-        pr.setCategory(categoryRepository.findById(model.getCategory().getId()).get());
-        pr.setDescription(model.getDescription());
-        List<ProductImages> prImages = new ArrayList<ProductImages>();
-        for (int i = 0; i < files.length; i++) {
-            MultipartFile file = files[i];
+    public String addProduct(
+            @RequestParam("productImages") String[] files
+                              ){
 
-            String name = UUID.randomUUID().toString()+"." + FilenameUtils.getExtension(file.getOriginalFilename());;
-            try {
-                byte[] bytes = file.getBytes();
-
-                Path f = storageService.load("");
-                String rootPath= f.toUri().getPath();
-                //String rootPath =  context.getRealPath("resources/");
-                System.out.println("---------"+rootPath);
-                File dir = new File(rootPath + File.separator );
-                if (!dir.exists())
-                    dir.mkdirs();
-
-                // Create the file on server
-                File serverFile = new File(dir.getAbsolutePath()
-                        + File.separator + name);
-                BufferedOutputStream stream = new BufferedOutputStream(
-                        new FileOutputStream(serverFile));
-                stream.write(bytes);
-                stream.close();
-                ProductImages prImage = new ProductImages();
-                prImage.setImage_name(name);
-                prImage.setProduct(pr);
-                prImages.add(prImage);
-
-
-
-//                logger.info("Server File Location="
-//                        + serverFile.getAbsolutePath());
-
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        }
-        pr.setProductImages(prImages);
-        productRespository.save(pr);
+        String f = files[0];
+//        Product pr = new Product();
+//        pr.setProductImages(model.getProductImages());
+//        pr.setName(model.getName());
+//        pr.setPrice(model.getPrice());
+//        pr.setDiscount(model.getDiscount());
+//        pr.setCategory(categoryRepository.findById(model.getCategory().getId()).get());
+//        pr.setDescription(model.getDescription());
+        //List<ProductImages> prImages = new ArrayList<ProductImages>();
+//        for (int i = 0; i < files.length; i++) {
+//            MultipartFile file = files[i];
+//
+//            String name = UUID.randomUUID().toString()+"." + FilenameUtils.getExtension(file.getOriginalFilename());;
+//            try {
+//                byte[] bytes = file.getBytes();
+//
+//                Path f = storageService.load("");
+//                String rootPath= f.toUri().getPath();
+//                //String rootPath =  context.getRealPath("resources/");
+//                System.out.println("---------"+rootPath);
+//                File dir = new File(rootPath + File.separator );
+//                if (!dir.exists())
+//                    dir.mkdirs();
+//
+//                // Create the file on server
+//                File serverFile = new File(dir.getAbsolutePath()
+//                        + File.separator + name);
+//                BufferedOutputStream stream = new BufferedOutputStream(
+//                        new FileOutputStream(serverFile));
+//                stream.write(bytes);
+//                stream.close();
+//                ProductImages prImage = new ProductImages();
+//                prImage.setImage_name(name);
+//                prImage.setProduct(pr);
+//                prImages.add(prImage);
+//
+//
+//
+////                logger.info("Server File Location="
+////                        + serverFile.getAbsolutePath());
+//
+//            } catch (Exception e) {
+//                return "You failed to upload " + name + " => " + e.getMessage();
+//            }
+//        }
+        //pr.setProductImages(prImages);
+        //productRespository.save(pr);
         return "redirect:/products";
     }
 }

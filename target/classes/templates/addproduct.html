@@ -11,6 +11,8 @@
           th:href="@{/assets/css/index.min.css}" />
     <link rel="stylesheet"
     th:href="@{/assets/css/addproductform.css}">
+    <link th:href="@{/lib/css/cropper.css}" rel="stylesheet"/>
+
 </head>
 
 <body>
@@ -19,7 +21,32 @@
         <header>
             <h1>Додати продукт :</h1>
         </header>
-        <form th:action="@{/product-add}" method="post" id="form" class="form" enctype="multipart/form-data">
+        <div  id="cropperModal" tabindex="-1" role="dialog" class="modal" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Обріжте фото</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <img id="imageCropper" src="/files/200_default.png" height="400">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!--                        <a id="img-rotation" class="btn btn-success"><i class="fa fa-repeat" aria-hidden="true"></i></a>-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="cropImg" class="btn btn-primary">Обрізати фото</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form th:action="@{/product-add}" method="post" id="form" class="form" >
+<!--              enctype="multipart/form-data"-->
+
 
             <div class="form-control">
                 <label for="name">Назва</label>
@@ -28,7 +55,9 @@
                 <i class="fas fa-exclamation-circle"></i>
                 <small>Error message</small>
             </div>
+            <div id="images">
 
+            </div>
             <div class="form-control">
                 <label for="price">Ціна</label>
                 <input type="number" id="price" name="price" placeholder="Ціна"/>
@@ -172,8 +201,9 @@
         }
 
     </script>
-
+    <script src="/lib/js/cropper.js"></script>
     <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+    <script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
 
     <script  th:src="@{'/assets/js/uploader.js'}" ></script>
 
