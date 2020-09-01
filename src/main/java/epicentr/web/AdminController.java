@@ -2,21 +2,15 @@ package epicentr.web;
 
 import epicentr.entities.Order;
 import epicentr.entities.Product;
-import epicentr.entities.User;
 import epicentr.repositories.*;
 import epicentr.services.StorageService;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.io.File;
-import java.nio.file.Path;
 import java.util.*;
 
 @Controller
@@ -83,7 +77,7 @@ public class AdminController {
     @GetMapping("admin/products")
     public String GetProducts(Model model) {
         model.addAttribute("products", productRespository.findAll());
-        return "adminproducts";
+        return "admin/products/list";
     }
     @GetMapping("admin/documents")
     public String GetDocuments(Model model) {
