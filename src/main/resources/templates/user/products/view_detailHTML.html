@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      >
+      layout:decorator="user/layouts/layout" lang="en"
+>
 <head>
     <meta charset="UTF-8">
+    <title>Title</title>
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/lib/css/all.css" rel="stylesheet"/>
     <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
-    <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
     <style>
+        .hrr {
+            border: none;
+            border-top: 3px solid lightgray;
+            color: #333;
+            overflow: visible;
+            text-align: center;
+            height: 10px;
+        }
+
+        .hrr:after {
+            background: #fff;
+            content: 'OR';
+            padding: 0 4px;
+            position: relative;
+            top: -13px;
+        }
         .breadcrumb-list > li {
             font-size: 14px;
             list-style: none;
@@ -351,18 +369,11 @@
         }
     </style>
 </head>
-<body >
-<div class="container">
-    <main id="app">
+<body>
 
-
-    </main>
-</div>
-
-<template id="product">
+<div layout:fragment="content">
 
     <div class=" wrapper con">
-
         <main>
             <div id="shopify-section-product-template" class="shopify-section">
                 <div class="single-product-area mt-80 mb-80">
@@ -379,16 +390,16 @@
                                                 <div class="xzoom-container">
 
                                                     <img class="xzoom" id="xzoom-default"
-                                                         :xoriginal="'/files/' + product.productImages[0].image_name"
-                                                         v-if="product.productImages!=undefined"
-                                                         :src="'/files/' + product.productImages[0].image_name"/>
+                                                         th:xoriginal="'/files/' + ${product.productImages[0].image_name}"
+                                                         th:if="${product.productImages}!=undefined"
+                                                         th:src="'/files/' + ${product.productImages[0].image_name}"/>
                                                     <div class="xzoom-thumbs">
 
-                                                        <a :href="'/files/' + image.image_name"
-                                                           v-for="image in product.productImages">
+                                                        <a th:href="'/files/' + ${image.image_name}"
+                                                           th:each="image : ${product.productImages}">
                                                             <img class="xzoom-gallery" style=" object-fit: contain;"
                                                                  width="105" height="80"
-                                                                 :src="'/files/' + image.image_name">
+                                                                 th:src="'/files/' + ${image.image_name}">
                                                         </a>
                                                     </div>
 
@@ -410,23 +421,16 @@
                                                                                                          name="utf8"
                                                                                                          value="✓">
                                             <div class="product-details">
-
-                                                <h1 class="single-product-name">
-                                                    {{ product.name }}
-
-                                                </h1>
-
-
+                                                <h1 th:text="${product.name}" class="single-product-name"></h1>
                                                 <div class="single-product-price">
                                                     <div class="product-discount">
                                                     <span class="price" id="ProductPrice">
-                                                        <span class="money">
-                                                            {{ product.price }}
+                                                        <span th:text="${product.price}" class="money">
                                                         </span>
                                                     </span>
                                                     </div>
                                                 </div>
-                                                <div class="product-info">{{ product.description }}</div>
+                                                <div class="product-info" th:text="${product.description}"></div>
 
                                                 <div class="single-product-action">
                                                     <div class="product-variant-option">
@@ -444,12 +448,18 @@
                                                             display: none;
                                                         }
                                                     </style>
-                                                    <v-btn icon>
-                                                        <i class="fas fa-cart-plus"></i>
-                                                    </v-btn>
-                                                    <div class="product-add-to-cart">
+
+
+                                                    <div sec:authorize="isAuthenticated()">
+                                                        <button id="cartBtn" class="btn btn-primary mb-2 mt-3">Add to
+                                                            cart
+                                                        </button>
+                                                        <hr class="hrr">
+                                                    </div>
+                                                    <div class="mt-0 product-add-to-cart">
                                                         <form action="/order" method="post">
-                                                            <input type="hidden" name="id" th:value="${product_id}"/>
+                                                            <input type="hidden" id="prod_id" name="id"
+                                                                   th:value="${product_id}"/>
 
                                                             <div sec:authorize="!isAuthenticated()">
                                                                 <div class="form-group has-feedback">
@@ -513,259 +523,190 @@
 
             </div>
         </main>
-        <input type="hidden" id="id" th:value="${product_id}"/>
     </div>
+</div>
+<div layout:fragment="scripts">
+    <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+    <script th:src="@{'/assets/js/xzoom.min.js'}"></script>
+    <script src="/lib/js/fontawesome.js"></script>
+    <script src="/assets/js/xzoom.min.js" rel="script"></script>
+    <script>
+        (function ($) {
+            $("#cartBtn").click(function () {
+                $.cookie.raw = true;
+                let prod_id = parseInt($("#prod_id").val());
+                let expDate = new Date();
+                expDate.setTime(expDate.getTime() + (7 * 24 * 60 * 60));
+                let val = $.cookie('cart');
+                if (val !== undefined) {
+                    let oldCart = JSON.parse(val);
+                    oldCart.push(prod_id);
+                    $.cookie('cart', JSON.stringify(oldCart), {path: '/', expires: expDate});
+                } else {
+                    let arr = [prod_id];
+                    $.cookie('cart', JSON.stringify(arr), {path: '/', expires: expDate});
+                }
+            });
+            $(document).ready(function () {
+                $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 300, title: true, tint: '#333', Xoffset: 15});
+                // $('.xzoom2, .xzoom-gallery2').xzoom({ position: '#xzoom2-id', tint: '#ffa200' });
+                // $('.xzoom3, .xzoom-gallery3').xzoom({ position: 'lens', lensShape: 'circle', sourceClass: 'xzoom-hidden' });
+                // $('.xzoom4, .xzoom-gallery4').xzoom({ tint: '#006699', Xoffset: 15 });
+                // $('.xzoom5, .xzoom-gallery5').xzoom({ tint: '#006699', Xoffset: 15 });
 
-</template>
-
-
-<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
-<script th:src="@{'/assets/js/xzoom.min.js'}"></script>
-<script src="/assets/js/xzoom.min.js" rel="script"></script>
-<script>
-    (function ($) {
-        $(document).ready(function () {
-            $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 300, title: true, tint: '#333', Xoffset: 15});
-            // $('.xzoom2, .xzoom-gallery2').xzoom({ position: '#xzoom2-id', tint: '#ffa200' });
-            // $('.xzoom3, .xzoom-gallery3').xzoom({ position: 'lens', lensShape: 'circle', sourceClass: 'xzoom-hidden' });
-            // $('.xzoom4, .xzoom-gallery4').xzoom({ tint: '#006699', Xoffset: 15 });
-            // $('.xzoom5, .xzoom-gallery5').xzoom({ tint: '#006699', Xoffset: 15 });
-
-            //Integration with hammer.js
-            var isTouchSupported = 'ontouchstart' in window;
-            console.log(isTouchSupported);
-            if (isTouchSupported) {
-                //If touch device
-                $('.xzoom, .xzoom2, .xzoom3, .xzoom4, .xzoom5').each(function () {
-                    var xzoom = $(this).data('xzoom');
-                    xzoom.eventunbind();
-                });
-
-                $('.xzoom, .xzoom2, .xzoom3').each(function () {
-                    var xzoom = $(this).data('xzoom');
-                    $(this).hammer().on("tap", function (event) {
-                        event.pageX = event.gesture.center.pageX;
-                        event.pageY = event.gesture.center.pageY;
-                        var s = 1, ls;
-
-                        xzoom.eventmove = function (element) {
-                            element.hammer().on('drag', function (event) {
-                                event.pageX = event.gesture.center.pageX;
-                                event.pageY = event.gesture.center.pageY;
-                                xzoom.movezoom(event);
-                                event.gesture.preventDefault();
-                            });
-                        }
-
-                        xzoom.eventleave = function (element) {
-                            element.hammer().on('tap', function (event) {
-                                xzoom.closezoom();
-                            });
-                        }
-                        xzoom.openzoom(event);
+                //Integration with hammer.js
+                var isTouchSupported = 'ontouchstart' in window;
+                console.log(isTouchSupported);
+                if (isTouchSupported) {
+                    //If touch device
+                    $('.xzoom, .xzoom2, .xzoom3, .xzoom4, .xzoom5').each(function () {
+                        var xzoom = $(this).data('xzoom');
+                        xzoom.eventunbind();
                     });
-                });
 
-                $('.xzoom4').each(function () {
-                    var xzoom = $(this).data('xzoom');
-                    $(this).hammer().on("tap", function (event) {
-                        event.pageX = event.gesture.center.pageX;
-                        event.pageY = event.gesture.center.pageY;
-                        var s = 1, ls;
+                    $('.xzoom, .xzoom2, .xzoom3').each(function () {
+                        var xzoom = $(this).data('xzoom');
+                        $(this).hammer().on("tap", function (event) {
+                            event.pageX = event.gesture.center.pageX;
+                            event.pageY = event.gesture.center.pageY;
+                            var s = 1, ls;
 
-                        xzoom.eventmove = function (element) {
-                            element.hammer().on('drag', function (event) {
-                                event.pageX = event.gesture.center.pageX;
-                                event.pageY = event.gesture.center.pageY;
-                                xzoom.movezoom(event);
-                                event.gesture.preventDefault();
-                            });
-                        }
-
-                        var counter = 0;
-                        xzoom.eventclick = function (element) {
-                            element.hammer().on('tap', function () {
-                                counter++;
-                                if (counter == 1) setTimeout(openfancy, 300);
-                                event.gesture.preventDefault();
-                            });
-                        }
-
-                        function openfancy() {
-                            if (counter == 2) {
-                                xzoom.closezoom();
-                                $.fancybox.open(xzoom.gallery().cgallery);
-                            } else {
-                                xzoom.closezoom();
+                            xzoom.eventmove = function (element) {
+                                element.hammer().on('drag', function (event) {
+                                    event.pageX = event.gesture.center.pageX;
+                                    event.pageY = event.gesture.center.pageY;
+                                    xzoom.movezoom(event);
+                                    event.gesture.preventDefault();
+                                });
                             }
-                            counter = 0;
-                        }
 
-                        xzoom.openzoom(event);
+                            xzoom.eventleave = function (element) {
+                                element.hammer().on('tap', function (event) {
+                                    xzoom.closezoom();
+                                });
+                            }
+                            xzoom.openzoom(event);
+                        });
                     });
-                });
 
-                $('.xzoom5').each(function () {
-                    var xzoom = $(this).data('xzoom');
-                    $(this).hammer().on("tap", function (event) {
-                        event.pageX = event.gesture.center.pageX;
-                        event.pageY = event.gesture.center.pageY;
-                        var s = 1, ls;
+                    $('.xzoom4').each(function () {
+                        var xzoom = $(this).data('xzoom');
+                        $(this).hammer().on("tap", function (event) {
+                            event.pageX = event.gesture.center.pageX;
+                            event.pageY = event.gesture.center.pageY;
+                            var s = 1, ls;
 
-                        xzoom.eventmove = function (element) {
-                            element.hammer().on('drag', function (event) {
-                                event.pageX = event.gesture.center.pageX;
-                                event.pageY = event.gesture.center.pageY;
-                                xzoom.movezoom(event);
-                                event.gesture.preventDefault();
-                            });
-                        }
+                            xzoom.eventmove = function (element) {
+                                element.hammer().on('drag', function (event) {
+                                    event.pageX = event.gesture.center.pageX;
+                                    event.pageY = event.gesture.center.pageY;
+                                    xzoom.movezoom(event);
+                                    event.gesture.preventDefault();
+                                });
+                            }
 
-                        var counter = 0;
-                        xzoom.eventclick = function (element) {
-                            element.hammer().on('tap', function () {
-                                counter++;
-                                if (counter == 1) setTimeout(openmagnific, 300);
-                                event.gesture.preventDefault();
-                            });
-                        }
+                            var counter = 0;
+                            xzoom.eventclick = function (element) {
+                                element.hammer().on('tap', function () {
+                                    counter++;
+                                    if (counter == 1) setTimeout(openfancy, 300);
+                                    event.gesture.preventDefault();
+                                });
+                            }
 
-                        function openmagnific() {
-                            if (counter == 2) {
-                                xzoom.closezoom();
-                                var gallery = xzoom.gallery().cgallery;
-                                var i, images = new Array();
-                                for (i in gallery) {
-                                    images[i] = {src: gallery[i]};
+                            function openfancy() {
+                                if (counter == 2) {
+                                    xzoom.closezoom();
+                                    $.fancybox.open(xzoom.gallery().cgallery);
+                                } else {
+                                    xzoom.closezoom();
                                 }
-                                $.magnificPopup.open({items: images, type: 'image', gallery: {enabled: true}});
-                            } else {
-                                xzoom.closezoom();
+                                counter = 0;
                             }
-                            counter = 0;
-                        }
 
-                        xzoom.openzoom(event);
+                            xzoom.openzoom(event);
+                        });
                     });
-                });
 
-            } else {
-                //If not touch device
+                    $('.xzoom5').each(function () {
+                        var xzoom = $(this).data('xzoom');
+                        $(this).hammer().on("tap", function (event) {
+                            event.pageX = event.gesture.center.pageX;
+                            event.pageY = event.gesture.center.pageY;
+                            var s = 1, ls;
 
-                //Integration with fancybox plugin
-                $('#xzoom-fancy').bind('click', function (event) {
-                    var xzoom = $(this).data('xzoom');
-                    xzoom.closezoom();
-                    $.fancybox.open(xzoom.gallery().cgallery, {padding: 0, helpers: {overlay: {locked: false}}});
-                    event.preventDefault();
-                });
+                            xzoom.eventmove = function (element) {
+                                element.hammer().on('drag', function (event) {
+                                    event.pageX = event.gesture.center.pageX;
+                                    event.pageY = event.gesture.center.pageY;
+                                    xzoom.movezoom(event);
+                                    event.gesture.preventDefault();
+                                });
+                            }
 
-                //Integration with magnific popup plugin
-                $('#xzoom-magnific').bind('click', function (event) {
-                    var xzoom = $(this).data('xzoom');
-                    xzoom.closezoom();
-                    var gallery = xzoom.gallery().cgallery;
-                    var i, images = new Array();
-                    for (i in gallery) {
-                        images[i] = {src: gallery[i]};
-                    }
-                    $.magnificPopup.open({items: images, type: 'image', gallery: {enabled: true}});
-                    event.preventDefault();
-                });
-            }
-        });
-    })(jQuery);
-</script>
-<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
-<script src="/lib/js/vue/vue.min.js"></script>
-<script src="/lib/js/vue/vue-router.min.js"></script>
-<script src="/lib/js/vue/vuetify.js"></script>
-<script src="/lib/js/fontawesome.js"></script>
-<script src="/lib/js/all.js"></script>
-<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
-<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
-<script>
-    var product = {};
+                            var counter = 0;
+                            xzoom.eventclick = function (element) {
+                                element.hammer().on('tap', function () {
+                                    counter++;
+                                    if (counter == 1) setTimeout(openmagnific, 300);
+                                    event.gesture.preventDefault();
+                                });
+                            }
 
-    function findProduct(productId) {
-        console.log("ax");
-        return findById(productId, fn);
-    }
+                            function openmagnific() {
+                                if (counter == 2) {
+                                    xzoom.closezoom();
+                                    var gallery = xzoom.gallery().cgallery;
+                                    var i, images = new Array();
+                                    for (i in gallery) {
+                                        images[i] = {src: gallery[i]};
+                                    }
+                                    $.magnificPopup.open({items: images, type: 'image', gallery: {enabled: true}});
+                                } else {
+                                    xzoom.closezoom();
+                                }
+                                counter = 0;
+                            }
 
-    function findProductKey(productId) {
-        console.log("ax2");
-        for (var key = 0; key < products.length; key++) {
-            if (products[key].id == productId) {
-                return key;
-            }
-        }
-    }
+                            xzoom.openzoom(event);
+                        });
+                    });
 
-    var productService = {
-        findAll(fn) {
-            axios
-                .get('/api/v1/products')
-                .then(response => fn(response))
-                .catch(error => console.log(error))
-        },
+                } else {
+                    //If not touch device
 
-        findById(id, fn) {
-            console.log("ax");
-            axios
-                .get('/api/v1/products/' + id)
-                .then(response => fn(response))
-                .catch(error => console.log(error))
+                    //Integration with fancybox plugin
+                    $('#xzoom-fancy').bind('click', function (event) {
+                        var xzoom = $(this).data('xzoom');
+                        xzoom.closezoom();
+                        $.fancybox.open(xzoom.gallery().cgallery, {padding: 0, helpers: {overlay: {locked: false}}});
+                        event.preventDefault();
+                    });
 
-        },
-
-        create(product, fn) {
-            axios
-                .post('/api/v1/products', product)
-                .then(response => fn(response))
-                .catch(error => console.log(error))
-        },
-
-        update(id, product, fn) {
-            axios
-                .put('/api/v1/products/' + id, product)
-                .then(response => fn(response))
-                .catch(error => console.log(error))
-        },
-
-        deleteProduct(id, fn) {
-            axios
-                .delete('/api/v1/products/' + id)
-                .then(response => fn(response))
-                .catch(error => console.log(error))
-        }
-    }
-
-    var Product = Vue.extend({
-        template: '#product',
-        data: function () {
-            return {product: {}};
-        },
-        mounted() {
-            productService.findById($("#id").val(), r => {
-                this.product = r.data;
-                product = r.data
-            })
-        }
-    });
-
-    new Vue({
-        vuetify: new Vuetify(),
-        render: h => h(Product)
-    }).$mount('#app')
-
-</script>
+                    //Integration with magnific popup plugin
+                    $('#xzoom-magnific').bind('click', function (event) {
+                        var xzoom = $(this).data('xzoom');
+                        xzoom.closezoom();
+                        var gallery = xzoom.gallery().cgallery;
+                        var i, images = new Array();
+                        for (i in gallery) {
+                            images[i] = {src: gallery[i]};
+                        }
+                        $.magnificPopup.open({items: images, type: 'image', gallery: {enabled: true}});
+                        event.preventDefault();
+                    });
+                }
 
 
-<!--  <script src="/lib/js/xzoom.min.js"></script>-->
+            });
+        })(jQuery);
+    </script>
+    <script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-
-<!--  <script src="https://unpkg.com/vue@2.5.22/dist/vue.js"></script>-->
-
+    <script src="/lib/js/all.js"></script>
+</div>
 
 </body>
 </html>
