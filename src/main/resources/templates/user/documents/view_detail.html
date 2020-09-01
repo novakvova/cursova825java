@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <link href="/static/lib/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/static/lib/css/all.css" rel="stylesheet"/>
-    <link href="/static/lib/css/fontawesome.css" rel="stylesheet"/>
-    <link href="/static/lib/css/vue/vuetify.css" rel="stylesheet"/>
+    <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/css/all.css" rel="stylesheet"/>
+    <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
+    <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -49,7 +49,7 @@
                 </v-tooltip>
                 <v-tooltip  bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>
                             <v-icon>mdi-text-box-plus </v-icon>
                         </v-btn>
                     </template>
@@ -125,13 +125,13 @@
     </v-app>
 </template>
 
-<script src="/static/lib/js/jquery.js"></script>
-<script src="/static/lib/js/bootstrap.min.js"></script>
-<script src="/static/lib/js/vue/vue.min.js"></script>
-<script src="/static/lib/js/vue/vue-router.min.js"></script>
-<script src="/static/lib/js/vue/vuetify.js"></script>
-<script src="/static/lib/js/fontawesome.js"></script>
-<script src="/static/lib/js/all.js"></script>
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js"></script>
+<script src="/lib/js/vue/vue.min.js"></script>
+<script src="/lib/js/vue/vue-router.min.js"></script>
+<script src="/lib/js/vue/vuetify.js"></script>
+<script src="/lib/js/fontawesome.js"></script>
+<script src="/lib/js/all.js"></script>
 <script>
     var Documents = Vue.extend({
         template: '#documents'

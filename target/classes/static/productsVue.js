@@ -70,7 +70,7 @@ var List = Vue.extend({
   },
   computed: {
     filteredProducts() {
-      return this.products.filter((product) => {
+      return this.view.filter((product) => {
       	return product.name.indexOf(this.searchKey) > -1
       	  || product.description.indexOf(this.searchKey) > -1
       	  || product.price.toString().indexOf(this.searchKey) > -1
@@ -130,10 +130,10 @@ var AddProduct = Vue.extend({
 var router = new VueRouter({
 	routes: [
 		{path: '/', component: List},
-		{path: '/product/:product_id', component: Product, name: 'product'},
-		{path: '/add-product', component: AddProduct},
-		{path: '/product/:product_id/edit', component: ProductEdit, name: 'product-edit'},
-		{path: '/product/:product_id/delete', component: ProductDelete, name: 'product-delete'}
+		// {path: '/product/:product_id', component: Product, name: 'product'},
+		// {path: '/add-product', component: AddProduct},
+		// {path: '/product/:product_id/edit', component: ProductEdit, name: 'product-edit'},
+		// {path: '/product/:product_id/delete', component: ProductDelete, name: 'product-delete'}
 	]
 });
 

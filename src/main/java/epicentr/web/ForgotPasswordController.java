@@ -1,28 +1,20 @@
 package epicentr.web;
 
-import epicentr.entities.Message;
 import epicentr.entities.User;
 import epicentr.helpers.EmailUtil;
 import epicentr.models.ForgotPasswordUserViewModel;
-import epicentr.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import epicentr.repositories.MessageRepository;
 import epicentr.repositories.UserRepository;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.SecureRandom;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -45,7 +37,7 @@ public class ForgotPasswordController
     @GetMapping("/changepassword")
     public String change( Model model)
     {
-        return "changepassword";
+        return "user/auth/changepassword";
     }
     @PostMapping("/changepassword")
     public String chPaswd(ForgotPasswordUserViewModel user)
@@ -59,7 +51,7 @@ public class ForgotPasswordController
     @GetMapping("/forgotpassword")
     public String forgot(Model model)
     {
-        return "forgotpassword";
+        return "user/auth/forgotpassword";
     }
 
     @PostMapping("/forgotpassword")

@@ -2,7 +2,6 @@ package epicentr.web;
 
 import epicentr.entities.Document;
 import epicentr.entities.DocumentFile;
-import epicentr.entities.Message;
 import epicentr.repositories.*;
 import epicentr.services.StorageService;
 import org.apache.commons.io.FilenameUtils;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.ServletContext;
 import java.io.File;
@@ -56,22 +54,17 @@ public class DocumentController
     @Autowired
     public PasswordEncoder passwordEncoder;
 
-    @GetMapping("/document/create")
-    public String document()
-    {
-        return "documents";
-    }
     @GetMapping("/documents")
     public String documents(Model model)
     {
         model.addAttribute("documents",documentRepository.findAll());
-        return "allDocuments";
+        return "user/documents/view";
     }
     @GetMapping("/document-view/{id}")
     public String documentView(@PathVariable("id") Long id,Model model)
     {
         model.addAttribute("document",documentRepository.findById(id).get());
-        return "documentView";
+        return "user/documents/view_detail";
     }
     @PostMapping("/document")
     public String saveDocument(@RequestParam("images[]") MultipartFile[] files,

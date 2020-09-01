@@ -3,13 +3,13 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      layout:decorator="layout" lang="en">
+      layout:decorator="user/layouts/layout" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/lib/css/all.css" rel="stylesheet"/>
-    <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
+    <link href="/static/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/static/lib/css/all.css" rel="stylesheet"/>
+    <link href="/static/lib/css/fontawesome.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
 
@@ -102,7 +102,7 @@
     </div>
 </div>
 <div layout:fragment="scripts">
-    <script src="/lib/js/fontawesome.js"></script>
+    <script src="/static/lib/js/fontawesome.js"></script>
     <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 
     <script>
@@ -167,7 +167,7 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-    <script src="/lib/js/all.js"></script>
+    <script src="/static/lib/js/all.js"></script>
 </div>
 </body>
 </html>

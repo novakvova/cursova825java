@@ -1,10 +1,6 @@
 package epicentr.web;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
 import epicentr.entities.Order;
 import epicentr.entities.Product;
 import epicentr.entities.User;
@@ -16,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.WebUtils;
@@ -24,7 +19,6 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +48,7 @@ public class OrderController {
             }
         }
         model.addAttribute("orders", orders);
-        return "myorders";
+        return "user/orders/view";
     }
 
     //    @GetMapping("/addtocart/{id}")
@@ -102,7 +96,7 @@ public class OrderController {
                 model.addAttribute("products", products);
             }
         }
-        return "cart";
+        return "user/carts/cart";
     }
 
     @PostMapping("/cart-order")

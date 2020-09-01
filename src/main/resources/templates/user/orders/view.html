@@ -34,7 +34,7 @@
                 <v-toolbar-title>Epicentr</v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-btn icon  th:href="@{/products}">
+                <v-btn icon th:href="@{/products}">
                     <v-icon>mdi-camera-burst </v-icon>
                 </v-btn>
                 <v-btn icon  th:href="@{/}">
@@ -48,9 +48,17 @@
                     </template>
                     <span>Documents</span>
                 </v-tooltip>
+<!--                <v-tooltip  bottom>-->
+<!--                    <template v-slot:activator="{ on, attrs }">-->
+<!--                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>-->
+<!--                            <v-icon>mdi-text-box-plus </v-icon>-->
+<!--                        </v-btn>-->
+<!--                    </template>-->
+<!--                    <span>Create Document</span>-->
+<!--                </v-tooltip>-->
                 <v-tooltip  bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>
                             <v-icon>mdi-text-box-plus </v-icon>
                         </v-btn>
                     </template>
