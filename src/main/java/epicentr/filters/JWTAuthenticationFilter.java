@@ -24,7 +24,6 @@ import static epicentr.constraint.SecurityConstants.HEADER_STRING;
 import static epicentr.constraint.SecurityConstants.SECRET;
 import static epicentr.constraint.SecurityConstants.TOKEN_PREFIX;
 
-
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
 

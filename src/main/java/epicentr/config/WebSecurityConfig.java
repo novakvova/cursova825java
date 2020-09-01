@@ -2,7 +2,9 @@ package epicentr.config;
 
 import javax.sql.DataSource;
 
+import com.auth0.spring.security.api.JwtWebSecurityConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,7 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private UserDetailsService customUserDetailsService;
-	
+//	@Value(value = "${auth0.apiAudience}")
+//	private String apiAudience;
+//	@Value(value = "${auth0.issuer}")
+//	private String issuer;
 	@Autowired
 	private DataSource dataSource;
 	
@@ -91,8 +96,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
              	;
 		http.csrf().disable();
+//		JwtWebSecurityConfigurer
+//				.forRS256("/api/v1/", "/")
+//				.configure(http)
+//				.cors().and().csrf().disable().authorizeRequests()
+//				.anyRequest().permitAll();
     }
-    
+	@Override
+	public void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
+	}
     PersistentTokenRepository persistentTokenRepository(){
     	JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
     	tokenRepositoryImpl.setDataSource(dataSource);
