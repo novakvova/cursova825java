@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My orders</title>
+    <title>Documents</title>
     <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/css/all.css" rel="stylesheet"/>
+    <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
     <link href="/lib/css/vue/vuetify.css" rel="stylesheet"/>
-    <link href="/lib/css/cropper.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
 </head>
-<body >
+<body>
 <div >
     <main id="app">
 
 
     </main>
 </div>
-<template id="orders">
+<template id="documents">
     <v-app>
         <div>
 
@@ -50,7 +49,7 @@
                 </v-tooltip>
                 <v-tooltip  bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
+                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>
                             <v-icon>mdi-text-box-plus </v-icon>
                         </v-btn>
                     </template>
@@ -106,37 +105,15 @@
             </v-app-bar>
         </div>
         <div class="container">
+
         <div class="row">
-            <div class="col-sm-4 col-md-3 col-lg-2" th:each="order : ${orders}"  >
+            <div class="col-sm-4 col-md-3 col-lg-2" th:each="document : ${documents}"  >
                 <v-card>
-                    <v-img
-                            class="white--text align-end"
-                            height="200px"
-                            th:src="'/files/' + ${order.getProduct().getProductImages().get(0).getImage_name()}"
-
-                    >
-                    </v-img>
                     <v-card-text>
-                        <h3 th:text="${order.getProduct().getName()}"></h3>
-                        <h5 th:if="${order.getProduct().getDiscount()} == null" th:text="${order.getProduct().getPrice()}"></h5>
-                        <v-badge
-                                color="red"
-                                th:if="${order.getProduct().getDiscount()} != null"
-                                th:content="'-' + ${order.getProduct().getDiscount()} + '%'"
-                        >
-                            <div class="d-flex flex-row">
-                                <h5 class="mr-1" style="text-decoration: line-through" th:text="${order.getProduct().getPrice()}"></h5>
-                                <h5 class="text-danger" th:text="${order.getProduct().getPrice()-(order.getProduct().getPrice()/100*order.getProduct().getDiscount())}"></h5>
-                            </div>
-                        </v-badge>
-                        <p th:text="${order.getProduct().getDescription()}"></p>
-                        <p class="text-primary" th:text="'Status: '+${order.getOrderStatus().getName()}"></p>
-                        <p class="text-primary" th:text="'Count: '+${order.getCount()}"></p>
-
+                        <h3 th:text="${document.getName()}"></h3>
                     </v-card-text>
-
                     <v-card-actions>
-                        <a th:href="'/product-view/' + ${order.getProduct().getId()}">
+                        <a th:href="'/document-view/' + ${document.getId()}">
                             <v-btn
 
                                     text
@@ -146,31 +123,31 @@
                             </v-btn>
                         </a>
                     </v-card-actions>
-
                 </v-card>
             </div>
         </div>
+
         </div>
     </v-app>
 </template>
 
+<script src="/lib/js/jquery.js"></script>
+<script src="/lib/js/bootstrap.min.js"></script>
 <script src="/lib/js/vue/vue.min.js"></script>
 <script src="/lib/js/vue/vue-router.min.js"></script>
 <script src="/lib/js/vue/vuetify.js"></script>
-
-<script src="/lib/js/jquery.js"></script>
-<script src="/lib/js/bootstrap.min.js"></script>
-<script src="/lib/js/cropper.js"></script>
-<!--  <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>-->
-<script src="https://unpkg.com/axios@0.18.0/dist/axios.min.js"></script>
+<script src="/lib/js/fontawesome.js"></script>
+<script src="/lib/js/all.js"></script>
 <script>
-    var UP = Vue.extend({
-        template: '#orders'
+    var Documents = Vue.extend({
+        template: '#documents',
+        data: function () {
+            return {product: {}};
+        }
     });
-
     new Vue({
         vuetify: new Vuetify(),
-        render: h => h(UP)
+        render: h => h(Documents)
     }).$mount('#app')
 
 </script>

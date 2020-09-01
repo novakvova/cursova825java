@@ -25,19 +25,19 @@ public class ProductController {
     }
     @GetMapping("/products")
     public String list(){
-        return "products";
+        return "user/products/view";
     }
     //Old on Vue.js
 //    @GetMapping("/product-view/{product_id}")
 //    public String view(@PathVariable("product_id") int product_id,Model model){
 //        model.addAttribute("product_id",product_id);
-//        return "productview";
+//        return "user/products/view_detail";
 //    }
     //New on HTML
     @GetMapping("/product-view/{product_id}")
     public String view(@PathVariable("product_id") Long product_id,Model model){
         model.addAttribute("product",productRespository.findById(product_id).get());
-        return "productviewHTML";
+        return "user/products/view_detailHTML";
     }
     @GetMapping("/product-add")
     public String add(Model model){

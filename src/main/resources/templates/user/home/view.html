@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-	layout:decorator="layout">
+	layout:decorator="user/layouts/layout">
 
 <head>
 <title>User Home</title>
@@ -20,7 +20,7 @@
 		<div sec:authorize="hasRole('ROLE_ADMIN')">
 			<h3>You will see this only if you are ADMIN</h3>
 			<p>
-				<a th:href="@{/admin/home}">Admin Home</a>
+				<a th:href="@{/templates/admin/home/view}">Admin Home</a>
 			</p>
 		</div>
 		<h3>Form with CSRF Token</h3>

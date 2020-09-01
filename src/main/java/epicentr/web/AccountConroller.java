@@ -5,7 +5,6 @@ import epicentr.entities.User;
 import epicentr.repositories.RoleRepository;
 import epicentr.services.StorageService;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import epicentr.repositories.UserRepository;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Base64;
@@ -50,7 +48,7 @@ public class AccountConroller
     @GetMapping("/register")
     public String GetRegister()
     {
-        return "register";
+        return "user/auth/register";
     }
     @GetMapping("/profile")
     public String GetProfile(Model model)
@@ -64,7 +62,7 @@ public class AccountConroller
         model.addAttribute("city",user.getCity());
         model.addAttribute("postOffice",user.getPostOffice());
         model.addAttribute("image",user.getImage());
-        return "profile";
+        return "user/auth/profile";
     }
     @PostMapping("/profile")
     public String UpdateProfile(User usik)
