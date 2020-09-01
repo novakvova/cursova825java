@@ -81,14 +81,14 @@
 					</template>
 					<span>Documents</span>
 				</v-tooltip>
-				<v-tooltip  bottom>
-					<template v-slot:activator="{ on, attrs }">
-						<v-btn v-bind="attrs" v-on="on"  th:href="@{/document/create}" icon>
-							<v-icon>mdi-text-box-plus </v-icon>
-						</v-btn>
-					</template>
-					<span>Create Document</span>
-				</v-tooltip>
+<!--				<v-tooltip  bottom>-->
+<!--					<template v-slot:activator="{ on, attrs }">-->
+<!--						<v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>-->
+<!--							<v-icon>mdi-text-box-plus </v-icon>-->
+<!--						</v-btn>-->
+<!--					</template>-->
+<!--					<span>Create Document</span>-->
+<!--				</v-tooltip>-->
 				<a sec:authorize="isAuthenticated()" th:href="@{/profile}">
 				<v-btn icon>
 					<v-icon>mdi-account</v-icon>

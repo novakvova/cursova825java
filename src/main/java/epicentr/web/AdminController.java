@@ -47,7 +47,7 @@ public class AdminController {
         }
 
         model.addAttribute("orders", orders);
-        return "adminhome";
+        return "admin/home/view";
     }
     @PostMapping("order/change")
     public String ChangeOrderStatus(Order model) {
@@ -72,7 +72,7 @@ public class AdminController {
 
         model.addAttribute("orderStatuses",orderStatusRepository.findAll());
         model.addAttribute("orders", orders);
-        return "adminorders";
+        return "admin/orders/view";
     }
     @GetMapping("admin/products")
     public String GetProducts(Model model) {
@@ -82,6 +82,11 @@ public class AdminController {
     @GetMapping("admin/documents")
     public String GetDocuments(Model model) {
         model.addAttribute("documents", documentRepository.findAll());
-        return "admindocuments";
+        return "admin/documents/list";
+    }
+    @GetMapping("admin/document/create")
+    public String document()
+    {
+        return "admin/documents/create";
     }
 }
