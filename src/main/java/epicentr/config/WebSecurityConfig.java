@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,9 +29,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static epicentr.constraint.SecurityConstants.SIGN_UP_URL;
 
-@Configuration
+//@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
+//@EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -53,15 +54,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.userDetailsService(customUserDetailsService)
         	.passwordEncoder(passwordEncoder());
     }
-	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-				.anyRequest().authenticated()
+
 				.antMatchers("/resources/**", "/webjars/**", "/lib/**","/assets/**").permitAll()
 				.antMatchers("/").permitAll()
+				.antMatchers("/api/v1/auth/**").permitAll()
+				.anyRequest().authenticated()
 				.and()
 				.formLogin()
                 .loginPage("/login")

@@ -49,6 +49,11 @@ public class User
 		roles = new ArrayList<Role>();
 	}
 
+	public User(String name, @Size(min = 4) String password) {
+		this.name = name;
+		this.password = password;
+	}
+
 	public User(@NotEmpty() String name, @NotEmpty @Email(message = "{errors.invalid_email}") String email, @NotEmpty @Size(min = 4) String password) {
 		this.name = name;
 		this.email = email;
