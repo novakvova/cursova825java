@@ -43,7 +43,7 @@ public class ForgotPasswordController
     public String chPaswd(ForgotPasswordUserViewModel user)
     {
         String id = base64decode(user.getCode());
-        Optional<User> usik = userRepository.findById(Integer.parseInt(id));
+        Optional<User> usik = userRepository.findById(Long.parseLong(id));
         usik.get().setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(usik.get());
         return "redirect:/login";
