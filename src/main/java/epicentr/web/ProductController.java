@@ -61,7 +61,7 @@ public class ProductController {
 
     @PostMapping("/product-add")
     public String addProduct(
-            @RequestParam("images") String[] files,
+            @RequestParam(value="images", required = false) String[] files,
             Product model) {
 
         //String f = files[0];
