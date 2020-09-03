@@ -1,11 +1,14 @@
 package epicentr.services;
 
-import epicentr.entities.User;
 import epicentr.repositories.UserRepository;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -19,14 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     }
 
     @Override
-    public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        User applicationUser = applicationUserRepository.findByName(username);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        epicentr.entities.User applicationUser = applicationUserRepository.findByEmail(username);
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }
-        User usik = new User();
-        usik.setName(applicationUser.getName());
-        usik.setPassword(applicationUser.getPassword());
-        return usik;
+        return new User(applicationUser.getEmail(),applicationUser.getPassword(),new ArrayList<>());
     }
 }
