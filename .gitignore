@@ -10,5 +10,6 @@ dump.rdb
 Test.java
 *.log
 node_modules/
+.vs
 package-lock.json
 uploads/
