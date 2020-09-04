@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import HomeScreen from './components/Home/HomeScreen';
 import ProductsList from './components/ProductsList';
 import ProductView from './components/ProductView';
+import LoginPage from './components/LoginPage/LoginPage';
+
+
 
 import firebase from 'firebase';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -74,6 +77,7 @@ class App extends React.Component {
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="ProductsList" component={ProductsList} />
           <Drawer.Screen name="ProductView" component={ProductView} />
+          <Drawer.Screen name="LoginPage" component={LoginPage} />
         </Drawer.Navigator>
       </NavigationContainer>
 
