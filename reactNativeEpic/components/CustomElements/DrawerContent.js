@@ -58,6 +58,15 @@ export function DrawerContent(props) {
               props.navigation.navigate('ProductsList');
             }}
           />
+          <DrawerItem
+            icon={({color, size}) => (
+              <Icon name="person-circle-outline" color={color} size={size} />
+            )}
+            label="Login"
+            onPress={() => {
+              props.navigation.navigate('LoginPage');
+            }}
+          />
         </View>
       </DrawerContentScrollView>
     </View>
