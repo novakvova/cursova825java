@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   SafeAreaView,
+  TextInput
 } from 'react-native';
 import {Input, Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -40,11 +41,11 @@ class Login extends Component {
           />
         </View>
         <>
-          <Input
+          <TextInput
             placeholder="Email"
             onChangeText={(value) => this.setState({email: value})}
           />
-          <Input
+          <TextInput
             placeholder="Password"
             secureTextEntry={true}
             onChangeText={(value) => this.setState({password: value})}
