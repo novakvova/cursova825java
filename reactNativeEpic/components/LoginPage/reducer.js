@@ -1,6 +1,8 @@
 import update from "../../helpers/update";
 import LoginService from "./LoginService";
 import isEmpty from "lodash/isEmpty";
+
+//import AsyncStorage from '@react-native-community/async-storage';
 import { AsyncStorage } from 'react-native';
 
 import setAuthorizationToken from "../../utils/setAuthorizationToken";
@@ -68,7 +70,7 @@ export const login = model => {
     LoginService.login(model)
       .then(
         response => {
-          console.log(response);
+          console.log("resp",response);
 
           dispatch(loginActions.success());
           loginByJWT(response.data, dispatch);
@@ -126,7 +128,7 @@ export function logout() {
   };
 }
 
-export const loginByJWT = (tokens, dispatch) => {
+export const loginByJWT = async (tokens, dispatch) => {
   const { token, refreshToken } = tokens;
   setAuthorizationToken(token);
   ///console.log('Hello app Token: ', token);
@@ -135,13 +137,13 @@ export const loginByJWT = (tokens, dispatch) => {
   if (!Array.isArray(user.roles)) {
     user.roles = Array.of(user.roles);
   }
-  AsyncStorage.setItem(
-    '@Storage:jwtToken',
+  await AsyncStorage.setItem(
+    '@jwtToken',
     token
   );
   console.log("token",token);
-  console.log("token",AsyncStorage.getItem(
-    '@Storage:jwtToken'
+  console.log("token",await AsyncStorage.getItem(
+    '@jwtToken'
   ));
   //localStorage.setItem("jwtToken", token);
   //localStorage.setItem("refreshToken", refreshToken);
@@ -149,10 +151,10 @@ export const loginByJWT = (tokens, dispatch) => {
   dispatch(loginActions.setCurrentUser(user));
 };
 
-export const logoutByJWT = dispatch => {
+export const logoutByJWT = async (dispatch) => {
   console.log("logout2")
-  AsyncStorage.removeItem(
-    'jwtToken'
+  await AsyncStorage.removeItem(
+    '@jwtToken'
     );
   //localStorage.removeItem("jwtToken");
   //localStorage.removeItem("refreshToken");

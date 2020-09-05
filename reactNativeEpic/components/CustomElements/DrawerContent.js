@@ -11,7 +11,10 @@ import {View, StyleSheet, Text, Image} from 'react-native';
 //     TouchableRipple,
 //     Switch
 // } from 'react-native-paper';
+import {logout} from '../LoginPage/reducer';
 
+import {connect} from 'react-redux';
+import get from 'lodash.get';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Button} from 'react-native-elements';
 
@@ -21,24 +24,29 @@ export function DrawerContent(props) {
   //const paperTheme = useTheme();
 
   //const { signOut, toggleTheme } = React.useContext(AuthContext);
-
+  // console.log("LOG",props);
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-              <View style={{flexDirection: 'row', marginTop: 15,justifyContent: 'space-between'}}>
-                <Text style={{fontSize: 20}}>Epicentr</Text>
-               
-                <Button
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 15,
+                justifyContent: 'space-between',
+              }}>
+              <Text style={{fontSize: 20}}>Epicentr</Text>
+
+              <Button
                 type="clear"
                 style={{marginRight: 25}}
                 onPress={() => {
-                    props.navigation.closeDrawer();
+                  props.navigation.closeDrawer();
                 }}
-                icon={ <Icon name="arrow-back-outline"  size={20} />}
+                icon={<Icon name="arrow-back-outline" size={20} />}
               />
-              </View>
+            </View>
           </View>
           <DrawerItem
             icon={({color, size}) => (
@@ -67,6 +75,16 @@ export function DrawerContent(props) {
               props.navigation.navigate('LoginPage');
             }}
           />
+        
+            <DrawerItem
+              icon={({color, size}) => <Icon name="exit-outline" color={color} size={25} />}
+              label="Logout"
+              onPress={() => {
+                logout();
+                props.navigation.navigate('Home');
+              }}
+            />
+
         </View>
       </DrawerContentScrollView>
     </View>
@@ -118,3 +136,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+function mapStateToProps(state) {
+  return {
+    login: get(state, 'login'),
+  };
+}
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);

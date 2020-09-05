@@ -11,8 +11,8 @@ import {
 import {Card, ListItem, Button} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
-import * as getListActions from './reducer';
 import get from 'lodash.get';
+import * as getListActions from './reducer';
 import {serverUrl} from '../../config';
 import Icon from 'react-native-vector-icons/Ionicons';
 
