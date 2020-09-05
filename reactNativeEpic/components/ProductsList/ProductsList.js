@@ -46,7 +46,7 @@ class ProductsList extends Component {
 
     const {navigation, loading} = this.props;
 
-    console.log('REFst', this.state.refreshing);
+    console.log('REFst', this.props.login);
     return (
       <React.Fragment>
         <View style={{flexDirection: 'row'}}>
@@ -129,6 +129,8 @@ function mapStateToProps(state) {
     errors: get(state, 'productsList.list.errors'),
     data: get(state, 'productsList.list.data'),
     loading: get(state, 'productsList.list.loading'),
+    login: get(state, 'login'),
+
   };
 }
 const mapDispatchToProps = (dispatch) => {

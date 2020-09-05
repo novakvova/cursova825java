@@ -11,7 +11,8 @@ import {View, StyleSheet, Text, Image} from 'react-native';
 //     TouchableRipple,
 //     Switch
 // } from 'react-native-paper';
-import {logout} from '../LoginPage/reducer';
+import {logoutByJWT} from '../LoginPage/reducer';
+import { useStore } from 'react-redux'
 
 import {connect} from 'react-redux';
 import get from 'lodash.get';
@@ -22,9 +23,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 export function DrawerContent(props) {
   //const paperTheme = useTheme();
-
+  const store = useStore()
+  const signOut = (e) =>{
+    e.preventDefault();
+    logoutByJWT(store.dispatch);
+    props.navigation.navigate('Home');
+  }
   //const { signOut, toggleTheme } = React.useContext(AuthContext);
-  // console.log("LOG",props);
+ 
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
@@ -47,6 +53,9 @@ export function DrawerContent(props) {
                 icon={<Icon name="arrow-back-outline" size={20} />}
               />
             </View>
+            {store.getState().login.isAuthenticated ? 
+            <Text>{store.getState().login.user.sub}</Text>
+            :<></>}
           </View>
           <DrawerItem
             icon={({color, size}) => (
@@ -66,6 +75,7 @@ export function DrawerContent(props) {
               props.navigation.navigate('ProductsList');
             }}
           />
+           {store.getState().login.isAuthenticated==false ?  
           <DrawerItem
             icon={({color, size}) => (
               <Icon name="person-circle-outline" color={color} size={size} />
@@ -75,16 +85,14 @@ export function DrawerContent(props) {
               props.navigation.navigate('LoginPage');
             }}
           />
-        
-            <DrawerItem
-              icon={({color, size}) => <Icon name="exit-outline" color={color} size={25} />}
-              label="Logout"
-              onPress={() => {
-                logout();
-                props.navigation.navigate('Home');
-              }}
-            />
-
+         : <DrawerItem
+          icon={({color, size}) => <Icon name="exit-outline" color={color} size={25} />}
+          label="Logout"
+          onPress={(e) => {
+            signOut(e);
+            props.navigation.navigate('Home');
+          }}
+        />} 
         </View>
       </DrawerContentScrollView>
     </View>
