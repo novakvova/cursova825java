@@ -89,6 +89,15 @@ export function DrawerContent(props) {
             />
           ) : (
             <>
+            <DrawerItem
+                icon={({color, size}) => (
+                  <Icon name="person-outline" color={color} size={25} />
+                )}
+                label="My Profile"
+                onPress={(e) => {
+                  props.navigation.navigate('UserProfile');
+                }}
+              />
               <DrawerItem
                 icon={({color, size}) => (
                   <Icon name="albums-outline" color={color} size={25} />

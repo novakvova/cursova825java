@@ -51,7 +51,7 @@ export const getListActions = {
     }
   }
 
-export const UserProfileViewReducer = (state = initialState, action) => { 
+export const userProfileViewReducer = (state = initialState, action) => { 
   let newState = state;
 
   switch (action.type) {

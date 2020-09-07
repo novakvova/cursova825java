@@ -1,6 +1,14 @@
 import React, {Component} from 'react';
-import {View, Text, TextInput} from 'react-native';
-import {Card, ListItem, Image, Button, Badge} from 'react-native-elements';
+import {View, Text, TextInput, Pressable} from 'react-native';
+import {
+  Card,
+  ListItem,
+  Image,
+  Button,
+  Badge,
+  Avatar,
+  Accessory,
+} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import * as getListActions from './reducer';
@@ -13,22 +21,14 @@ class UserProfileView extends Component {
     title: 'Product',
   };
 
-  state = {count: ''};
+  state = {};
   componentDidMount() {
-    console.log('DDDDDD');
-    const {route} = this.props;
-    const {id} = route.params;
-
-    this.props.getInfo({id});
+    this.props.getInfo({username: this.props.login.user.sub});
   }
 
   render() {
     const {data, navigation} = this.props;
     const {route} = this.props;
-    const {id} = route.params;
-    if (id != data.id) {
-      this.props.getInfo({id});
-    }
     return (
       <React.Fragment>
         <View style={{flexDirection: 'row'}}>
@@ -41,83 +41,17 @@ class UserProfileView extends Component {
           />
         </View>
         <ScrollView>
-          <ScrollView horizontal={true}>
-            {data.productImages != undefined ? (
-              data.productImages.map(function (el) {
-                console.log(`${serverUrl}files/` + el.image_name);
-                return (
-                  <Image
-                    style={{
-                      borderRadius: 20,
-                      width: 200,
-                      height: 200,
-                      marginLeft: 25,
-                    }}
-                    source={{
-                      uri: `${serverUrl}files/` + el.image_name,
-                    }}
-                  />
-                );
-              })
-            ) : (
-              <React.Fragment></React.Fragment>
-            )}
-          </ScrollView>
-          <Text
-            style={{
-              marginLeft: 25,
-              fontSize: 35,
-              fontWeight: 'bold',
-              marginBottom: 10,
-            }}>
-            {data.name}
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-end',
-              marginLeft: 25,
-            }}>
-            <Text style={{textDecorationLine: 'line-through', fontSize: 25}}>
-              {data.price}
-            </Text>
-            <View style={{flexDirection: 'column', marginLeft: 10}}>
-              <View style={{marginLeft: -25, flexDirection: 'row-reverse'}}>
-                <Badge value={'-' + data.discount + '%'} status="error" />
-              </View>
-              <Text style={{color: 'red', fontSize: 25}}>
-                {data.price - (data.price / 100) * data.discount}
-              </Text>
+          <Pressable>
+            <View style={{flexDirection:"row",justifyContent:"center"}}>
+              <Avatar
+                size="xlarge"
+                rounded
+                source={{
+                  uri: `${serverUrl}files/` + data.image,
+                }}></Avatar>
             </View>
-          </View>
-          <Text style={{marginLeft: 25, marginTop: 10, fontSize: 15}}>
-            Description:
-          </Text>
-          <Text style={{marginLeft: 25, marginTop: 10, fontSize: 12}}>
-            {data.description}
-          </Text>
-          {this.props.login.isAuthenticated ? (
-            <View style={{flexDirection: 'row', marginTop: 10}}>
-              <TextInput
-                style={{marginLeft: 25, marginRight: 5}}
-                placeholder="Count"
-                autoCompleteType="cc-number"
-                onChangeText={(value) => this.setState({count: value})}
-              />
-              <Button
-                title="Order"
-                onPress={(e) => {
-                  this.props.createOrder({
-                    username: this.props.login.user.sub,
-                    productId: data.id,
-                    count: this.state.count,
-                  });
-                  this.props.navigation.navigate('Home');
-                }}></Button>
-            </View>
-          ) : (
-            <></>
-          )}
+          </Pressable>
+          <Text>{data.name}</Text>
         </ScrollView>
       </React.Fragment>
     );
@@ -136,7 +70,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getInfo: (model) => {
       dispatch(getListActions.getInfo(model));
-    }
+    },
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfileView);
