@@ -8,6 +8,7 @@ import {productsListReducer} from '../components/ProductsList/reducer';
 import {userProfileViewReducer} from '../components/UserProfile/reducer';
 import {productViewReducer} from '../components/ProductView/reducer';
 import {loginReducer} from '../components/LoginPage/reducer';
+import {myOrdersListReducer} from '../components/MyOrders/reducer';
 
 
 
@@ -21,6 +22,7 @@ export default function configureStore( initialState) {
     productView:productViewReducer,
     userProfileView: userProfileViewReducer,
     login:loginReducer,
+    myOrders:myOrdersListReducer,
   };
   const middleware = [
     thunk
