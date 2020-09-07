@@ -1,2 +1,2 @@
-export const serverUrl = "https://stepmanul.tk/";
-//export const serverUrl = "http://localhost:8082/api/v1/products/";
+//export const serverUrl = "https://stepmanul.tk/";
+export const serverUrl = "http://10.0.2.2:8082/";

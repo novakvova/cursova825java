@@ -111,7 +111,7 @@
             fluid
             tag="section"
     >
-        <div class="modal" id="cropperModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        <div class="modal" id="cropperModal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -135,6 +135,57 @@
             </div>
         </div>
         <v-row justify="center">
+
+            <v-col
+                    cols="12"
+                    md="4"
+            >
+                <base-material-card
+                        class="v-card-profile"
+
+                >
+                    <v-card-text class="text-center">
+
+
+                        <form action="/save-image" method="post">
+                            <div class="d-flex flex-column justify-content-center">
+                                <a id="photo">
+                                    <v-avatar size="lg" th:if="${image} == null">
+                                        <img
+                                                style="max-height: 350px"
+                                                src="/files/200_default.png"
+                                                alt="profileImage"
+                                                class="image"
+                                        >
+                                    </v-avatar>
+                                    <v-avatar size="lg" th:if="${image} != null">
+                                        <img
+
+                                                th:src="'/files/' + ${image}"
+                                                class="image"
+                                                style="width: 200px"
+                                                width="200"
+                                                alt="profileImage"
+                                        >
+                                    </v-avatar>
+                                </a>
+                                <input name="image" type="hidden" id="valueImage"/>
+
+                                <v-btn
+                                        type="submit"
+                                        rounded
+                                        class="mt-3 mr-0"
+                                >
+                                    Save photo
+                                </v-btn>
+                            </div>
+                        </form>
+
+
+                    </v-card-text>
+                </base-material-card>
+            </v-col>
+
             <v-col
                     cols="12"
                     md="8"
@@ -221,54 +272,7 @@
                 </base-material-card>
             </v-col>
 
-            <v-col
-                    cols="12"
-                    md="4"
-            >
-                <base-material-card
-                        class="v-card-profile"
 
-                >
-                    <v-card-text class="text-center">
-
-
-                            <form action="/save-image" method="post">
-                                <div class="d-flex flex-column justify-content-center">
-                                <a id="photo">
-                                    <v-avatar size="lg" th:if="${image} == null">
-                                        <img
-                                                style="max-height: 350px"
-                                                src="/files/200_default.png"
-                                                alt="profileImage"
-                                                class="image"
-                                        >
-                                    </v-avatar>
-                                    <v-avatar size="lg" th:if="${image} != null">
-                                        <img
-
-                                                style="max-height: 350px"
-                                                th:src="'/files/' + ${image}"
-                                                class="image"
-                                                alt="profileImage"
-                                        >
-                                    </v-avatar>
-                                </a>
-                                <input name="image" type="hidden" id="valueImage"/>
-
-                                <v-btn
-                                        type="submit"
-                                        rounded
-                                        class="mt-3 mr-0"
-                                >
-                                    Save photo
-                                </v-btn>
-                                </div>
-                            </form>
-
-
-                    </v-card-text>
-                </base-material-card>
-            </v-col>
         </v-row>
     </v-container>
     </v-app>
@@ -312,7 +316,7 @@
                         //запуск кропера
                         const imageCropper = document.getElementById('imageCropper');
                         cropper = new Cropper(imageCropper, {
-                            aspectRatio: 224 / 168,
+                            aspectRatio: 1 / 1,
                             viewMode: 1,
                             autoCropArea: 0.5,
                             crop(event) {
