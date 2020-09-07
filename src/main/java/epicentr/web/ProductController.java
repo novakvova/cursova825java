@@ -39,7 +39,6 @@ public class ProductController {
     public String list() {
         return "user/products/view";
     }
-
     //Old on Vue.js
 //    @GetMapping("/product-view/{product_id}")
 //    public String view(@PathVariable("product_id") int product_id,Model model){
