@@ -26,7 +26,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        String[] restricted = new String[]{"/api/v1/products"};
+        String[] restricted = new String[]{"/api/v1/products","/api/v1/order/myorders","/api/v1/order/create"};
         String t = request.getRequestURI();
         for(int i =0; i<restricted.length;i++){
             String v = restricted[i];

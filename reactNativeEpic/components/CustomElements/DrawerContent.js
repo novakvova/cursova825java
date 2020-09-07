@@ -11,7 +11,11 @@ import {View, StyleSheet, Text, Image} from 'react-native';
 //     TouchableRipple,
 //     Switch
 // } from 'react-native-paper';
+import {logoutByJWT} from '../LoginPage/reducer';
+import { useStore } from 'react-redux'
 
+import {connect} from 'react-redux';
+import get from 'lodash.get';
 import {DrawerContentScrollView, DrawerItem} from '@react-navigation/drawer';
 import {Button} from 'react-native-elements';
 
@@ -19,26 +23,39 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 export function DrawerContent(props) {
   //const paperTheme = useTheme();
-
+  const store = useStore()
+  const signOut = (e) =>{
+    e.preventDefault();
+    logoutByJWT(store.dispatch);
+    props.navigation.navigate('Home');
+  }
   //const { signOut, toggleTheme } = React.useContext(AuthContext);
-
+ 
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-              <View style={{flexDirection: 'row', marginTop: 15,justifyContent: 'space-between'}}>
-                <Text style={{fontSize: 20}}>Epicentr</Text>
-               
-                <Button
+            <View
+              style={{
+                flexDirection: 'row',
+                marginTop: 15,
+                justifyContent: 'space-between',
+              }}>
+              <Text style={{fontSize: 20}}>Epicentr</Text>
+
+              <Button
                 type="clear"
                 style={{marginRight: 25}}
                 onPress={() => {
-                    props.navigation.closeDrawer();
+                  props.navigation.closeDrawer();
                 }}
-                icon={ <Icon name="arrow-back-outline"  size={20} />}
+                icon={<Icon name="arrow-back-outline" size={20} />}
               />
-              </View>
+            </View>
+            {store.getState().login.isAuthenticated ? 
+            <Text>{store.getState().login.user.sub}</Text>
+            :<></>}
           </View>
           <DrawerItem
             icon={({color, size}) => (
@@ -58,6 +75,7 @@ export function DrawerContent(props) {
               props.navigation.navigate('ProductsList');
             }}
           />
+           {store.getState().login.isAuthenticated==false ?  
           <DrawerItem
             icon={({color, size}) => (
               <Icon name="person-circle-outline" color={color} size={size} />
@@ -67,6 +85,14 @@ export function DrawerContent(props) {
               props.navigation.navigate('LoginPage');
             }}
           />
+         : <DrawerItem
+          icon={({color, size}) => <Icon name="exit-outline" color={color} size={25} />}
+          label="Logout"
+          onPress={(e) => {
+            signOut(e);
+            props.navigation.navigate('Home');
+          }}
+        />} 
         </View>
       </DrawerContentScrollView>
     </View>
@@ -118,3 +144,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+function mapStateToProps(state) {
+  return {
+    login: get(state, 'login'),
+  };
+}
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);

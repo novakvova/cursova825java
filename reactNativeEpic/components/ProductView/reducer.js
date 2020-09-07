@@ -16,6 +16,16 @@ const initialState = {
     },   
 }
 
+export const createOrder = (model) => {
+    return (dispatch) => {
+        ProductViewService.createOrder(model)
+            .then((response) => {            
+            }, err=> { throw err; })
+            .catch(err=> {               
+                dispatch(getListActions.failed(err.response.data));               
+            });
+    }
+}
 export const getInfo = (model) => {
     return (dispatch) => {
         dispatch(getListActions.started());
