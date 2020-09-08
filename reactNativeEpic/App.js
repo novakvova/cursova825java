@@ -3,6 +3,8 @@ import HomeScreen from './components/Home/HomeScreen';
 import ProductsList from './components/ProductsList';
 import ProductView from './components/ProductView';
 import LoginPage from './components/LoginPage/LoginPage';
+import MyOrders from './components/MyOrders/MyOrders';
+import UserProfile from './components/UserProfile/';
 
 
 
@@ -78,6 +80,8 @@ class App extends React.Component {
           <Drawer.Screen name="ProductsList" component={ProductsList} />
           <Drawer.Screen name="ProductView" component={ProductView} />
           <Drawer.Screen name="LoginPage" component={LoginPage} />
+          <Drawer.Screen name="UserProfile" component={UserProfile} />
+          <Drawer.Screen name="MyOrders" component={MyOrders} />
         </Drawer.Navigator>
       </NavigationContainer>
 

@@ -12,7 +12,7 @@ import {View, StyleSheet, Text, Image} from 'react-native';
 //     Switch
 // } from 'react-native-paper';
 import {logoutByJWT} from '../LoginPage/reducer';
-import { useStore } from 'react-redux'
+import {useStore} from 'react-redux';
 
 import {connect} from 'react-redux';
 import get from 'lodash.get';
@@ -23,14 +23,14 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 export function DrawerContent(props) {
   //const paperTheme = useTheme();
-  const store = useStore()
-  const signOut = (e) =>{
+  const store = useStore();
+  const signOut = (e) => {
     e.preventDefault();
     logoutByJWT(store.dispatch);
     props.navigation.navigate('Home');
-  }
+  };
   //const { signOut, toggleTheme } = React.useContext(AuthContext);
- 
+
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView {...props}>
@@ -53,9 +53,11 @@ export function DrawerContent(props) {
                 icon={<Icon name="arrow-back-outline" size={20} />}
               />
             </View>
-            {store.getState().login.isAuthenticated ? 
-            <Text>{store.getState().login.user.sub}</Text>
-            :<></>}
+            {store.getState().login.isAuthenticated ? (
+              <Text>{store.getState().login.user.sub}</Text>
+            ) : (
+              <></>
+            )}
           </View>
           <DrawerItem
             icon={({color, size}) => (
@@ -75,24 +77,48 @@ export function DrawerContent(props) {
               props.navigation.navigate('ProductsList');
             }}
           />
-           {store.getState().login.isAuthenticated==false ?  
-          <DrawerItem
-            icon={({color, size}) => (
-              <Icon name="person-circle-outline" color={color} size={size} />
-            )}
-            label="Login"
-            onPress={() => {
-              props.navigation.navigate('LoginPage');
-            }}
-          />
-         : <DrawerItem
-          icon={({color, size}) => <Icon name="exit-outline" color={color} size={25} />}
-          label="Logout"
-          onPress={(e) => {
-            signOut(e);
-            props.navigation.navigate('Home');
-          }}
-        />} 
+          {store.getState().login.isAuthenticated == false ? (
+            <DrawerItem
+              icon={({color, size}) => (
+                <Icon name="person-circle-outline" color={color} size={size} />
+              )}
+              label="Login"
+              onPress={() => {
+                props.navigation.navigate('LoginPage');
+              }}
+            />
+          ) : (
+            <>
+            <DrawerItem
+                icon={({color, size}) => (
+                  <Icon name="person-outline" color={color} size={25} />
+                )}
+                label="My Profile"
+                onPress={(e) => {
+                  props.navigation.navigate('UserProfile');
+                }}
+              />
+              <DrawerItem
+                icon={({color, size}) => (
+                  <Icon name="albums-outline" color={color} size={25} />
+                )}
+                label="My Orders"
+                onPress={(e) => {
+                  props.navigation.navigate('MyOrders');
+                }}
+              />
+              <DrawerItem
+                icon={({color, size}) => (
+                  <Icon name="exit-outline" color={color} size={25} />
+                )}
+                label="Logout"
+                onPress={(e) => {
+                  signOut(e);
+                  props.navigation.navigate('Home');
+                }}
+              />
+            </>
+          )}
         </View>
       </DrawerContentScrollView>
     </View>
