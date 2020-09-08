@@ -1,8 +1,11 @@
 package epicentr.api;
 
+import epicentr.entities.User;
 import epicentr.helpers.JwtTokenUtil;
+import epicentr.models.CreateOrder;
 import epicentr.models.JwtRequest;
 import epicentr.models.JwtResponse;
+import epicentr.repositories.UserRepository;
 import epicentr.services.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthAPI {
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
@@ -35,6 +40,13 @@ public class AuthAPI {
                 .loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody CreateOrder model) {
+        User ushka = userRepository.findByEmail(model.getUsername());
+        ushka.setRoles(null);
+        ushka.setOrders(null);
+        return ResponseEntity.ok(ushka);
     }
     private void authenticate(String username, String password) throws Exception {
         try {
