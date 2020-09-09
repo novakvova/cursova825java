@@ -49,26 +49,36 @@
 	<template id="navbar">
 		<div>
 			<v-app-bar
-					color="deep-purple accent-4"
 
 					dense
 					dark
 			>
 				<v-app-bar-nav-icon></v-app-bar-nav-icon>
-<!--				<img  src="/assets/css/epicentrLogo.svg"/>-->
+				<!--				<img  src="/assets/css/epicentrLogo.svg"/>-->
 				<v-toolbar-title>Epicentr</v-toolbar-title>
 				<v-spacer></v-spacer>
 
-				<v-btn icon  th:href="@{/}">
-					<v-icon>mdi-home</v-icon>
-				</v-btn>
 
-				<v-btn sec:authorize="hasRole('ROLE_ADMIN')" icon  th:href="@{/admin/home}">
-					<v-icon>mdi-alert-circle</v-icon>
-				</v-btn>
+
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn icon  th:href="@{/}">
+							<v-icon>mdi-home</v-icon>
+						</v-btn>
+					</template>
+					<span>Admin page</span>
+				</v-tooltip>
+				<v-tooltip  bottom>
+					<template v-slot:activator="{ on, attrs }">
+						<v-btn sec:authorize="hasRole('ROLE_ADMIN')" icon  th:href="@{/admin/home}">
+							<v-icon>mdi-alert-circle</v-icon>
+						</v-btn>
+					</template>
+					<span>Admin page</span>
+				</v-tooltip>
 				<!--				<v-btn icon  th:href="@{/product-add}">-->
-<!--					<v-icon>mdi-image-plus</v-icon>-->
-<!--				</v-btn>-->
+				<!--					<v-icon>mdi-image-plus</v-icon>-->
+				<!--				</v-btn>-->
 				<v-tooltip  bottom>
 					<template v-slot:activator="{ on, attrs }">
 						<v-btn v-bind="attrs" v-on="on"  th:href="@{/documents}" icon>
@@ -77,18 +87,18 @@
 					</template>
 					<span>Documents</span>
 				</v-tooltip>
-<!--				<v-tooltip  bottom>-->
-<!--					<template v-slot:activator="{ on, attrs }">-->
-<!--						<v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>-->
-<!--							<v-icon>mdi-text-box-plus </v-icon>-->
-<!--						</v-btn>-->
-<!--					</template>-->
-<!--					<span>Create Document</span>-->
-<!--				</v-tooltip>-->
+				<!--				<v-tooltip  bottom>-->
+				<!--					<template v-slot:activator="{ on, attrs }">-->
+				<!--						<v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>-->
+				<!--							<v-icon>mdi-text-box-plus </v-icon>-->
+				<!--						</v-btn>-->
+				<!--					</template>-->
+				<!--					<span>Create Document</span>-->
+				<!--				</v-tooltip>-->
 				<a sec:authorize="isAuthenticated()" th:href="@{/profile}">
-				<v-btn icon>
-					<v-icon>mdi-account</v-icon>
-				</v-btn>
+					<v-btn icon>
+						<v-icon>mdi-account</v-icon>
+					</v-btn>
 
 				</a>
 				<v-tooltip sec:authorize="isAuthenticated()" bottom>
