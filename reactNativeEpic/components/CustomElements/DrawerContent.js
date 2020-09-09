@@ -78,6 +78,16 @@ export function DrawerContent(props) {
             }}
           />
           {store.getState().login.isAuthenticated == false ? (
+            <>
+            <DrawerItem
+              icon={({color, size}) => (
+                <Icon name="person-add-outline" color={color} size={size} />
+              )}
+              label="Register"
+              onPress={() => {
+                props.navigation.navigate('Register');
+              }}
+            />
             <DrawerItem
               icon={({color, size}) => (
                 <Icon name="person-circle-outline" color={color} size={size} />
@@ -87,6 +97,7 @@ export function DrawerContent(props) {
                 props.navigation.navigate('LoginPage');
               }}
             />
+            </>
           ) : (
             <>
             <DrawerItem
