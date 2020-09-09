@@ -80,10 +80,10 @@ public class OrderController {
                 Gson gson = new Gson();
                 //Type type = new TypeToken<ArrayList<ShortProductModel>>(){}.getType();
                 //List<ShortProductModel> list = gson.fromJson(value.getValue(), type);
-                String[] arr = gson.fromJson(value.getValue(), String[].class);
+                Long[] arr = gson.fromJson(value.getValue(), Long[].class);
                 List<ShortProductModel> products = new ArrayList<>();
-                for (String item : arr) {
-                    Product prod = productRespository.findById(Long.parseLong(item)).get();
+                for (Long item : arr) {
+                    Product prod = productRespository.findById(item).get();
                     if (prod != null) {
                         products.add(new ShortProductModel(
                                 prod.getId(),

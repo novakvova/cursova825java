@@ -376,6 +376,9 @@
     <div class=" wrapper con">
         <main>
             <div id="shopify-section-product-template" class="shopify-section">
+                <div id="alerts">
+
+                </div>
                 <div class="single-product-area mt-80 mb-80">
                     <div class="container">
                         <div class="row">
@@ -536,16 +539,29 @@
                 $.cookie.raw = true;
                 let prod_id = parseInt($("#prod_id").val());
                 let expDate = new Date();
-                expDate.setTime(expDate.getTime() + (7 * 24 * 60 * 60));
-                let val = $.cookie('cart');
-                if (val !== undefined) {
-                    let oldCart = JSON.parse(val);
+                expDate.setTime(expDate.getTime() + (60 * 24 * 60 * 60));
+                if ($.cookie('cart') !== undefined) {
+                    let oldCart = $.parseJSON($.cookie('cart'));
                     oldCart.push(prod_id);
+                    console.log(oldCart);
+                    //$.cookie("cart", null, { path: '/' });
                     $.cookie('cart', JSON.stringify(oldCart), {path: '/', expires: expDate});
                 } else {
                     let arr = [prod_id];
                     $.cookie('cart', JSON.stringify(arr), {path: '/', expires: expDate});
                 }
+                if($.cookie('cart')!==undefined) {
+                    $('#alerts').html("<div class=\"alert alert-success alert-dismissible fade show\" style='position:fixed; right:20px' role=\"alert\">\n" +
+                        "  <strong>OMG!</strong> Check your cart\n" +
+                        "</div>");
+                }else {
+                    $('#alerts').html("<div class=\"alert alert-danger alert-dismissible fade show\" style='position:fixed; right:20px' role=\"alert\">\n" +
+                        "  <strong>OMG!</strong> Error\n" +
+                        "</div>");
+                }
+                setTimeout(function(){
+                    $('.alert').alert('close');
+                },(5000));
             });
             $(document).ready(function () {
                 $('.xzoom, .xzoom-gallery').xzoom({zoomWidth: 300, title: true, tint: '#333', Xoffset: 15});
