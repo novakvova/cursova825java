@@ -39,15 +39,15 @@
 
                 <v-tooltip  bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn icon  th:href="@{/}">
+                        <v-btn icon v-bind="attrs" v-on="on"  th:href="@{/}">
                             <v-icon>mdi-home</v-icon>
                         </v-btn>
                     </template>
-                    <span>Admin page</span>
+                    <span>Home</span>
                 </v-tooltip>
-                <v-tooltip  bottom>
+                <v-tooltip sec:authorize="hasRole('ROLE_ADMIN')"  bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn sec:authorize="hasRole('ROLE_ADMIN')" icon  th:href="@{/admin/home}">
+                        <v-btn icon v-bind="attrs" v-on="on"  sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/admin/home}">
                             <v-icon>mdi-alert-circle</v-icon>
                         </v-btn>
                     </template>
@@ -72,12 +72,18 @@
                 <!--					</template>-->
                 <!--					<span>Create Document</span>-->
                 <!--				</v-tooltip>-->
-                <a sec:authorize="isAuthenticated()" th:href="@{/profile}">
-                    <v-btn icon>
-                        <v-icon>mdi-account</v-icon>
-                    </v-btn>
 
-                </a>
+                <v-tooltip  bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <a v-bind="attrs" v-on="on" sec:authorize="isAuthenticated()" th:href="@{/profile}">
+                            <v-btn v-bind="attrs" v-on="on" icon>
+                                <v-icon>mdi-account</v-icon>
+                            </v-btn>
+
+                        </a>
+                    </template>
+                    <span>Profile</span>
+                </v-tooltip>
                 <v-tooltip sec:authorize="isAuthenticated()" bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on"  th:href="@{/myorders}" icon>
@@ -118,7 +124,7 @@
                     </template>
                     <span>Register</span>
                 </v-tooltip>
-            </v-app-bar>        </div>
+            </v-app-bar>       </div>
     <v-container
             id="user-profile"
             fluid
