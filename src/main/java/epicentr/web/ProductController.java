@@ -127,12 +127,12 @@ public class ProductController {
                 prImage.setProduct(pr);
                 prImages.add(prImage);
             }catch (Exception e){
-                return "redirect:/products";
+                return "redirect:/";
             }
         }
         pr.setProductImages(prImages);
         productRespository.save(pr);
-        return "redirect:/products";
+        return "redirect:/";
     }
 }
 
