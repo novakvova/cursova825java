@@ -35,7 +35,7 @@ public class ProductController {
         this.storageService = storageService;
     }
 
-    @GetMapping("/products")
+    @GetMapping("/")
     public String list() {
         return "user/products/view";
     }
