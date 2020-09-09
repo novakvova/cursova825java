@@ -29,16 +29,31 @@
                     dark
             >
                 <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
+                <!--				<img  src="/assets/css/epicentrLogo.svg"/>-->
                 <v-toolbar-title>Epicentr</v-toolbar-title>
                 <v-spacer></v-spacer>
 
-                <v-btn icon  th:href="@{/products}">
-                    <v-icon>mdi-camera-burst </v-icon>
-                </v-btn>
-                <v-btn icon  th:href="@{/}">
-                    <v-icon>mdi-home</v-icon>
-                </v-btn>
+
+
+                <v-tooltip  bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on"  th:href="@{/}">
+                            <v-icon>mdi-home</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Home</span>
+                </v-tooltip>
+                <v-tooltip sec:authorize="hasRole('ROLE_ADMIN')"  bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn icon v-bind="attrs" v-on="on"  sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/admin/home}">
+                            <v-icon>mdi-alert-circle</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Admin page</span>
+                </v-tooltip>
+                <!--				<v-btn icon  th:href="@{/product-add}">-->
+                <!--					<v-icon>mdi-image-plus</v-icon>-->
+                <!--				</v-btn>-->
                 <v-tooltip  bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on"  th:href="@{/documents}" icon>
@@ -47,20 +62,26 @@
                     </template>
                     <span>Documents</span>
                 </v-tooltip>
+                <!--				<v-tooltip  bottom>-->
+                <!--					<template v-slot:activator="{ on, attrs }">-->
+                <!--						<v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>-->
+                <!--							<v-icon>mdi-text-box-plus </v-icon>-->
+                <!--						</v-btn>-->
+                <!--					</template>-->
+                <!--					<span>Create Document</span>-->
+                <!--				</v-tooltip>-->
+
                 <v-tooltip  bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/admin/document/create}" icon>
-                            <v-icon>mdi-text-box-plus </v-icon>
-                        </v-btn>
-                    </template>
-                    <span>Create Document</span>
-                </v-tooltip>
-                <a sec:authorize="isAuthenticated()" th:href="@{/profile}">
-                    <v-btn icon>
-                        <v-icon>mdi-account</v-icon>
-                    </v-btn>
+                        <a v-bind="attrs" v-on="on" sec:authorize="isAuthenticated()" th:href="@{/profile}">
+                            <v-btn v-bind="attrs" v-on="on" icon>
+                                <v-icon>mdi-account</v-icon>
+                            </v-btn>
 
-                </a>
+                        </a>
+                    </template>
+                    <span>Profile</span>
+                </v-tooltip>
                 <v-tooltip sec:authorize="isAuthenticated()" bottom>
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on"  th:href="@{/myorders}" icon>
@@ -71,37 +92,36 @@
                 </v-tooltip>
                 <v-tooltip sec:authorize="isAuthenticated()" bottom>
                     <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/cart}" icon>
+                            <v-icon>mdi-cart</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Cart</span>
+                </v-tooltip>
+                <v-tooltip sec:authorize="isAuthenticated()" bottom>
+                    <template v-slot:activator="{ on, attrs }">
                         <v-btn v-bind="attrs" v-on="on"  th:href="@{/logout}" icon>
                             <v-icon>mdi-exit-to-app</v-icon>
                         </v-btn>
                     </template>
                     <span>Logout</span>
                 </v-tooltip>
-
-                <v-menu
-                        left
-                        bottom
-                >
+                <v-tooltip sec:authorize="!isAuthenticated()" bottom>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn
-                                icon
-                                v-bind="attrs"
-                                v-on="on"
-                        >
-                            <v-icon>mdi-dots-vertical</v-icon>
+                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/login}" icon>
+                            <v-icon>mdi-account-arrow-right</v-icon>
                         </v-btn>
                     </template>
-
-                    <v-list>
-                        <v-list-item
-                                v-for="n in 5"
-                                :key="n"
-                                @click="() => {}"
-                        >
-                            <v-list-item-title>Option {{ n }}</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
+                    <span>Login</span>
+                </v-tooltip>
+                <v-tooltip sec:authorize="!isAuthenticated()" bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn v-bind="attrs" v-on="on"  th:href="@{/register}" icon>
+                            <v-icon>mdi-account-plus</v-icon>
+                        </v-btn>
+                    </template>
+                    <span>Register</span>
+                </v-tooltip>
             </v-app-bar>
         </div>
         <div class="container">
