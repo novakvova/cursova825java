@@ -5,6 +5,7 @@ import ProductView from './components/ProductView';
 import LoginPage from './components/LoginPage/LoginPage';
 import MyOrders from './components/MyOrders/MyOrders';
 import UserProfile from './components/UserProfile/';
+import Register from './components/Register';
 
 
 
@@ -82,6 +83,7 @@ class App extends React.Component {
           <Drawer.Screen name="LoginPage" component={LoginPage} />
           <Drawer.Screen name="UserProfile" component={UserProfile} />
           <Drawer.Screen name="MyOrders" component={MyOrders} />
+          <Drawer.Screen name="Register" component={Register} />
         </Drawer.Navigator>
       </NavigationContainer>
 
