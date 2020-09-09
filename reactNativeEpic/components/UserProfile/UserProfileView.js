@@ -42,7 +42,7 @@ class UserProfileView extends Component {
         </View>
         <ScrollView>
           <Pressable>
-            <View style={{flexDirection:"row",justifyContent:"center"}}>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
               <Avatar
                 size="xlarge"
                 rounded
@@ -51,7 +51,14 @@ class UserProfileView extends Component {
                 }}></Avatar>
             </View>
           </Pressable>
-          <Text>{data.name}</Text>
+          <View style={{marginLeft: 25}}>
+            <Text style={{marginTop:5,fontSize:25}}>Name: {data.name}</Text>
+            <Text style={{marginTop:5,fontSize:25}}>Last Name: {data.lastName}</Text>
+            <Text style={{marginTop:5,fontSize:25}}>Email: {data.email}</Text>
+            <Text style={{marginTop:5,fontSize:25}}>City: {data.city}</Text>
+            <Text style={{marginTop:5,fontSize:25}}>Post office: {data.postOffice}</Text>
+
+          </View>
         </ScrollView>
       </React.Fragment>
     );
