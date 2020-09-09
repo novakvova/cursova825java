@@ -35,6 +35,8 @@
             let button = $('.images .pic');
             let cropper = null;
             let dialogCropper = $("#cropperModal");
+            let temp;
+
             button.on('click', function () {
                 if (cropper == null) {
                     //запуск кропера
@@ -57,6 +59,7 @@
                     //обрізка малюнка
                     $("#cropImg").on("click", function (e) {
                         e.preventDefault();
+                        viewFileUploader(temp);
                         var imgContent = cropper.getCroppedCanvas().toDataURL();
                         $("#images").prepend('<input type="hidden" name="images" value="' + imgContent + '">')
                         // axios.post('/products/upload', {imageBase64: imgContent})
@@ -72,7 +75,6 @@
                 }
                 let uploader = $('<input type="file"  style="display:none"/>');
                 uploader.click();
-
                 uploader.on('change', function () {
                     let reader = new FileReader();
                     reader.onload = function (event) {
@@ -82,8 +84,10 @@
                         uploader.remove();
                         //
                     };
+                    temp = this;
                     reader.readAsDataURL(uploader[0].files[0]);
-                    viewFileUploader(this);
+
+
                 });
             });
             $("#tbodyFileList").on("click", ".removefile", function () {
