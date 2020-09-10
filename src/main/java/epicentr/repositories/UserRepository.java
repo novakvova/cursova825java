@@ -10,9 +10,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Ramesh Fadatare
  *
  */
-public interface UserRepository extends JpaRepository<User, Integer>
+public interface UserRepository extends JpaRepository<User, Long>
 {
 
-	Optional<User> findByEmail(String email);
+	User findByEmail(String email);
+	User findByName(String name);
 
 }

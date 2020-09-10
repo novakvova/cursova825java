@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="admin/layouts/adminLayout">
+      
+      <head>
+        <title>Admin Home</title>
+    </head>
+    <body>
+    	<div layout:fragment="content">
+			<canvas id="myChart"></canvas>
+			<div layout:fragment="scripts">
+				<script th:src="@{'/lib/js/Chart.min.js'}"></script>
+				<script th:inline="javascript">
+					let orders = /*[[${orders}]]*/ [];
+					console.log("OO",orders);
+					let fYear=0;
+					let sYear=0;
+					let tYear=0;
+					let fourthYear=0;
+					let vYear=0;
+					for (let el=0;el<orders.length;el++) {
+
+
+						if(orders[el].createdAt.split("-")[0] == new Date().getFullYear()){
+							fYear+=1;
+						}
+						if(orders[el].createdAt.split("-")[0] == new Date().getFullYear()-1){
+							sYear+=1;
+						}
+						if(orders[el].createdAt.split("-")[0] == new Date().getFullYear()-2){
+							tYear+=1;
+						}
+						if(orders[el].createdAt.split("-")[0] == new Date().getFullYear()-3){
+							fourthYear+=1;
+						}
+						if(orders[el].createdAt.split("-")[0] == new Date().getFullYear()-4){
+							vYear+=1;
+						}
+					}
+					let d = new Date();
+					var ctxL = document.getElementById("myChart").getContext('2d');
+					var myLineChart = new Chart(ctxL, {
+						type: 'line',
+						//type: 'radar',
+						data: {
+							labels: [
+								new Date().getFullYear()-4, new Date().getFullYear()-3, new Date().getFullYear()-2, new Date().getFullYear()-1, new Date().getFullYear()
+							],
+							datasets: [
+								{
+									//label: "м³",
+									pointRadius: 7,
+									pointHoverRadius: 9,
+									//pointHoverBackgroundColor: 'red',
+									pointBackgroundColor: 'rgba(0, 10, 130, 1)',
+									// pointBorderWidth: 10,
+									data: [
+										vYear,fourthYear,tYear,sYear,fYear
+									],
+									spanGaps:true,
+									fill:false,
+									// backgroundColor: [
+									//     'rgba(0, 0, 0, 0)',
+									// ],
+									borderColor: [
+										'rgba(0, 10, 130, .7)',
+									],
+									pointBorderColor: [
+										'rgba(0, 10, 130, .7)',
+									],
+									borderWidth: 3
+								}
+							]
+						},
+						options: {
+
+							// "hover": {
+							//     "animationDuration": 0
+							// },
+							// "animation": {
+							//     "duration": 1,
+							//     "onComplete": function() {
+							//         var chartInstance = this.chart,
+							//             ctxL = chartInstance.ctx;
+							//
+							//         ctxL.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+							//         ctxL.textAlign = 'center';
+							//         ctxL.textBaseline = 'bottom';
+							//
+							//         this.data.datasets.forEach(function(dataset, i) {
+							//             var meta = chartInstance.controller.getDatasetMeta(i);
+							//             meta.data.forEach(function(bar, index) {
+							//                 var data = dataset.data[index];
+							//                 ctxL.fillText(data+" м³", bar._model.x, bar._model.y - 10);
+							//             });
+							//         });
+							//     }
+							// },
+
+
+							responsive: true,
+							legend: {
+								display: false,
+								//position: 'bottom',
+							},
+							scales: {
+								xAxes: [{
+									display: true,
+									scaleLabel: {
+										display: true,
+										labelString: 'Роки'
+									}
+								}],
+								yAxes: [{
+									display: true,
+									ticks: {
+										//beginAtZero: true,
+										//steps: 10,
+										//stepValue: 5,
+										//max: 533,
+										// Include a dollar sign in the ticks
+										callback: function(value, index, values) {
+											return value; //+'м³';
+										}
+									}
+								}]
+							},
+							title: {
+								display: true,
+								text: 'Замовлення'
+							},
+							//showTooltips: false,
+							tooltips:{
+								showTooltips: false,
+								callbacks: {
+									label: function(item) { return `${item.yLabel}`},
+								},
+								enabled: true,
+								mode: 'label'
+							}
+						}
+					});
+				</script>
+
+			</div>
+    	</div>
+
+
+	</body>
+    
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{'/lib/css/bootstrap.min.css'}" rel="stylesheet"/>
+    <link th:href="@{'/assets/css/dashboard.css'}" rel="stylesheet"/>
+    <link th:href="@{'/lib/css/Chart.min.css'}" rel="stylesheet"/>
+    <link th:href="@{'/assets/font-awesome-4.5.0/css/font-awesome.css'}" rel="stylesheet"/>
+<!--    <link th:href="@{'/lib/css/all.css'}" rel="stylesheet"/>-->
+
+    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">Епіцентр</title>
+</head>
+<div layout:fragment="styles">
+    <!-- Your Page Content Here -->
+</div>
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Epicentr</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
+            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+        <ul class="navbar-nav mr-auto d-flex flex-row">
+            <li class=" ml-3 nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class=" ml-3 nav-item text-nowrap">
+                <a class="nav-link" href="#" th:href="@{/logout}">Sign out</a>
+            </li>
+        </ul>
+
+    <!--    <ul class="navbar-nav px-3">-->
+    <!--        <li class="nav-item active">-->
+    <!--            <a class="nav-link" href="/products">Home <span class="sr-only">(current)</span></a>-->
+    <!--        </li>-->
+    <!--        <li class="nav-item text-nowrap">-->
+    <!--            <a class="nav-link" href="#" th:href="@{/logout}">Sign out</a>-->
+    <!--        </li>-->
+    <!--    </ul>-->
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/home">
+                            <span data-feather="home"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/orders">
+                            <span data-feather="file"></span>
+                            Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/products">
+                            <span data-feather="shopping-cart"></span>
+                            Products
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/documents">
+                            <span data-feather="users"></span>
+                            Documents
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/document/create">
+                            <span data-feather="users"></span>
+                            Create Document
+                        </a>
+                    </li>
+                </ul>
+
+
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div layout:fragment="content">
+                <!-- Your Page Content Here -->
+            </div>
+        </main>
+    </div>
+</div>
+<script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
+<script th:src="@{'/lib/js/bootstrap.min.js'}"></script>
+<script th:src="@{'/assets/js/dashboard.js'}"></script>
+<script th:src="@{'/lib/js/Chart.min.js'}"></script>
+<div layout:fragment="scripts">
+    <!-- Your Script Content Here -->
+</div>
+</body>
+</html>

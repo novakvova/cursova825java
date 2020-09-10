@@ -1,0 +1,19 @@
+.root {
+    height: 100vh;
+  }
+  .paper {
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .avatar {
+    margin: 1rem;
+  }
+  .form {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .submit {
+    margin: 3rem,0rem,2rem;
+  }

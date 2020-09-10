@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="admin/layouts/adminLayout">
+<head>
+    <meta charset="UTF-8">
+    <title>Documents</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <p class="mt-2"><a th:href="@{/admin/document/create}">Add document</a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Document name</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="document : ${documents}">
+            <th scope="row" th:text="${document.getName()}"></th>
+            <td>
+                <form action="/document/delete" method="post">
+                    <input name="id" type="hidden" th:value="${document.getId()}">
+                    <button  type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

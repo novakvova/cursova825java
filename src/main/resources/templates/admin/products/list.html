@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="admin/layouts/adminLayout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <p class="mt-2"><a th:href="@{/product-add}">Add product</a></p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Product name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Discount (%)</th>
+            <th scope="col">Description</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="product : ${products}">
+            <th scope="row" th:text="${product.getName()}"></th>
+            <td th:text="${product.getPrice()}"></td>
+            <td th:text="${product.getDiscount()}+'%'"></td>
+            <td><p th:text="${product.getDescription()}"></p></td>
+            <td>
+                <form action="/product/delete" method="post">
+                    <input name="id" type="hidden" th:value="${product.getId()}">
+                    <button  type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

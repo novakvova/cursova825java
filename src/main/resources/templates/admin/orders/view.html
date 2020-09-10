@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      layout:decorator="admin/layouts/adminLayout">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Product name</th>
+            <th scope="col">Count</th>
+            <th scope="col">City</th>
+            <th scope="col">Post office</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Change status</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="order : ${orders}">
+            <th scope="row" th:text="${order.getProduct().getName()}"></th>
+            <td th:text="${order.getCount()}"></td>
+            <td th:if="${order.getUser()}!=null" th:text="${order.getUser().getCity()}"></td>
+            <td th:if="${order.getUser()}!=null" th:text="${order.getUser().getPostOffice()}"></td>
+            <td th:if="${order.getUser()}!=null" th:text="${order.getUser().getName()}"></td>
+            <td th:if="${order.getUser()}!=null" th:text="${order.getUser().getLastName()}"></td>
+            <td th:if="${order.getUser()}==null" th:text="${order.getCity()}"></td>
+            <td th:if="${order.getUser()}==null" th:text="${order.getPostOffice()}"></td>
+            <td th:if="${order.getUser()}==null" th:text="${order.getName()}"></td>
+            <td th:if="${order.getUser()}==null" th:text="${order.getLastName()}"></td>
+            <td >
+                <form action="/order/change" method="post">
+
+                    <input name="id" type="hidden" th:value="${order.getId()}">
+                    <select name="orderStatus">
+                        <option th:if="${order.getOrderStatus()}!=${oS}" th:each="oS : ${orderStatuses}" name="id" th:value="${oS.getId()}"
+                                th:text="${oS.getName()}">
+                        <option th:if="${order.getOrderStatus()}==${oS}" selected  th:each="oS : ${orderStatuses}" name="id" th:value="${oS.getId()}"
+                                th:text="${oS.getName()}">
+                        </option>
+                    </select>
+                    <button  type="submit" class="ml-2 btn btn-primary">Change</button>
+                </form>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

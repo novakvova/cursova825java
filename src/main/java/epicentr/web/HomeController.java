@@ -34,7 +34,7 @@ public class HomeController
 	public String home(Model model)
 	{
 		model.addAttribute("msgs", messageRepository.findAll());		
-		return "userhome";
+		return "user/home/view";
 	}
 	
 	@PostMapping("/messages")
