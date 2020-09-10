@@ -7,9 +7,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/static/lib/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/static/lib/css/all.css" rel="stylesheet"/>
-    <link href="/static/lib/css/fontawesome.css" rel="stylesheet"/>
+    <link href="/lib/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/css/all.css" rel="stylesheet"/>
+    <link href="/lib/css/fontawesome.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
 
@@ -18,7 +18,6 @@
 <div layout:fragment="content">
     <div sec:authorize="isAuthenticated()">
         <div class="container">
-
             <div class="row">
                 <div class="col-sm-12" id="cart">
                     <h1 class="display-3">Cart</h1>
@@ -26,7 +25,7 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="table-responsive">
-                                    <table class="table table-striped">
+                                    <table id="myTable" class="table table-striped">
                                         <thead>
                                         <tr>
                                             <th scope="col"></th>
@@ -52,7 +51,7 @@
                                                     th:max="10" value="1"/></td>
 
                                             <td class="text-right prc" th:text="${item.price}"></td>
-                                            <td class="text-right prc" th:text="${item.discount}"></td>
+                                            <td class="text-right dis" th:text="${item.discount}"></td>
 
                                             <td class="text-right">
                                                 <button class="btn btn-sm btn-danger" th:name="${item.id}" id="btnDel">
@@ -77,7 +76,7 @@
                             <div class="col mb-2">
                                 <div class="row">
                                     <div class="col-sm-12  col-md-6">
-                                        <a href="/products/#/" class="btn btn-block btn-light">Continue
+                                        <a href="/#/" class="btn btn-block btn-light">Continue
                                             Shopping</a>
                                     </div>
                                     <div class="col-sm-12 col-md-6 text-right">
@@ -87,6 +86,7 @@
                                             <button type="submit" id="upload"
                                                     class="btn btn-lg btn-block btn-success text-uppercase">Make order
                                             </button>
+                                            <span id="error" style="color:darkred; margin-top:25px;margin-right: 25%; font-size: 13px; font-weight: bold;"></span>
                                         </form>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
     </div>
 </div>
 <div layout:fragment="scripts">
-    <script src="/static/lib/js/fontawesome.js"></script>
+    <script src="/lib/js/fontawesome.js"></script>
     <script th:src="@{'/assets/js/jquery-2.1.4.min.js'}"></script>
 
     <script>
@@ -129,16 +129,25 @@
                 function CalcTotal() {
                     let trs = $("tbody tr").not(":last");
                     trs.each(function () {
-                        let count = $(this).find('input[type=number]')[0].value;
-                        let price = $(this).find(".prc")[0].innerText;
-                        glPrice += (parseInt(count) * parseInt(price));
+                        let count = parseInt($(this).find('input[type=number]')[0].value);
+                        let price = parseInt($(this).find(".prc")[0].innerText);
+                        let discount = parseInt($(this).find(".dis")[0].innerText);
+                        glPrice += (count * (price-price/100 * discount));
                     });
                     console.log(total);
                     total.html(glPrice.toString());
                     glPrice = 0;
                 }
 
-                $('input[type=number]').on('change', CalcTotal);
+                //$('input[type=number]').on('change', CalcTotal);
+                $(".count").change(function() {
+                    if(parseInt($(this).val())>10)
+                    {
+                        $("#error").text("Max count value is 10");
+                        $(this).val(10);
+                    }
+                    CalcTotal();
+                });
                 CalcTotal();
             });
         })(jQuery);
@@ -160,6 +169,14 @@
                         console.log(count);
                     })
                 });
+
+                $("form").submit(function(e){
+                    if($('#myTable tr').length<=1)
+                    {
+                        e.preventDefault();
+                        $("#error").text("Add some products before ordering");
+                    }
+                });
             });
         })(jQuery);
     </script>
@@ -167,7 +184,7 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-    <script src="/static/lib/js/all.js"></script>
+    <script src="/lib/js/all.js"></script>
 </div>
 </body>
 </html>
