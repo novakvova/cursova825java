@@ -76,17 +76,22 @@
                 let uploader = $('<input type="file"  style="display:none"/>');
                 uploader.click();
                 uploader.on('change', function () {
-                    let reader = new FileReader();
-                    reader.onload = function (event) {
-
-                        dialogCropper.modal('show');
-                        cropper.replace(event.target.result);
-                        uploader.remove();
-                        //
-                    };
                     temp = this;
-                    reader.readAsDataURL(uploader[0].files[0]);
+                    if(uploader[0].files[0].type.includes("image")){
+                        let reader = new FileReader();
+                        reader.onload = function (event) {
 
+                            dialogCropper.modal('show');
+                            cropper.replace(event.target.result);
+                            uploader.remove();
+                            //
+                        };
+                        reader.readAsDataURL(uploader[0].files[0]);
+
+                    }
+                    else{
+                        viewFileUploader(temp);
+                    }
 
                 });
             });
