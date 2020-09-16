@@ -111,6 +111,6 @@ public class DocumentController
         }
         doc.setDocumentFiles(docFiles);
         documentRepository.save(doc);
-        return "redirect:/home";
+        return "redirect:/documents";
     }
 }

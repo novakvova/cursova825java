@@ -42,10 +42,10 @@ public class ForgotPasswordController
     @PostMapping("/changepassword")
     public String chPaswd(ForgotPasswordUserViewModel user)
     {
-        String id = base64decode(user.getCode());
-        Optional<User> usik = userRepository.findById(Long.parseLong(id));
-        usik.get().setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(usik.get());
+        Integer id = Integer.parseInt(user.getCode());
+        User usik = userRepository.getOne(id);
+        usik.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(usik);
         return "redirect:/login";
     }
     @GetMapping("/forgotpassword")
